@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 COURSES = ROOT / "output" / "course-materials" / "combined-manifest.json"
 CORPUS = ROOT / "output" / "course-corpus" / "opendataloader" / "index.json"
 BOOK = ROOT / "output" / "books" / "llm-foundations-opendataloader" / "opendataloader-manifest.json"
-PAPERS = ROOT / "output" / "papers" / "index.json"
+PAPERS = ROOT / "site" / ".vitepress" / "theme" / "data" / "papers.json"
 OUTPUT_JSON = ROOT / "output" / "course-corpus" / "curriculum-coverage.json"
 OUTPUT_MD = ROOT / "site" / "curriculum" / "sources.md"
 

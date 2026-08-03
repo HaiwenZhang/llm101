@@ -18,7 +18,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 COURSES = ROOT / "output" / "course-materials" / "combined-manifest.json"
 COVERAGE = ROOT / "output" / "course-corpus" / "curriculum-coverage.json"
-PAPERS = ROOT / "output" / "papers" / "index.json"
+PAPERS = ROOT / "site" / ".vitepress" / "theme" / "data" / "papers.json"
 BEGINNER = ROOT / "site" / "beginner"
 OUTPUT = ROOT / "site" / ".vitepress" / "theme" / "data" / "chapter-readings.json"
 

@@ -11,10 +11,7 @@ site/.vitepress/cache/
 site/.vitepress/dist/
 dist/
 tmp/
-output/*
-!output/papers/
-output/papers/*
-!output/papers/index.json
+output/
 scripts/__pycache__/
 *.pyc
 *.tgz

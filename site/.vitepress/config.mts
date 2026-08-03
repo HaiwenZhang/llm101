@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitepress'
-import paperIndex from '../../output/papers/index.json'
+import paperIndex from './theme/data/papers.json'
 
 const base = process.env.VITEPRESS_BASE || '/'
 

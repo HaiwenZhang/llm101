@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { withBase } from 'vitepress'
-import paperIndex from '../../../../output/papers/index.json'
+import paperIndex from '../data/papers.json'
 
 type Paper = typeof paperIndex.papers[number]
 const query = ref('')

@@ -1795,7 +1795,7 @@ K3 在权重、部分 kernel/infra、广泛评测和 scaling study 上较强；�
 它不是摘要拼接，而是按“问题 → 机制 → 证据 → 与 K3 的关系 → 适用边界”重新组织。
 所有结论均为对本地 PDF 的转述；公式、表格和精确数字若要引用到工作文档中，必须回到 PDF 核对。
 
-> 生成说明：论文元数据来自 `papers/manifest.json`，解析统计来自 `output/papers/index.json`，编者笔记来自 `study/paper_notes.json`。运行 `python scripts/build_paper_digest.py` 可幂等重建本章。
+> 生成说明：论文元数据来自 `papers/manifest.json`，解析统计来自 `site/.vitepress/theme/data/papers.json`，编者笔记来自 `study/paper_notes.json`。运行 `python scripts/build_paper_digest.py` 可幂等重建本章。
 
 ### 16.1　先按因果关系读，不按发表时间读
 

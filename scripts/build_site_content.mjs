@@ -153,7 +153,7 @@ await writeFile(
   'utf8'
 )
 
-const paperIndex = JSON.parse(await readFile(resolve(root, 'output/papers/index.json'), 'utf8'))
+const paperIndex = JSON.parse(await readFile(resolve(root, 'site/.vitepress/theme/data/papers.json'), 'utf8'))
 const coreNotes = JSON.parse(await readFile(resolve(root, 'study/paper_notes.json'), 'utf8')).papers
 const extraNotes = JSON.parse(await readFile(resolve(root, 'study/paper_extra_notes.json'), 'utf8')).papers
 const notesBySlug = new Map([...coreNotes, ...extraNotes].map(note => [note.slug, note]))

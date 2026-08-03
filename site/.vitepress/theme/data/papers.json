@@ -1,0 +1,1159 @@
+{
+  "schema_version": 1,
+  "generated_at_unix": 1785672093,
+  "paper_count": 33,
+  "failure_count": 0,
+  "papers": [
+    {
+      "order": 0,
+      "slug": "kimi_k3",
+      "title": "Kimi K3: Open Frontier Intelligence",
+      "arxiv_id": "2607.24653",
+      "source_url": "https://arxiv.org/pdf/2607.24653",
+      "pdf": "papers/00_kimi_k3_2607.24653.pdf",
+      "markdown": "output/papers/00_kimi_k3/00_kimi_k3_2607.24653.md",
+      "json": "output/papers/00_kimi_k3/00_kimi_k3_2607.24653.json",
+      "sha256": "936a7a3b655947b014ba96b8a790c3cdb6ea8b37eea514e4b7b52655e20af0f8",
+      "bytes": 2491068,
+      "pages": 47,
+      "pdf_title": "Kimi K3: Open Frontier Intelligence",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        0,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "focus": [
+        "architecture",
+        "pre-training",
+        "post-training",
+        "agent",
+        "infrastructure"
+      ],
+      "extraction": {
+        "characters": 189123,
+        "lines": 2675,
+        "headings": 91,
+        "page_markers": 47,
+        "image_references": 9,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 1,
+      "slug": "deepseek_v2",
+      "title": "DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model",
+      "arxiv_id": "2405.04434",
+      "source_url": "https://arxiv.org/pdf/2405.04434",
+      "pdf": "papers/01_deepseek_v2_2405.04434.pdf",
+      "markdown": "output/papers/01_deepseek_v2/01_deepseek_v2_2405.04434.md",
+      "json": "output/papers/01_deepseek_v2/01_deepseek_v2_2405.04434.json",
+      "sha256": "f149f9c09aa8b46ce6a740a255a99b7cc2317ac5b065989339919b7e6c329c9b",
+      "bytes": 1586880,
+      "pages": 52,
+      "pdf_title": "",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        3,
+        4
+      ],
+      "focus": [
+        "MLA",
+        "DeepSeekMoE",
+        "KV cache"
+      ],
+      "extraction": {
+        "characters": 112455,
+        "lines": 1811,
+        "headings": 59,
+        "page_markers": 52,
+        "image_references": 1,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 2,
+      "slug": "gated_deltanet",
+      "title": "Gated Delta Networks: Improving Mamba2 with Delta Rule",
+      "arxiv_id": "2412.06464",
+      "source_url": "https://arxiv.org/pdf/2412.06464",
+      "pdf": "papers/02_gated_deltanet_2412.06464.pdf",
+      "markdown": "output/papers/02_gated_deltanet/02_gated_deltanet_2412.06464.md",
+      "json": "output/papers/02_gated_deltanet/02_gated_deltanet_2412.06464.json",
+      "sha256": "55f84f2ae9c4e52ff494bfa699499867f5e9e17514994ac71de43888363a5fb9",
+      "bytes": 442953,
+      "pages": 22,
+      "pdf_title": "",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        5
+      ],
+      "focus": [
+        "delta rule",
+        "gating",
+        "linear attention"
+      ],
+      "extraction": {
+        "characters": 87559,
+        "lines": 1733,
+        "headings": 0,
+        "page_markers": 22,
+        "image_references": 290,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 3,
+      "slug": "kimi_linear",
+      "title": "Kimi Linear: An Expressive, Efficient Attention Architecture",
+      "arxiv_id": "2510.26692",
+      "source_url": "https://arxiv.org/pdf/2510.26692",
+      "pdf": "papers/03_kimi_linear_2510.26692.pdf",
+      "markdown": "output/papers/03_kimi_linear/03_kimi_linear_2510.26692.md",
+      "json": "output/papers/03_kimi_linear/03_kimi_linear_2510.26692.json",
+      "sha256": "e2e23a449fc9bb27e34e783d20b2e6cd0f1ac67d58efdc0479c03c54db956a17",
+      "bytes": 1354769,
+      "pages": 28,
+      "pdf_title": "Kimi Linear: An Expressive, Efficient Attention Architecture",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        3,
+        5,
+        13
+      ],
+      "focus": [
+        "KDA",
+        "hybrid attention",
+        "chunkwise algorithm"
+      ],
+      "extraction": {
+        "characters": 94528,
+        "lines": 2016,
+        "headings": 42,
+        "page_markers": 28,
+        "image_references": 1,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 4,
+      "slug": "attention_residuals",
+      "title": "Attention Residuals",
+      "arxiv_id": "2603.15031",
+      "source_url": "https://arxiv.org/pdf/2603.15031",
+      "pdf": "papers/04_attention_residuals_2603.15031.pdf",
+      "markdown": "output/papers/04_attention_residuals/04_attention_residuals_2603.15031.md",
+      "json": "output/papers/04_attention_residuals/04_attention_residuals_2603.15031.json",
+      "sha256": "444673994328f7be8aee9d96fb240596b6f254f06ebaa53a2673413a244198c9",
+      "bytes": 1065095,
+      "pages": 21,
+      "pdf_title": "Attention Residuals",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        6,
+        13
+      ],
+      "focus": [
+        "depth mixing",
+        "Block AttnRes",
+        "pipeline communication"
+      ],
+      "extraction": {
+        "characters": 74767,
+        "lines": 1281,
+        "headings": 28,
+        "page_markers": 21,
+        "image_references": 0,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 5,
+      "slug": "deepseek_moe",
+      "title": "DeepSeekMoE: Towards Ultimate Expert Specialization in Mixture-of-Experts Language Models",
+      "arxiv_id": "2401.06066",
+      "source_url": "https://arxiv.org/pdf/2401.06066",
+      "pdf": "papers/05_deepseek_moe_2401.06066.pdf",
+      "markdown": "output/papers/05_deepseek_moe/05_deepseek_moe_2401.06066.md",
+      "json": "output/papers/05_deepseek_moe/05_deepseek_moe_2401.06066.json",
+      "sha256": "a64b509e1410d09cf5b70570788d27790985fb9808ce436b9da8de73f2eed651",
+      "bytes": 733666,
+      "pages": 33,
+      "pdf_title": "",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        4,
+        7
+      ],
+      "focus": [
+        "fine-grained experts",
+        "shared experts",
+        "routing"
+      ],
+      "extraction": {
+        "characters": 91661,
+        "lines": 1032,
+        "headings": 53,
+        "page_markers": 33,
+        "image_references": 0,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 6,
+      "slug": "deepseek_v3",
+      "title": "DeepSeek-V3 Technical Report",
+      "arxiv_id": "2412.19437",
+      "source_url": "https://arxiv.org/pdf/2412.19437",
+      "pdf": "papers/06_deepseek_v3_2412.19437.pdf",
+      "markdown": "output/papers/06_deepseek_v3/06_deepseek_v3_2412.19437.md",
+      "json": "output/papers/06_deepseek_v3/06_deepseek_v3_2412.19437.json",
+      "sha256": "812a3fd645c80725354de9d831a6785503007a60681461407f64e97305fa9330",
+      "bytes": 1887366,
+      "pages": 53,
+      "pdf_title": "",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        4,
+        7,
+        9,
+        11,
+        13
+      ],
+      "focus": [
+        "auxiliary-loss-free balancing",
+        "MTP",
+        "FP8",
+        "Muon",
+        "MoE infrastructure"
+      ],
+      "extraction": {
+        "characters": 153671,
+        "lines": 2293,
+        "headings": 80,
+        "page_markers": 53,
+        "image_references": 32,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 7,
+      "slug": "latent_moe",
+      "title": "LatentMoE: Toward Optimal Accuracy per FLOP and Parameter in Mixture of Experts",
+      "arxiv_id": "2601.18089",
+      "source_url": "https://arxiv.org/pdf/2601.18089",
+      "pdf": "papers/07_latent_moe_2601.18089.pdf",
+      "markdown": "output/papers/07_latent_moe/07_latent_moe_2601.18089.md",
+      "json": "output/papers/07_latent_moe/07_latent_moe_2601.18089.json",
+      "sha256": "8308307d9519455b7332ae81debbde5af931fb5a20aa9053046875e1361f5515",
+      "bytes": 3575198,
+      "pages": 18,
+      "pdf_title": "LatentMoE: Toward Optimal Accuracy per FLOP and Parameter in Mixture of Experts",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        7
+      ],
+      "focus": [
+        "latent routed width",
+        "expert granularity",
+        "accuracy per FLOP"
+      ],
+      "extraction": {
+        "characters": 50229,
+        "lines": 485,
+        "headings": 24,
+        "page_markers": 18,
+        "image_references": 9,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 8,
+      "slug": "chinchilla",
+      "title": "Training Compute-Optimal Large Language Models",
+      "arxiv_id": "2203.15556",
+      "source_url": "https://arxiv.org/pdf/2203.15556",
+      "pdf": "papers/08_chinchilla_2203.15556.pdf",
+      "markdown": "output/papers/08_chinchilla/08_chinchilla_2203.15556.md",
+      "json": "output/papers/08_chinchilla/08_chinchilla_2203.15556.json",
+      "sha256": "3fd3632a8ef48171bd25282990221d49535d75356192f068b3b2ebe08f2aedd4",
+      "bytes": 6004349,
+      "pages": 36,
+      "pdf_title": "",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        9
+      ],
+      "focus": [
+        "scaling laws",
+        "compute optimality",
+        "data-model tradeoff"
+      ],
+      "extraction": {
+        "characters": 101621,
+        "lines": 2289,
+        "headings": 58,
+        "page_markers": 36,
+        "image_references": 4,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 9,
+      "slug": "kimi_k2",
+      "title": "Kimi K2: Open Agentic Intelligence",
+      "arxiv_id": "2507.20534",
+      "source_url": "https://arxiv.org/pdf/2507.20534",
+      "pdf": "papers/09_kimi_k2_2507.20534.pdf",
+      "markdown": "output/papers/09_kimi_k2/09_kimi_k2_2507.20534.md",
+      "json": "output/papers/09_kimi_k2/09_kimi_k2_2507.20534.json",
+      "sha256": "035062b5e1ab865ffad9f90f81d6c8332f8af805063fac54cc6f2cca1fe608b5",
+      "bytes": 5872335,
+      "pages": 32,
+      "pdf_title": "Kimi K2: Open Agentic Intelligence",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        4,
+        9,
+        10,
+        13
+      ],
+      "focus": [
+        "Muon",
+        "large MoE",
+        "agentic data",
+        "infrastructure"
+      ],
+      "extraction": {
+        "characters": 117208,
+        "lines": 1985,
+        "headings": 41,
+        "page_markers": 32,
+        "image_references": 14,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 10,
+      "slug": "kimi_k1_5",
+      "title": "Kimi k1.5: Scaling Reinforcement Learning with LLMs",
+      "arxiv_id": "2501.12599",
+      "source_url": "https://arxiv.org/pdf/2501.12599",
+      "pdf": "papers/10_kimi_k1.5_2501.12599.pdf",
+      "markdown": "output/papers/10_kimi_k1_5/10_kimi_k1.5_2501.12599.md",
+      "json": "output/papers/10_kimi_k1_5/10_kimi_k1.5_2501.12599.json",
+      "sha256": "1f4425ccf3cad58f2f2ce4acfeb7c85a6c5d6db3b9cdeae4bc80fa305921982d",
+      "bytes": 926045,
+      "pages": 25,
+      "pdf_title": "Kimi k1.5: Scaling Reinforcement Learning with LLMs",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        10,
+        12,
+        13
+      ],
+      "focus": [
+        "long-CoT RL",
+        "partial rollout",
+        "multimodal RL"
+      ],
+      "extraction": {
+        "characters": 101337,
+        "lines": 2789,
+        "headings": 65,
+        "page_markers": 25,
+        "image_references": 77,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 11,
+      "slug": "kimi_k2_5",
+      "title": "Kimi K2.5: Visual Agentic Intelligence",
+      "arxiv_id": "2602.02276",
+      "source_url": "https://arxiv.org/pdf/2602.02276",
+      "pdf": "papers/11_kimi_k2.5_2602.02276.pdf",
+      "markdown": "output/papers/11_kimi_k2_5/11_kimi_k2.5_2602.02276.md",
+      "json": "output/papers/11_kimi_k2_5/11_kimi_k2.5_2602.02276.json",
+      "sha256": "06811e2d0e7a68cfc4e6b081963f4efcc84f5c05a376ed62b05440978db264e9",
+      "bytes": 9084004,
+      "pages": 30,
+      "pdf_title": "Kimi K2.5: Visual Agentic Intelligence",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        8,
+        10,
+        12,
+        13
+      ],
+      "focus": [
+        "native multimodality",
+        "reasoning effort",
+        "agent swarm",
+        "visual RL"
+      ],
+      "extraction": {
+        "characters": 116165,
+        "lines": 1604,
+        "headings": 105,
+        "page_markers": 30,
+        "image_references": 61,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 12,
+      "slug": "deepseek_r1",
+      "title": "DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning",
+      "arxiv_id": "2501.12948",
+      "source_url": "https://arxiv.org/pdf/2501.12948",
+      "pdf": "papers/12_deepseek_r1_2501.12948.pdf",
+      "markdown": "output/papers/12_deepseek_r1/12_deepseek_r1_2501.12948.md",
+      "json": "output/papers/12_deepseek_r1/12_deepseek_r1_2501.12948.json",
+      "sha256": "b191b0a365a64b4ab2791d117069ed17a2933d03554a662ced58b37df52018f4",
+      "bytes": 5034998,
+      "pages": 86,
+      "pdf_title": "DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        10,
+        11
+      ],
+      "focus": [
+        "reasoning RL",
+        "cold start",
+        "verifiable rewards",
+        "distillation"
+      ],
+      "extraction": {
+        "characters": 230683,
+        "lines": 3002,
+        "headings": 103,
+        "page_markers": 86,
+        "image_references": 3,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 13,
+      "slug": "fast_weight_programmers",
+      "title": "Linear Transformers Are Secretly Fast Weight Programmers",
+      "arxiv_id": "2102.11174",
+      "source_url": "https://arxiv.org/pdf/2102.11174",
+      "pdf": "papers/13_fast_weight_programmers_2102.11174.pdf",
+      "markdown": "output/papers/13_fast_weight_programmers/13_fast_weight_programmers_2102.11174.md",
+      "json": "output/papers/13_fast_weight_programmers/13_fast_weight_programmers_2102.11174.json",
+      "sha256": "6891c3b7f048f436cebb6f4aaee0343b3e3b2b91793f3412819383ccea5c962b",
+      "bytes": 1452993,
+      "pages": 16,
+      "pdf_title": "Linear Transformers Are Secretly Fast Weight Programmers",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        5
+      ],
+      "focus": [
+        "fast weights",
+        "linear attention",
+        "delta rule"
+      ],
+      "extraction": {
+        "characters": 67210,
+        "lines": 994,
+        "headings": 36,
+        "page_markers": 16,
+        "image_references": 5,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 14,
+      "slug": "mamba2",
+      "title": "Transformers are SSMs: Generalized Models and Efficient Algorithms Through Structured State Space Duality",
+      "arxiv_id": "2405.21060",
+      "source_url": "https://arxiv.org/pdf/2405.21060",
+      "pdf": "papers/14_mamba2_2405.21060.pdf",
+      "markdown": "output/papers/14_mamba2/14_mamba2_2405.21060.md",
+      "json": "output/papers/14_mamba2/14_mamba2_2405.21060.json",
+      "sha256": "6fe16414fa471a5ab150cddcba5840d3a94e347e96992c50c12c1fb8b919479f",
+      "bytes": 3209170,
+      "pages": 52,
+      "pdf_title": "",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        5
+      ],
+      "focus": [
+        "state space duality",
+        "Mamba-2",
+        "chunkwise algorithms"
+      ],
+      "extraction": {
+        "characters": 181144,
+        "lines": 2738,
+        "headings": 73,
+        "page_markers": 52,
+        "image_references": 16,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 15,
+      "slug": "switch_transformers",
+      "title": "Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity",
+      "arxiv_id": "2101.03961",
+      "source_url": "https://arxiv.org/pdf/2101.03961",
+      "pdf": "papers/15_switch_transformers_2101.03961.pdf",
+      "markdown": "output/papers/15_switch_transformers/15_switch_transformers_2101.03961.md",
+      "json": "output/papers/15_switch_transformers/15_switch_transformers_2101.03961.json",
+      "sha256": "f340f6ace31abf7d0730ef461404279f40d3c890e9cc2daeb7068b3304afdbd6",
+      "bytes": 1304157,
+      "pages": 40,
+      "pdf_title": "",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        4
+      ],
+      "focus": [
+        "sparse MoE",
+        "routing",
+        "capacity factor",
+        "load balancing"
+      ],
+      "extraction": {
+        "characters": 102278,
+        "lines": 1644,
+        "headings": 72,
+        "page_markers": 40,
+        "image_references": 0,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 16,
+      "slug": "roformer_rope",
+      "title": "RoFormer: Enhanced Transformer with Rotary Position Embedding",
+      "arxiv_id": "2104.09864",
+      "source_url": "https://arxiv.org/pdf/2104.09864",
+      "pdf": "papers/16_roformer_rope_2104.09864.pdf",
+      "markdown": "output/papers/16_roformer_rope/16_roformer_rope_2104.09864.md",
+      "json": "output/papers/16_roformer_rope/16_roformer_rope_2104.09864.json",
+      "sha256": "e9a481fbe1c8a20b7b1fa566b13102a1896c7829fa9a8b4c80528452a5ddaf79",
+      "bytes": 599289,
+      "pages": 14,
+      "pdf_title": "RoFormer",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        3,
+        9
+      ],
+      "focus": [
+        "RoPE",
+        "relative position",
+        "position encoding"
+      ],
+      "extraction": {
+        "characters": 45767,
+        "lines": 847,
+        "headings": 32,
+        "page_markers": 14,
+        "image_references": 0,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 17,
+      "slug": "yarn",
+      "title": "YaRN: Efficient Context Window Extension of Large Language Models",
+      "arxiv_id": "2309.00071",
+      "source_url": "https://arxiv.org/pdf/2309.00071",
+      "pdf": "papers/17_yarn_2309.00071.pdf",
+      "markdown": "output/papers/17_yarn/17_yarn_2309.00071.md",
+      "json": "output/papers/17_yarn/17_yarn_2309.00071.json",
+      "sha256": "e7c0268a796138460c6ba2f67a7cba5bd922c401aea94c1fcd09c4b76b883c85",
+      "bytes": 838521,
+      "pages": 20,
+      "pdf_title": "YaRN: Efficient Context Window Extension of Large Language Models",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        3,
+        9
+      ],
+      "focus": [
+        "RoPE scaling",
+        "context extension",
+        "long context"
+      ],
+      "extraction": {
+        "characters": 54315,
+        "lines": 799,
+        "headings": 8,
+        "page_markers": 20,
+        "image_references": 9,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 18,
+      "slug": "muon_scalable",
+      "title": "Muon is Scalable for LLM Training",
+      "arxiv_id": "2502.16982",
+      "source_url": "https://arxiv.org/pdf/2502.16982",
+      "pdf": "papers/18_muon_scalable_2502.16982.pdf",
+      "markdown": "output/papers/18_muon_scalable/18_muon_scalable_2502.16982.md",
+      "json": "output/papers/18_muon_scalable/18_muon_scalable_2502.16982.json",
+      "sha256": "6b8e3b47da4db09c952a35486c905f416c57081a32b445a36a3744c441b1c7f3",
+      "bytes": 2077505,
+      "pages": 19,
+      "pdf_title": "",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        9,
+        13
+      ],
+      "focus": [
+        "Muon",
+        "matrix optimization",
+        "update scale"
+      ],
+      "extraction": {
+        "characters": 57329,
+        "lines": 1604,
+        "headings": 30,
+        "page_markers": 19,
+        "image_references": 1,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 19,
+      "slug": "instructgpt",
+      "title": "Training Language Models to Follow Instructions with Human Feedback",
+      "arxiv_id": "2203.02155",
+      "source_url": "https://arxiv.org/pdf/2203.02155",
+      "pdf": "papers/19_instructgpt_2203.02155.pdf",
+      "markdown": "output/papers/19_instructgpt/19_instructgpt_2203.02155.md",
+      "json": "output/papers/19_instructgpt/19_instructgpt_2203.02155.json",
+      "sha256": "c1984bb50a5b90fddb895fdc3a0f72e5bc977148c9f63ef6040cbe7a3e1f0d98",
+      "bytes": 1797405,
+      "pages": 68,
+      "pdf_title": "",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        10,
+        11
+      ],
+      "focus": [
+        "SFT",
+        "reward modeling",
+        "PPO",
+        "RLHF"
+      ],
+      "extraction": {
+        "characters": 189378,
+        "lines": 1919,
+        "headings": 79,
+        "page_markers": 68,
+        "image_references": 7,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 20,
+      "slug": "dpo",
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "arxiv_id": "2305.18290",
+      "source_url": "https://arxiv.org/pdf/2305.18290",
+      "pdf": "papers/20_dpo_2305.18290.pdf",
+      "markdown": "output/papers/20_dpo/20_dpo_2305.18290.md",
+      "json": "output/papers/20_dpo/20_dpo_2305.18290.json",
+      "sha256": "92cb3a2b71362acda98a789b03d88688fd33cf5fcf13f81d2b1de30ee7d3b67a",
+      "bytes": 1299212,
+      "pages": 27,
+      "pdf_title": "",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        10,
+        11
+      ],
+      "focus": [
+        "preference optimization",
+        "implicit reward",
+        "offline alignment"
+      ],
+      "extraction": {
+        "characters": 94437,
+        "lines": 1330,
+        "headings": 38,
+        "page_markers": 27,
+        "image_references": 2,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 21,
+      "slug": "deepseek_math",
+      "title": "DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models",
+      "arxiv_id": "2402.03300",
+      "source_url": "https://arxiv.org/pdf/2402.03300",
+      "pdf": "papers/21_deepseek_math_2402.03300.pdf",
+      "markdown": "output/papers/21_deepseek_math/21_deepseek_math_2402.03300.md",
+      "json": "output/papers/21_deepseek_math/21_deepseek_math_2402.03300.json",
+      "sha256": "6cc20b3c5b8d25b8b53868fc4ec1792c144f07d67bdf7395138efd4422197e7b",
+      "bytes": 1844642,
+      "pages": 30,
+      "pdf_title": "",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        10,
+        11
+      ],
+      "focus": [
+        "GRPO",
+        "mathematical reasoning",
+        "reinforcement learning"
+      ],
+      "extraction": {
+        "characters": 82896,
+        "lines": 1330,
+        "headings": 43,
+        "page_markers": 30,
+        "image_references": 5,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 22,
+      "slug": "mopd",
+      "title": "MOPD: Multi-Teacher On-Policy Distillation for Capability Integration in LLM Post-Training",
+      "arxiv_id": "2606.30406",
+      "source_url": "https://arxiv.org/pdf/2606.30406",
+      "pdf": "papers/22_mopd_2606.30406.pdf",
+      "markdown": "output/papers/22_mopd/22_mopd_2606.30406.md",
+      "json": "output/papers/22_mopd/22_mopd_2606.30406.json",
+      "sha256": "cd7f1cc0584ee14f7a0a9380e25348df4ca1421dbad6ec34e7412754e3a2f188",
+      "bytes": 1066370,
+      "pages": 15,
+      "pdf_title": "MOPD: Multi-Teacher On-Policy Distillation for Capability Integration in LLM Post-Training",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        10,
+        11
+      ],
+      "focus": [
+        "on-policy distillation",
+        "multi-teacher distillation",
+        "capability integration"
+      ],
+      "extraction": {
+        "characters": 43643,
+        "lines": 641,
+        "headings": 19,
+        "page_markers": 15,
+        "image_references": 7,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 23,
+      "slug": "kimi_vl",
+      "title": "Kimi-VL Technical Report",
+      "arxiv_id": "2504.07491",
+      "source_url": "https://arxiv.org/pdf/2504.07491",
+      "pdf": "papers/23_kimi_vl_2504.07491.pdf",
+      "markdown": "output/papers/23_kimi_vl/23_kimi_vl_2504.07491.md",
+      "json": "output/papers/23_kimi_vl/23_kimi_vl_2504.07491.json",
+      "sha256": "1a2b6734c86d0983ac01c21d644483fb22c276844a89d53736e6ff8b72baf9cb",
+      "bytes": 11165243,
+      "pages": 24,
+      "pdf_title": "Kimi-VL Technical Report",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        8,
+        12
+      ],
+      "focus": [
+        "MoonViT",
+        "native resolution",
+        "multimodal agent",
+        "long context"
+      ],
+      "extraction": {
+        "characters": 119279,
+        "lines": 1871,
+        "headings": 74,
+        "page_markers": 24,
+        "image_references": 155,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 24,
+      "slug": "react",
+      "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+      "arxiv_id": "2210.03629",
+      "source_url": "https://arxiv.org/pdf/2210.03629",
+      "pdf": "papers/24_react_2210.03629.pdf",
+      "markdown": "output/papers/24_react/24_react_2210.03629.md",
+      "json": "output/papers/24_react/24_react_2210.03629.json",
+      "sha256": "f285b0971ae4a790e402fb93966bed3adde2cf0a04977d08b2b40d6ab0cace69",
+      "bytes": 633805,
+      "pages": 33,
+      "pdf_title": "",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        12
+      ],
+      "focus": [
+        "reasoning and acting",
+        "tool use",
+        "agent loop"
+      ],
+      "extraction": {
+        "characters": 103062,
+        "lines": 1422,
+        "headings": 6,
+        "page_markers": 33,
+        "image_references": 0,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 25,
+      "slug": "megatron_lm",
+      "title": "Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM",
+      "arxiv_id": "2104.04473",
+      "source_url": "https://arxiv.org/pdf/2104.04473",
+      "pdf": "papers/25_megatron_lm_2104.04473.pdf",
+      "markdown": "output/papers/25_megatron_lm/25_megatron_lm_2104.04473.md",
+      "json": "output/papers/25_megatron_lm/25_megatron_lm_2104.04473.json",
+      "sha256": "7d78344f7fd322c901ad14046eeeaa9fd798416ad35190ffc6a6ecca0f7f79b0",
+      "bytes": 1035739,
+      "pages": 13,
+      "pdf_title": "Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        13
+      ],
+      "focus": [
+        "tensor parallelism",
+        "pipeline parallelism",
+        "data parallelism"
+      ],
+      "extraction": {
+        "characters": 76159,
+        "lines": 1210,
+        "headings": 31,
+        "page_markers": 13,
+        "image_references": 0,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 26,
+      "slug": "zero",
+      "title": "ZeRO: Memory Optimizations Toward Training Trillion Parameter Models",
+      "arxiv_id": "1910.02054",
+      "source_url": "https://arxiv.org/pdf/1910.02054",
+      "pdf": "papers/26_zero_1910.02054.pdf",
+      "markdown": "output/papers/26_zero/26_zero_1910.02054.md",
+      "json": "output/papers/26_zero/26_zero_1910.02054.json",
+      "sha256": "c531734c7d9ee647fda9b4f0e1a6abd6d58ad34e862bc945451b09032be3167e",
+      "bytes": 779206,
+      "pages": 24,
+      "pdf_title": "",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        13
+      ],
+      "focus": [
+        "optimizer state sharding",
+        "gradient sharding",
+        "parameter sharding"
+      ],
+      "extraction": {
+        "characters": 70673,
+        "lines": 691,
+        "headings": 49,
+        "page_markers": 24,
+        "image_references": 8,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 27,
+      "slug": "flash_attention_2",
+      "title": "FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning",
+      "arxiv_id": "2307.08691",
+      "source_url": "https://arxiv.org/pdf/2307.08691",
+      "pdf": "papers/27_flash_attention_2_2307.08691.pdf",
+      "markdown": "output/papers/27_flash_attention_2/27_flash_attention_2_2307.08691.md",
+      "json": "output/papers/27_flash_attention_2/27_flash_attention_2_2307.08691.json",
+      "sha256": "4aa8935dfacaf6ae8c68f772ca92f730154a0dd0e1bceeb59c7bc56c512d5868",
+      "bytes": 1660578,
+      "pages": 14,
+      "pdf_title": "",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        2,
+        13
+      ],
+      "focus": [
+        "IO-aware attention",
+        "GPU kernels",
+        "work partitioning"
+      ],
+      "extraction": {
+        "characters": 41299,
+        "lines": 1375,
+        "headings": 26,
+        "page_markers": 14,
+        "image_references": 4,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 28,
+      "slug": "ring_attention",
+      "title": "Ring Attention with Blockwise Transformers for Near-Infinite Context",
+      "arxiv_id": "2310.01889",
+      "source_url": "https://arxiv.org/pdf/2310.01889",
+      "pdf": "papers/28_ring_attention_2310.01889.pdf",
+      "markdown": "output/papers/28_ring_attention/28_ring_attention_2310.01889.md",
+      "json": "output/papers/28_ring_attention/28_ring_attention_2310.01889.json",
+      "sha256": "1e0ee1ad0aaf8c5763d060ba725887f1c6affda412c0a26dbb888cad5ad80f8c",
+      "bytes": 1766025,
+      "pages": 16,
+      "pdf_title": "",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        9,
+        13
+      ],
+      "focus": [
+        "context parallelism",
+        "ring communication",
+        "long context"
+      ],
+      "extraction": {
+        "characters": 54320,
+        "lines": 432,
+        "headings": 21,
+        "page_markers": 16,
+        "image_references": 5,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 29,
+      "slug": "deepspeed_ulysses",
+      "title": "DeepSpeed Ulysses: System Optimizations for Enabling Training of Extreme Long Sequence Transformer Models",
+      "arxiv_id": "2309.14509",
+      "source_url": "https://arxiv.org/pdf/2309.14509",
+      "pdf": "papers/29_deepspeed_ulysses_2309.14509.pdf",
+      "markdown": "output/papers/29_deepspeed_ulysses/29_deepspeed_ulysses_2309.14509.md",
+      "json": "output/papers/29_deepspeed_ulysses/29_deepspeed_ulysses_2309.14509.json",
+      "sha256": "9258c53f28569c9dd367eb8db9a3ca06178ad5b5d225e61b25148caaf4cd9f11",
+      "bytes": 643890,
+      "pages": 12,
+      "pdf_title": "DeepSpeed Ulysses: System Optimizations for Enabling Training of Extreme Long Sequence Transformer Models",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        9,
+        13
+      ],
+      "focus": [
+        "sequence parallelism",
+        "all-to-all communication",
+        "long context"
+      ],
+      "extraction": {
+        "characters": 34807,
+        "lines": 283,
+        "headings": 24,
+        "page_markers": 12,
+        "image_references": 8,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 30,
+      "slug": "pagedattention_vllm",
+      "title": "Efficient Memory Management for Large Language Model Serving with PagedAttention",
+      "arxiv_id": "2309.06180",
+      "source_url": "https://arxiv.org/pdf/2309.06180",
+      "pdf": "papers/30_pagedattention_vllm_2309.06180.pdf",
+      "markdown": "output/papers/30_pagedattention_vllm/30_pagedattention_vllm_2309.06180.md",
+      "json": "output/papers/30_pagedattention_vllm/30_pagedattention_vllm_2309.06180.json",
+      "sha256": "55b3b324d779a67c59dac2519445e3b07c14e6ff5c656fadb47a3d7b5997469e",
+      "bytes": 1459631,
+      "pages": 16,
+      "pdf_title": "Efficient Memory Management for Large Language Model Serving with PagedAttention",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        2,
+        13
+      ],
+      "focus": [
+        "PagedAttention",
+        "KV cache",
+        "continuous batching",
+        "serving"
+      ],
+      "extraction": {
+        "characters": 85904,
+        "lines": 1633,
+        "headings": 37,
+        "page_markers": 16,
+        "image_references": 3,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 31,
+      "slug": "mooncake",
+      "title": "Mooncake: A KVCache-centric Disaggregated Architecture for LLM Serving",
+      "arxiv_id": "2407.00079",
+      "source_url": "https://arxiv.org/pdf/2407.00079",
+      "pdf": "papers/31_mooncake_2407.00079.pdf",
+      "markdown": "output/papers/31_mooncake/31_mooncake_2407.00079.md",
+      "json": "output/papers/31_mooncake/31_mooncake_2407.00079.json",
+      "sha256": "af8db47ba2ccbbd7ca3f46de6176292010192afb0ffe5c51da2db56e1006f27a",
+      "bytes": 681606,
+      "pages": 23,
+      "pdf_title": "Mooncake: A KVCache-centric Disaggregated Architecture for LLM Serving",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        2,
+        13
+      ],
+      "focus": [
+        "disaggregated serving",
+        "KV cache",
+        "prefill-decode separation",
+        "scheduling"
+      ],
+      "extraction": {
+        "characters": 86676,
+        "lines": 1313,
+        "headings": 40,
+        "page_markers": 23,
+        "image_references": 6,
+        "has_abstract": true,
+        "has_references": true
+      }
+    },
+    {
+      "order": 32,
+      "slug": "deepseek_v4",
+      "title": "DeepSeek-V4: Towards Highly Efficient Million-Token Context Intelligence",
+      "arxiv_id": "2606.19348",
+      "source_url": "https://arxiv.org/pdf/2606.19348",
+      "pdf": "papers/32_deepseek_v4_2606.19348.pdf",
+      "markdown": "output/papers/32_deepseek_v4/32_deepseek_v4_2606.19348.md",
+      "json": "output/papers/32_deepseek_v4/32_deepseek_v4_2606.19348.json",
+      "sha256": "55b2d72f772ac00de2e470b3ee08443c648d971c7f57c52d6202895665e5978d",
+      "bytes": 4713349,
+      "pages": 58,
+      "pdf_title": "DeepSeek-V4: Towards Highly Efficient Million-Token Context Intelligence",
+      "download_status": "preexisting",
+      "parse_status": "parsed",
+      "textbook_chapters": [
+        3,
+        6,
+        9,
+        11,
+        13,
+        14
+      ],
+      "focus": [
+        "million-token context",
+        "compressed attention",
+        "hyper-connections",
+        "Muon",
+        "MOPD"
+      ],
+      "extraction": {
+        "characters": 177078,
+        "lines": 2316,
+        "headings": 106,
+        "page_markers": 58,
+        "image_references": 7,
+        "has_abstract": true,
+        "has_references": true
+      }
+    }
+  ],
+  "failures": []
+}

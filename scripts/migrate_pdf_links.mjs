@@ -7,7 +7,7 @@ const courseManifest = JSON.parse(
   await readFile(join(root, 'output/course-materials/combined-manifest.json'), 'utf8')
 )
 const paperIndex = JSON.parse(
-  await readFile(join(root, 'output/papers/index.json'), 'utf8')
+  await readFile(join(root, 'site/.vitepress/theme/data/papers.json'), 'utf8')
 )
 
 const replacements = new Map()

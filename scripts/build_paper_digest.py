@@ -4,7 +4,7 @@
 The chapter is generated from three sources:
 
 1. papers/manifest.json: canonical paper order and metadata;
-2. output/papers/index.json: validated local PDF/extraction artifacts and statistics;
+2. site/.vitepress/theme/data/papers.json: validated local PDF/extraction artifacts and statistics;
 3. study/paper_notes.json: human-curated, source-grounded Chinese study notes.
 
 The script owns only the text between the generated markers, so the rest of the
@@ -24,7 +24,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_PATH = ROOT / "papers" / "manifest.json"
-INDEX_PATH = ROOT / "output" / "papers" / "index.json"
+INDEX_PATH = ROOT / "site" / ".vitepress" / "theme" / "data" / "papers.json"
 NOTES_PATH = ROOT / "study" / "paper_notes.json"
 TEXTBOOK_PATH = ROOT / "study" / "03_kimi_k3_textbook.md"
 
@@ -128,7 +128,7 @@ def render_digest(rows: list[dict[str, Any]]) -> str:
         "它不是摘要拼接，而是按“问题 → 机制 → 证据 → 与 K3 的关系 → 适用边界”重新组织。",
         "所有结论均为对本地 PDF 的转述；公式、表格和精确数字若要引用到工作文档中，必须回到 PDF 核对。",
         "",
-        "> 生成说明：论文元数据来自 `papers/manifest.json`，解析统计来自 `output/papers/index.json`，编者笔记来自 `study/paper_notes.json`。运行 `python scripts/build_paper_digest.py` 可幂等重建本章。",
+        "> 生成说明：论文元数据来自 `papers/manifest.json`，解析统计来自 `site/.vitepress/theme/data/papers.json`，编者笔记来自 `study/paper_notes.json`。运行 `python scripts/build_paper_digest.py` 可幂等重建本章。",
         "",
         "### 16.1　先按因果关系读，不按发表时间读",
         "",

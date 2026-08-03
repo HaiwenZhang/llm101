@@ -6,7 +6,7 @@ The pipeline is intentionally deterministic and resumable:
 - paper metadata lives in papers/manifest.json;
 - PDFs are downloaded atomically into papers/;
 - extracted Markdown/JSON lives under output/papers/<paper-slug>/;
-- output/papers/index.json records checksums, page counts, and extraction stats;
+- site/.vitepress/theme/data/papers.json records checksums, page counts, and extraction stats;
 - existing valid artifacts are reused unless a force flag is supplied.
 
 OpenDataLoader PDF is used because it preserves headings, tables, page boundaries,
@@ -33,6 +33,7 @@ ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_PATH = ROOT / "papers" / "manifest.json"
 PAPERS_DIR = ROOT / "papers"
 OUTPUT_DIR = ROOT / "output" / "papers"
+INDEX_PATH = ROOT / "site" / ".vitepress" / "theme" / "data" / "papers.json"
 TMP_DIR = ROOT / "tmp" / "pdfs"
 
 
@@ -308,6 +309,7 @@ def record_for(paper: Paper, pdfinfo: str, download_status: str, parse_status: s
 
 def write_index(records: list[dict[str, Any]], failures: list[dict[str, str]]) -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    INDEX_PATH.parent.mkdir(parents=True, exist_ok=True)
     payload = {
         "schema_version": 1,
         "generated_at_unix": int(time.time()),
@@ -316,7 +318,7 @@ def write_index(records: list[dict[str, Any]], failures: list[dict[str, str]]) -
         "papers": records,
         "failures": failures,
     }
-    (OUTPUT_DIR / "index.json").write_text(
+    INDEX_PATH.write_text(
         json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
@@ -362,10 +364,10 @@ def merge_previous_index(
     textbook generator will reject until the full pipeline has run once.
     """
 
-    if len(selected_papers) == len(all_papers) or not (OUTPUT_DIR / "index.json").exists():
+    if len(selected_papers) == len(all_papers) or not INDEX_PATH.exists():
         return records, failures
     try:
-        previous = json.loads((OUTPUT_DIR / "index.json").read_text(encoding="utf-8"))
+        previous = json.loads(INDEX_PATH.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         return records, failures
 
