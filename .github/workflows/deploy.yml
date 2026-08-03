@@ -1,5 +1,6 @@
 name: Deploy VitePress to GitHub Pages
 
+# Repository Settings > Pages must use GitHub Actions as the publishing source.
 on:
   push:
     branches: [main]
