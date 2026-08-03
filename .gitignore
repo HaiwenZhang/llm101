@@ -2,7 +2,7 @@ node_modules/
 .venv/
 .DS_Store
 /images/
-papers/
+/papers/
 resources/
 *.pdf
 .openai/
