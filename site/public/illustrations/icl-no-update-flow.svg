@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">上下文学习与参数微调的数据流对比</title>
+  <desc id="desc">上下文学习把指令、示例和新输入序列化为同一段 token，冻结参数的模型根据上下文生成答案，请求结束后参数不变。微调则用训练样本计算损失和梯度，更新模型参数并保存新的 checkpoint。</desc>
+  <rect width="1200" height="650" rx="30" fill="#f8faff"/>
+  <text x="55" y="63" font-family="system-ui,sans-serif" font-size="29" font-weight="700" fill="#182342">ICL 的“学习”发生在上下文状态里，不发生在权重文件里</text>
+  <text x="55" y="99" font-family="system-ui,sans-serif" font-size="17" fill="#5c6787">同样是给示例，是否计算梯度决定它属于 few-shot prompting 还是 fine-tuning</text>
+  <g font-family="system-ui,sans-serif">
+    <g transform="translate(55 150)">
+      <rect width="515" height="390" rx="22" fill="#eef1ff" stroke="#8799e9" stroke-width="2"/>
+      <text x="257" y="42" text-anchor="middle" font-size="22" font-weight="700" fill="#25345d">In-Context Learning：一次请求</text>
+      <g transform="translate(28 83)" font-size="12" fill="#25345d">
+        <rect width="125" height="48" rx="9" fill="#dfe4fa"/><text x="62" y="20" text-anchor="middle">system / 指令</text><text x="62" y="37" text-anchor="middle">类别定义</text>
+        <rect y="59" width="125" height="65" rx="9" fill="#dfe4fa"/><text x="62" y="80" text-anchor="middle">示例 (x₁,y₁)</text><text x="62" y="98" text-anchor="middle">示例 (x₂,y₂)</text><text x="62" y="116" text-anchor="middle">…</text>
+        <rect y="135" width="125" height="48" rx="9" fill="#dfe4fa"/><text x="62" y="156" text-anchor="middle">新输入 x*</text><text x="62" y="173" text-anchor="middle">等待预测</text>
+      </g>
+      <path d="M165 174h55" stroke="#5368d9" stroke-width="3"/><path d="M210 167l11 7-11 7" fill="none" stroke="#5368d9" stroke-width="3"/>
+      <g transform="translate(225 86)" font-size="12" fill="#25345d">
+        <rect width="122" height="172" rx="12" fill="#dfe4fa"/><text x="61" y="27" text-anchor="middle" font-weight="700">Chat template</text><text x="61" y="51" text-anchor="middle">加角色特殊 token</text><text x="61" y="72" text-anchor="middle">按固定顺序拼接</text><text x="61" y="99" text-anchor="middle">→ token ids</text><text x="61" y="125" text-anchor="middle">→ Attention</text><text x="61" y="151" text-anchor="middle">→ KV 状态</text>
+      </g>
+      <path d="M356 174h42" stroke="#5368d9" stroke-width="3"/><path d="M388 167l11 7-11 7" fill="none" stroke="#5368d9" stroke-width="3"/>
+      <g transform="translate(405 101)" font-size="12" fill="#25345d"><rect width="82" height="100" rx="12" fill="#dfe4fa"/><text x="41" y="30" text-anchor="middle" font-weight="700">模型 θ</text><text x="41" y="53" text-anchor="middle">冻结</text><text x="41" y="77" text-anchor="middle">🔒</text><path d="M41 109v35" stroke="#5368d9" stroke-width="3"/><path d="M34 136l7 10 7-10" fill="none" stroke="#5368d9" stroke-width="3"/><rect y="151" width="82" height="45" rx="9" fill="#dfe4fa"/><text x="41" y="178" text-anchor="middle">输出 y*</text></g>
+      <rect x="28" y="326" width="459" height="38" rx="10" fill="#dfe4fa"/><text x="257" y="350" text-anchor="middle" font-size="13" fill="#25345d">删掉示例或请求结束：θ 完全不变，临时条件消失</text>
+    </g>
+    <g transform="translate(630 150)">
+      <rect width="515" height="390" rx="22" fill="#fff4e5" stroke="#dfa84e" stroke-width="2"/>
+      <text x="257" y="42" text-anchor="middle" font-size="22" font-weight="700" fill="#684c1e">Fine-tuning：训练过程</text>
+      <g transform="translate(35 95)" font-size="12" fill="#684c1e"><rect width="125" height="80" rx="10" fill="#f4dfb9"/><text x="62" y="25" text-anchor="middle">训练集</text><text x="62" y="45" text-anchor="middle">(xᵢ,yᵢ)</text><text x="62" y="66" text-anchor="middle">反复采 batch</text></g>
+      <path d="M170 135h53" stroke="#dfa84e" stroke-width="3"/><path d="M213 128l11 7-11 7" fill="none" stroke="#dfa84e" stroke-width="3"/>
+      <g transform="translate(230 91)" font-size="12" fill="#684c1e"><rect width="110" height="88" rx="10" fill="#f4dfb9"/><text x="55" y="26" text-anchor="middle" font-weight="700">模型 θ</text><text x="55" y="49" text-anchor="middle">预测 ŷ</text><text x="55" y="71" text-anchor="middle">计算 loss</text></g>
+      <path d="M350 135h53" stroke="#dfa84e" stroke-width="3"/><path d="M393 128l11 7-11 7" fill="none" stroke="#dfa84e" stroke-width="3"/>
+      <g transform="translate(410 91)" font-size="12" fill="#684c1e"><rect width="70" height="88" rx="10" fill="#f4dfb9"/><text x="35" y="27" text-anchor="middle">∇θ</text><text x="35" y="50" text-anchor="middle">优化器</text><text x="35" y="72" text-anchor="middle">更新</text></g>
+      <path d="M445 187v65H285v-64" fill="none" stroke="#dfa84e" stroke-width="3"/><path d="M278 198l7-11 7 11" fill="none" stroke="#dfa84e" stroke-width="3"/>
+      <g transform="translate(132 279)" font-size="12" fill="#684c1e"><rect width="251" height="49" rx="10" fill="#f4dfb9"/><text x="125" y="21" text-anchor="middle" font-weight="700">保存 θ′ = θ + Δθ</text><text x="125" y="39" text-anchor="middle">下次请求仍保留适配行为</text></g>
+      <text x="257" y="359" text-anchor="middle" font-size="13" fill="#745f43">代价：训练显存、优化器状态、数据治理与 checkpoint 管理</text>
+    </g>
+  </g>
+  <rect x="115" y="573" width="970" height="45" rx="14" fill="#eef1ff"/><text x="600" y="601" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" fill="#25345d">Few-shot 的示例每次都占上下文并重复计算；Fine-tuning 把模式写进参数，但需要训练并可能改变其他行为</text>
+</svg>

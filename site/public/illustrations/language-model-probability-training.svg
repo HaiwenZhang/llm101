@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="860" viewBox="0 0 1600 860" role="img" aria-labelledby="title desc">
+  <title id="title">从整句概率到最大似然和 BPTT 的三步图</title>
+  <desc id="desc">展示语言模型用链式法则分解整句概率、最大似然等价于让模型分布靠近数据分布，以及循环网络共享权重在反向传播中累加梯度。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7f9ff"/><stop offset="1" stop-color="#fffaf3"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="8" stdDeviation="11" flood-color="#24304a" flood-opacity=".10"/></filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 10 5 0 10z" fill="#8993aa"/></marker>
+    <style>
+      .zh{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.t{font-size:42px;font-weight:800;fill:#17213a}.sub{font-size:21px;fill:#66708a}.n{font-size:20px;font-weight:800;fill:#fff}.h{font-size:25px;font-weight:800;fill:#17213a}.b{font-size:19px;font-weight:700;fill:#27324a}.s{font-size:16px;fill:#66708a}.f{font-size:21px;font-weight:700;fill:#17213a}.tiny{font-size:14px;fill:#788299}
+    </style>
+  </defs>
+  <rect width="1600" height="860" rx="34" fill="url(#bg)"/>
+  <text x="70" y="72" class="zh t">语言模型训练：不是背句子，而是在校准一整套概率</text>
+  <text x="70" y="108" class="zh sub">整句分布 → 链式法则 → 最大似然 / KL → 共享参数的时间反向传播</text>
+
+  <g filter="url(#shadow)">
+    <rect x="65" y="155" width="455" height="610" rx="24" fill="#fff" stroke="#d8def0" stroke-width="2"/>
+    <circle cx="105" cy="198" r="23" fill="#4c6fff"/><text x="105" y="205" text-anchor="middle" class="zh n">1</text>
+    <text x="142" y="207" class="zh h">先给完整序列一个概率</text>
+    <text x="100" y="257" class="zh s">序列必须包含结束符 EOS，概率才描述“何时停下”。</text>
+    <g transform="translate(98 292)">
+      <rect x="0" y="0" width="72" height="54" rx="12" fill="#edf1ff" stroke="#aebcff"/><text x="36" y="34" text-anchor="middle" class="zh b">我</text>
+      <rect x="88" y="0" width="72" height="54" rx="12" fill="#edf1ff" stroke="#aebcff"/><text x="124" y="34" text-anchor="middle" class="zh b">喜欢</text>
+      <rect x="176" y="0" width="72" height="54" rx="12" fill="#edf1ff" stroke="#aebcff"/><text x="212" y="34" text-anchor="middle" class="zh b">学习</text>
+      <rect x="264" y="0" width="72" height="54" rx="12" fill="#edf1ff" stroke="#aebcff"/><text x="300" y="34" text-anchor="middle" class="mono b">EOS</text>
+    </g>
+    <text x="292" y="398" text-anchor="middle" class="mono f">p(x₁,x₂,x₃,EOS)</text>
+    <path d="M292 420v45" stroke="#8993aa" stroke-width="3" marker-end="url(#arrow)"/>
+    <rect x="99" y="482" width="386" height="132" rx="17" fill="#f6f8ff" stroke="#bdc8f7"/>
+    <text x="292" y="521" text-anchor="middle" class="zh b">链式法则是恒等式，不是模型假设</text>
+    <text x="292" y="562" text-anchor="middle" class="mono f">∏ₜ p(xₜ | x&lt;ₜ)</text>
+    <text x="292" y="592" text-anchor="middle" class="zh tiny">n-gram、RNN、Transformer 只是在表示 x&lt;ₜ 时不同</text>
+    <rect x="99" y="650" width="386" height="72" rx="14" fill="#edf9f6" stroke="#9cd8ca"/>
+    <text x="292" y="679" text-anchor="middle" class="zh s">评分：算已有序列概率　·　采样：从分布生成</text>
+    <text x="292" y="704" text-anchor="middle" class="zh s">条件生成：固定前缀，再继续使用同一分布</text>
+  </g>
+
+  <path d="M540 458h55" stroke="#8993aa" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="615" y="155" width="420" height="610" rx="24" fill="#fff" stroke="#d8def0" stroke-width="2"/>
+    <circle cx="655" cy="198" r="23" fill="#8b5cf6"/><text x="655" y="205" text-anchor="middle" class="zh n">2</text>
+    <text x="692" y="207" class="zh h">最大似然在做分布匹配</text>
+    <text x="650" y="257" class="zh s">训练语料出现得越多，经验分布给它的权重越大。</text>
+    <g transform="translate(654 294)">
+      <text x="0" y="0" class="zh b">数据分布</text><text x="300" y="0" text-anchor="end" class="zh b">模型分布</text>
+      <rect x="0" y="22" width="300" height="26" rx="8" fill="#edf1ff"/><rect x="0" y="22" width="205" height="26" rx="8" fill="#4c6fff"/>
+      <rect x="0" y="64" width="300" height="26" rx="8" fill="#f4efff"/><rect x="0" y="64" width="128" height="26" rx="8" fill="#8b5cf6"/>
+      <rect x="0" y="106" width="300" height="26" rx="8" fill="#fff1e5"/><rect x="0" y="106" width="78" height="26" rx="8" fill="#ed8c3b"/>
+      <text x="315" y="42" class="mono tiny">pθ</text><text x="315" y="84" class="mono tiny">pθ</text><text x="315" y="126" class="mono tiny">pθ</text>
+    </g>
+    <rect x="651" y="465" width="348" height="105" rx="16" fill="#f7f4ff" stroke="#c9b8f4"/>
+    <text x="825" y="501" text-anchor="middle" class="mono f">min  -Edata log pθ(x)</text>
+    <text x="825" y="538" text-anchor="middle" class="mono f">⇔ min KL(pdata || pθ)</text>
+    <text x="825" y="560" text-anchor="middle" class="zh tiny">相差一个与 θ 无关的数据熵常数</text>
+    <rect x="651" y="604" width="348" height="118" rx="16" fill="#fff8ee" stroke="#f1c98f"/>
+    <text x="825" y="638" text-anchor="middle" class="zh b">为什么必须使用 log？</text>
+    <text x="825" y="673" text-anchor="middle" class="zh s">很多小概率相乘会下溢；取 log 后乘法变加法</text>
+    <text x="825" y="702" text-anchor="middle" class="mono f">log ∏ pₜ = ∑ log pₜ</text>
+  </g>
+
+  <path d="M1055 458h55" stroke="#8993aa" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="1130" y="155" width="405" height="610" rx="24" fill="#fff" stroke="#d8def0" stroke-width="2"/>
+    <circle cx="1170" cy="198" r="23" fill="#e36c48"/><text x="1170" y="205" text-anchor="middle" class="zh n">3</text>
+    <text x="1207" y="207" class="zh h">BPTT 累加共享权重的贡献</text>
+    <text x="1165" y="257" class="zh s">图上出现许多 Wₕ，代码里只有同一张 Wₕ。</text>
+    <g transform="translate(1165 300)">
+      <rect x="0" y="0" width="58" height="58" rx="11" fill="#fff1ed" stroke="#e36c48"/><text x="29" y="36" text-anchor="middle" class="mono b">h₁</text>
+      <rect x="103" y="0" width="58" height="58" rx="11" fill="#fff1ed" stroke="#e36c48"/><text x="132" y="36" text-anchor="middle" class="mono b">h₂</text>
+      <rect x="206" y="0" width="58" height="58" rx="11" fill="#fff1ed" stroke="#e36c48"/><text x="235" y="36" text-anchor="middle" class="mono b">h₃</text>
+      <path d="M60 29h39M163 29h39" stroke="#e36c48" stroke-width="3" marker-end="url(#arrow)"/>
+      <text x="80" y="18" text-anchor="middle" class="mono tiny">Wₕ</text><text x="183" y="18" text-anchor="middle" class="mono tiny">Wₕ</text>
+      <path d="M235 74C220 150 150 155 132 72M132 72C115 125 55 125 29 72" fill="none" stroke="#8b5cf6" stroke-width="3" marker-end="url(#arrow)"/>
+      <text x="132" y="178" text-anchor="middle" class="zh s">同一参数在各时间位置收到的梯度要相加</text>
+    </g>
+    <rect x="1165" y="521" width="335" height="96" rx="16" fill="#f7f4ff" stroke="#c9b8f4"/>
+    <text x="1332" y="558" text-anchor="middle" class="mono f">∂L/∂Wₕ = ∑ₜ ∂Lₜ/∂Wₕ</text>
+    <text x="1332" y="592" text-anchor="middle" class="zh tiny">每一项内部又包含跨时间的 Jacobian 连乘</text>
+    <rect x="1165" y="647" width="335" height="75" rx="14" fill="#fff1ed" stroke="#efb29f"/>
+    <text x="1332" y="677" text-anchor="middle" class="zh s">|λ|ᵏ 很小 → 消失　·　很大 → 爆炸</text>
+    <text x="1332" y="704" text-anchor="middle" class="zh s">裁剪只限制爆炸；门控加法路径帮助长距离保留</text>
+  </g>
+  <text x="800" y="822" text-anchor="middle" class="zh tiny">教学图：标量和单序列只用于建立直觉；真实模型使用批次、矩阵 Jacobian 与多层参数。</text>
+</svg>

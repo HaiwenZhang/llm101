@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="940" viewBox="0 0 1600 940" role="img" aria-labelledby="title desc">
+  <title id="title">Decoder-only Transformer 参数量分解图</title>
+  <desc id="desc">从词表嵌入、单个 Transformer Block 到多层堆叠和总参数量的逐步计算示意图。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7f9ff"/>
+      <stop offset="1" stop-color="#fffaf4"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#24304a" flood-opacity=".10"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8a94aa"/>
+    </marker>
+    <style>
+      .zh { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      .title { font-size: 44px; font-weight: 800; fill: #17213a; }
+      .subtitle { font-size: 22px; fill: #66708a; }
+      .step { font-size: 20px; font-weight: 800; fill: #fff; }
+      .box-title { font-size: 25px; font-weight: 800; fill: #17213a; }
+      .label { font-size: 20px; font-weight: 700; fill: #27324a; }
+      .small { font-size: 17px; fill: #66708a; }
+      .formula { font-size: 24px; font-weight: 750; fill: #17213a; }
+      .tiny { font-size: 15px; fill: #7a849b; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="940" rx="36" fill="url(#bg)"/>
+  <text x="80" y="82" class="zh title">参数量不是猜出来的：把每一块矩阵的格子数加起来</text>
+  <text x="80" y="122" class="zh subtitle">Decoder-only Transformer · bias-free 教学近似 · 从一个 Block 数到整个模型</text>
+
+  <g filter="url(#shadow)">
+    <rect x="74" y="178" width="320" height="566" rx="24" fill="#fff" stroke="#d9dff0" stroke-width="2"/>
+    <circle cx="112" cy="218" r="22" fill="#4c6fff"/>
+    <text x="112" y="225" text-anchor="middle" class="zh step">1</text>
+    <text x="148" y="226" class="zh box-title">词表入口与出口</text>
+
+    <rect x="110" y="282" width="248" height="118" rx="16" fill="#edf1ff" stroke="#b9c5ff" stroke-width="2"/>
+    <text x="234" y="322" text-anchor="middle" class="zh label">Token Embedding</text>
+    <text x="234" y="363" text-anchor="middle" class="mono formula">V × d</text>
+    <text x="234" y="388" text-anchor="middle" class="zh tiny">V 行 token × 每行 d 个数</text>
+
+    <path d="M234 414 L234 468" fill="none" stroke="#8a94aa" stroke-width="3" marker-end="url(#arrow)"/>
+    <rect x="110" y="486" width="248" height="118" rx="16" fill="#edf1ff" stroke="#b9c5ff" stroke-width="2"/>
+    <text x="234" y="526" text-anchor="middle" class="zh label">LM Head</text>
+    <text x="234" y="567" text-anchor="middle" class="mono formula">d × V</text>
+    <text x="234" y="592" text-anchor="middle" class="zh tiny">把隐藏向量变回词表分数</text>
+
+    <rect x="105" y="636" width="258" height="72" rx="14" fill="#f8f9fc" stroke="#d9dff0" stroke-dasharray="6 5"/>
+    <text x="234" y="665" text-anchor="middle" class="zh small">若输入输出共享同一张表</text>
+    <text x="234" y="692" text-anchor="middle" class="zh label" fill="#4c6fff">2Vd → Vd</text>
+  </g>
+
+  <path d="M414 460 L468 460" fill="none" stroke="#8a94aa" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="488" y="178" width="650" height="566" rx="24" fill="#fff" stroke="#d9dff0" stroke-width="2"/>
+    <circle cx="526" cy="218" r="22" fill="#8b5cf6"/>
+    <text x="526" y="225" text-anchor="middle" class="zh step">2</text>
+    <text x="562" y="226" class="zh box-title">只数 1 个 Transformer Block</text>
+
+    <rect x="526" y="278" width="574" height="190" rx="18" fill="#f5f0ff" stroke="#cbb8ff" stroke-width="2"/>
+    <text x="556" y="318" class="zh label">Attention：四个线性投影</text>
+    <g transform="translate(552 342)">
+      <rect x="0" y="0" width="112" height="68" rx="12" fill="#fff" stroke="#ae91fa"/>
+      <rect x="136" y="0" width="112" height="68" rx="12" fill="#fff" stroke="#ae91fa"/>
+      <rect x="272" y="0" width="112" height="68" rx="12" fill="#fff" stroke="#ae91fa"/>
+      <rect x="408" y="0" width="112" height="68" rx="12" fill="#fff" stroke="#ae91fa"/>
+      <text x="56" y="27" text-anchor="middle" class="mono label">WQ</text><text x="56" y="52" text-anchor="middle" class="mono tiny">d × d</text>
+      <text x="192" y="27" text-anchor="middle" class="mono label">WK</text><text x="192" y="52" text-anchor="middle" class="mono tiny">d × dkv</text>
+      <text x="328" y="27" text-anchor="middle" class="mono label">WV</text><text x="328" y="52" text-anchor="middle" class="mono tiny">d × dkv</text>
+      <text x="464" y="27" text-anchor="middle" class="mono label">WO</text><text x="464" y="52" text-anchor="middle" class="mono tiny">d × d</text>
+    </g>
+    <text x="813" y="448" text-anchor="middle" class="zh small">普通 MHA：d<tspan baseline-shift="sub" font-size="12">kv</tspan>=d，所以是 4d²；GQA 会缩小 K、V</text>
+
+    <rect x="526" y="492" width="382" height="166" rx="18" fill="#fff5e9" stroke="#f2bf81" stroke-width="2"/>
+    <text x="556" y="531" class="zh label">FFN：真正的参数大户</text>
+    <text x="556" y="574" class="zh small">普通 GELU / ReLU</text>
+    <text x="872" y="574" text-anchor="end" class="mono formula">2ddff</text>
+    <text x="556" y="615" class="zh small">SwiGLU（门、上投影、下投影）</text>
+    <text x="872" y="615" text-anchor="end" class="mono formula">3ddff</text>
+    <text x="556" y="642" class="zh tiny">常见：普通 FFN 取 dff≈4d；GLU 常取约 8/3 d</text>
+
+    <rect x="930" y="492" width="170" height="166" rx="18" fill="#eaf9f5" stroke="#83cfbc" stroke-width="2"/>
+    <text x="1015" y="531" text-anchor="middle" class="zh label">RMSNorm</text>
+    <text x="1015" y="580" text-anchor="middle" class="mono formula">2d</text>
+    <text x="1015" y="611" text-anchor="middle" class="zh tiny">每个 Block 两个</text>
+    <text x="1015" y="636" text-anchor="middle" class="zh tiny">通常只占很小比例</text>
+
+    <rect x="526" y="680" width="574" height="42" rx="12" fill="#17213a"/>
+    <text x="813" y="708" text-anchor="middle" class="zh" font-size="18" font-weight="750" fill="#fff">一个 Block = Attention + FFN + 2d</text>
+  </g>
+
+  <path d="M1158 460 L1212 460" fill="none" stroke="#8a94aa" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="1232" y="178" width="294" height="566" rx="24" fill="#fff" stroke="#d9dff0" stroke-width="2"/>
+    <circle cx="1270" cy="218" r="22" fill="#ed8c3b"/>
+    <text x="1270" y="225" text-anchor="middle" class="zh step">3</text>
+    <text x="1306" y="226" class="zh box-title">重复 L 层</text>
+
+    <g transform="translate(1272 286)">
+      <rect x="36" y="128" width="178" height="94" rx="15" fill="#fff5e9" stroke="#f2bf81" stroke-width="2" opacity=".50"/>
+      <rect x="24" y="104" width="178" height="94" rx="15" fill="#fff5e9" stroke="#f2bf81" stroke-width="2" opacity=".65"/>
+      <rect x="12" y="80" width="178" height="94" rx="15" fill="#fff5e9" stroke="#f2bf81" stroke-width="2" opacity=".82"/>
+      <rect x="0" y="56" width="178" height="94" rx="15" fill="#fff5e9" stroke="#f2bf81" stroke-width="2"/>
+      <text x="89" y="96" text-anchor="middle" class="zh label">Block</text>
+      <text x="89" y="124" text-anchor="middle" class="zh small">同样的形状</text>
+      <text x="214" y="112" class="mono formula">× L</text>
+    </g>
+
+    <rect x="1268" y="560" width="222" height="120" rx="18" fill="#eefaf7" stroke="#83cfbc" stroke-width="2"/>
+    <text x="1379" y="600" text-anchor="middle" class="zh small">别忘了最后一个</text>
+    <text x="1379" y="643" text-anchor="middle" class="zh label">Final RMSNorm = d</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="74" y="786" width="1452" height="104" rx="22" fill="#17213a"/>
+    <text x="110" y="827" class="zh" font-size="19" fill="#aeb9d4">总参数（未共享 Embedding）</text>
+    <text x="110" y="866" class="mono" font-size="29" font-weight="800" fill="#fff">2Vd + L × [ 2d² + 2d·d<tspan baseline-shift="sub" font-size="18">kv</tspan> + m·d·d<tspan baseline-shift="sub" font-size="18">ff</tspan> + 2d ] + d</text>
+    <rect x="1258" y="810" width="224" height="56" rx="14" fill="#2b3857"/>
+    <text x="1370" y="834" text-anchor="middle" class="zh" font-size="15" fill="#aeb9d4">m = FFN 矩阵数</text>
+    <text x="1370" y="857" text-anchor="middle" class="zh" font-size="18" font-weight="750" fill="#fff">普通 2 · SwiGLU 3</text>
+  </g>
+</svg>

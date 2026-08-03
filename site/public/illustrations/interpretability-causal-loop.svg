@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="690" viewBox="0 0 1200 690" role="img" aria-labelledby="title desc">
+  <title id="title">从相关性可视化走向因果解释的实验闭环</title>
+  <desc id="desc">可信可解释性实验先定义行为和最小对照，再用归因或探针提出内部位置假设，随后通过 activation patching、ablation 或 steering 干预，测量目标行为与副作用，并在新样本和模型上复现或推翻假设。</desc>
+  <rect width="1200" height="690" rx="30" fill="#f8faff"/>
+  <text x="58" y="66" font-family="system-ui,sans-serif" font-size="29" font-weight="700" fill="#182342">一张热力图不是终点：解释必须走完“定位—干预—证伪”</text>
+  <text x="58" y="103" font-family="system-ui,sans-serif" font-size="17" fill="#5c6787">相关方法告诉你去哪找；因果干预才检验该部件是否真的改变行为</text>
+
+  <g font-family="system-ui,sans-serif">
+    <g transform="translate(58 153)">
+      <rect width="1084" height="144" rx="22" fill="#eef1ff" stroke="#8799e9" stroke-width="2"/>
+      <g font-size="13" fill="#25345d">
+        <rect x="28" y="33" width="178" height="76" rx="14" fill="#fff" stroke="#cbd3eb"/><text x="117" y="60" text-anchor="middle" font-size="15" font-weight="700">① 定义行为</text><text x="117" y="84" text-anchor="middle">目标 logit / 答案 / 拒答</text>
+        <path d="M218 71h54" stroke="#8799e9" stroke-width="3"/><path d="m260 63 14 8-14 8" fill="none" stroke="#8799e9" stroke-width="3"/>
+        <rect x="286" y="33" width="210" height="76" rx="14" fill="#fff" stroke="#cbd3eb"/><text x="391" y="60" text-anchor="middle" font-size="15" font-weight="700">② 最小对照</text><text x="391" y="84" text-anchor="middle">clean 与 corrupted 只改一因子</text>
+        <path d="M508 71h54" stroke="#8799e9" stroke-width="3"/><path d="m550 63 14 8-14 8" fill="none" stroke="#8799e9" stroke-width="3"/>
+        <rect x="576" y="33" width="210" height="76" rx="14" fill="#fff" stroke="#cbd3eb"/><text x="681" y="60" text-anchor="middle" font-size="15" font-weight="700">③ 相关性定位</text><text x="681" y="84" text-anchor="middle">归因 / probe / logit lens</text>
+        <path d="M798 71h54" stroke="#8799e9" stroke-width="3"/><path d="m840 63 14 8-14 8" fill="none" stroke="#8799e9" stroke-width="3"/>
+        <rect x="866" y="33" width="190" height="76" rx="14" fill="#dfe5ff" stroke="#8799e9"/><text x="961" y="60" text-anchor="middle" font-size="15" font-weight="700">候选机制假设</text><text x="961" y="84" text-anchor="middle">层 / 位置 / 头 / 特征 / 边</text>
+      </g>
+    </g>
+
+    <g transform="translate(58 345)">
+      <rect width="330" height="218" rx="22" fill="#eaf8f4" stroke="#72baa7" stroke-width="2"/>
+      <text x="165" y="41" text-anchor="middle" font-size="19" font-weight="700" fill="#205c50">④ 做因果干预</text>
+      <g transform="translate(31 70)" font-size="13" fill="#205c50">
+        <rect width="268" height="34" rx="9" fill="#d5eee8"/><text x="134" y="22" text-anchor="middle">Patch：替换为 clean 激活</text>
+        <rect y="45" width="268" height="34" rx="9" fill="#d5eee8"/><text x="134" y="67" text-anchor="middle">Ablate：置零 / 均值 / resample</text>
+        <rect y="90" width="268" height="34" rx="9" fill="#d5eee8"/><text x="134" y="112" text-anchor="middle">Steer：沿特征方向加减</text>
+      </g>
+      <text x="165" y="201" text-anchor="middle" font-size="12" fill="#4c6f67">干预基线会改变结论，必须一起报告</text>
+    </g>
+
+    <g transform="translate(435 345)">
+      <rect width="330" height="218" rx="22" fill="#fff4e5" stroke="#dfa84e" stroke-width="2"/>
+      <text x="165" y="41" text-anchor="middle" font-size="19" font-weight="700" fill="#684c1e">⑤ 测目标与副作用</text>
+      <g transform="translate(31 70)" font-size="13" fill="#684c1e">
+        <text y="14">• 目标 logit / 概率恢复多少？</text><text y="48">• 未相关任务是否一起损坏？</text><text y="82">• 干预是否仍在正常激活分布内？</text><text y="116">• 必要性、充分性、完整性各多强？</text>
+      </g>
+      <text x="165" y="201" text-anchor="middle" font-size="12" fill="#80653b">只展示成功样本会严重高估机制</text>
+    </g>
+
+    <g transform="translate(812 345)">
+      <rect width="330" height="218" rx="22" fill="#fff0ef" stroke="#d9867f" stroke-width="2"/>
+      <text x="165" y="41" text-anchor="middle" font-size="19" font-weight="700" fill="#6f2e2a">⑥ 复现或推翻</text>
+      <g transform="translate(31 70)" font-size="13" fill="#6f2e2a">
+        <text y="14">• 新 Prompt、新实体、新语言</text><text y="48">• 不同 seed、检查点与模型尺寸</text><text y="82">• 随机位置、随机组件对照</text><text y="116">• 主动生成反例，修订假设</text>
+      </g>
+      <text x="165" y="201" text-anchor="middle" font-size="12" fill="#86534f">不能复现的“故事”不是稳定机制</text>
+    </g>
+  </g>
+  <path d="M961 297v26H223v22" fill="none" stroke="#8799e9" stroke-width="3"/><path d="m215 333 8 14 8-14" fill="none" stroke="#8799e9" stroke-width="3"/>
+  <path d="M388 454h47M765 454h47" stroke="#8799e9" stroke-width="3"/><path d="m423 446 14 8-14 8M800 446l14 8-14 8" fill="none" stroke="#8799e9" stroke-width="3"/>
+  <path d="M977 571v52H223v-52" fill="none" stroke="#d9867f" stroke-width="3" stroke-dasharray="7 5"/><text x="600" y="647" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="700" fill="#6f2e2a">反例出现 → 回到假设与对照设计，而不是给热力图换一个故事</text>
+</svg>

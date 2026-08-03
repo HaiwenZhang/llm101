@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">扩散模型训练一步与生成多步的区别</title>
+  <desc id="desc">左侧训练从真实样本、随机时间和已知噪声直接构造任意带噪状态，只调用一次网络并与已知噪声比较；右侧生成从纯噪声出发，没有真实图像和噪声答案，需要沿时间反复调用同一网络直到得到图像。</desc>
+  <rect width="1200" height="700" rx="30" fill="#f8faff"/>
+  <text x="56" y="65" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#182342">训练只抽一个时刻；生成要沿整条路走回来</text>
+  <text x="56" y="103" font-family="system-ui,sans-serif" font-size="17" fill="#5c6787">最容易混淆的不是公式，而是监督学习的数据流与采样时的数据流完全不同</text>
+
+  <g font-family="system-ui,sans-serif">
+    <g transform="translate(55 148)">
+      <rect width="520" height="462" rx="24" fill="#eaf8f4" stroke="#72baa7" stroke-width="2"/>
+      <text x="30" y="43" font-size="22" font-weight="700" fill="#205c50">训练：随机时刻的一步监督</text>
+      <text x="30" y="70" font-size="14" fill="#4c6f67">一次更新只调用网络 1 次；ε 是自己采样的，所以监督标签已知</text>
+      <g transform="translate(32 105)">
+        <rect width="130" height="62" rx="13" fill="#fff" stroke="#9dcfc3"/><text x="65" y="27" text-anchor="middle" font-size="15" font-weight="700" fill="#205c50">真实样本 x₀</text><text x="65" y="47" text-anchor="middle" font-size="12" fill="#4c6f67">来自数据集</text>
+        <rect y="83" width="130" height="62" rx="13" fill="#fff" stroke="#9dcfc3"/><text x="65" y="110" text-anchor="middle" font-size="15" font-weight="700" fill="#205c50">时间 t</text><text x="65" y="130" text-anchor="middle" font-size="12" fill="#4c6f67">随机抽一个</text>
+        <rect y="166" width="130" height="62" rx="13" fill="#fff" stroke="#9dcfc3"/><text x="65" y="193" text-anchor="middle" font-size="15" font-weight="700" fill="#205c50">噪声 ε</text><text x="65" y="213" text-anchor="middle" font-size="12" fill="#4c6f67">自己采样并保存</text>
+        <path d="M146 32h60M146 114h60M146 197h60" stroke="#72baa7" stroke-width="3"/><path d="m194 24 14 8-14 8M194 106l14 8-14 8M194 189l14 8-14 8" fill="none" stroke="#72baa7" stroke-width="3"/>
+        <rect x="217" y="67" width="125" height="100" rx="15" fill="#d5eee8" stroke="#72baa7"/><text x="279" y="102" text-anchor="middle" font-size="15" font-weight="700" fill="#205c50">直接构造 xₜ</text><text x="279" y="127" text-anchor="middle" font-size="12" fill="#4c6f67">αₜx₀ + σₜε</text><text x="279" y="147" text-anchor="middle" font-size="12" fill="#4c6f67">无需模拟前 t 步</text>
+        <path d="M350 117h55" stroke="#72baa7" stroke-width="3"/><path d="m393 109 14 8-14 8" fill="none" stroke="#72baa7" stroke-width="3"/>
+        <rect x="416" y="74" width="72" height="86" rx="15" fill="#205c50"/><text x="452" y="106" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">网络</text><text x="452" y="128" text-anchor="middle" font-size="12" fill="#d5eee8">ε̂θ</text>
+        <path d="M452 168v65H310" stroke="#72baa7" stroke-width="3" fill="none"/><path d="m322 225-14 8 14 8" fill="none" stroke="#72baa7" stroke-width="3"/>
+        <rect x="166" y="244" width="286" height="61" rx="14" fill="#fff" stroke="#9dcfc3"/><text x="309" y="269" text-anchor="middle" font-size="14" font-weight="700" fill="#205c50">MSE(ε̂θ, ε) → 反向传播</text><text x="309" y="290" text-anchor="middle" font-size="12" fill="#4c6f67">比较预测噪声与已知噪声</text>
+      </g>
+    </g>
+
+    <g transform="translate(625 148)">
+      <rect width="520" height="462" rx="24" fill="#fff0ef" stroke="#d9867f" stroke-width="2"/>
+      <text x="30" y="43" font-size="22" font-weight="700" fill="#6f2e2a">生成：从噪声反复求解</text>
+      <text x="30" y="70" font-size="14" fill="#86534f">没有真实 x₀ 和噪声答案；每一步只能依靠模型当前预测</text>
+      <g transform="translate(31 114)">
+        <rect width="112" height="76" rx="14" fill="#fff" stroke="#e4aaa5"/><text x="56" y="30" text-anchor="middle" font-size="15" font-weight="700" fill="#6f2e2a">xₜ</text><text x="56" y="53" text-anchor="middle" font-size="12" fill="#86534f">纯噪声</text>
+        <path d="M120 38h45" stroke="#d9867f" stroke-width="3"/><path d="m153 30 14 8-14 8" fill="none" stroke="#d9867f" stroke-width="3"/>
+        <rect x="176" width="112" height="76" rx="14" fill="#f6d6d3" stroke="#d9867f"/><text x="232" y="29" text-anchor="middle" font-size="14" font-weight="700" fill="#6f2e2a">同一网络</text><text x="232" y="51" text-anchor="middle" font-size="12" fill="#86534f">预测 ε̂ / v̂</text>
+        <path d="M296 38h45" stroke="#d9867f" stroke-width="3"/><path d="m329 30 14 8-14 8" fill="none" stroke="#d9867f" stroke-width="3"/>
+        <rect x="352" width="106" height="76" rx="14" fill="#fff" stroke="#e4aaa5"/><text x="405" y="30" text-anchor="middle" font-size="15" font-weight="700" fill="#6f2e2a">xₜ₋₁</text><text x="405" y="53" text-anchor="middle" font-size="12" fill="#86534f">稍微更干净</text>
+        <path d="M405 86v62H56V86" stroke="#d9867f" stroke-width="3" fill="none" stroke-dasharray="7 5"/><text x="230" y="140" text-anchor="middle" font-size="13" font-weight="700" fill="#6f2e2a">换下一个时间，再调用网络</text>
+        <g transform="translate(0 185)">
+          <rect width="458" height="72" rx="15" fill="#fff" stroke="#e4aaa5"/>
+          <text x="229" y="27" text-anchor="middle" font-size="15" font-weight="700" fill="#6f2e2a">NFE ≈ 采样步数 × 每步网络调用数</text>
+          <text x="229" y="51" text-anchor="middle" font-size="12" fill="#86534f">CFG 若分开算条件/无条件，常接近每步 2 次前向</text>
+        </g>
+        <rect x="82" y="282" width="294" height="57" rx="14" fill="#f6d6d3"/><text x="229" y="307" text-anchor="middle" font-size="14" font-weight="700" fill="#6f2e2a">求解结束：得到 x₀ 图像</text><text x="229" y="328" text-anchor="middle" font-size="12" fill="#86534f">步数少更快，但离散化误差通常更大</text>
+      </g>
+    </g>
+  </g>
+  <rect x="167" y="640" width="866" height="38" rx="12" fill="#eef1ff"/><text x="600" y="665" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" fill="#25345d">训练成本看一次更新的 batch 与网络；推理成本看 NFE、分辨率、CFG、VAE 解码和安全过滤</text>
+</svg>

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Encoder-Decoder 从固定向量到逐步 Attention</title>
+  <desc id="desc">上半部分展示整句被压入一个固定 context vector 的瓶颈，下半部分展示每个解码步骤用不同查询对全部编码状态计算注意力权重并获得新的上下文。</desc>
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f8fbff"/><stop offset="1" stop-color="#fff8f1"/></linearGradient>
+    <filter id="s2" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="7" stdDeviation="10" flood-color="#24304a" flood-opacity=".10"/></filter>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 10 5 0 10z" fill="#7f899f"/></marker>
+    <style>.zh{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.t{font-size:42px;font-weight:800;fill:#17213a}.sub{font-size:21px;fill:#66708a}.h{font-size:25px;font-weight:800;fill:#17213a}.b{font-size:19px;font-weight:750;fill:#27324a}.s{font-size:16px;fill:#66708a}.f{font-size:20px;font-weight:700;fill:#17213a}.tiny{font-size:14px;fill:#788299}</style>
+  </defs>
+  <rect width="1600" height="900" rx="34" fill="url(#bg2)"/>
+  <text x="70" y="72" class="zh t">为什么 Encoder–Decoder 需要 Attention？</text>
+  <text x="70" y="109" class="zh sub">关键不是多一个模块，而是把“整句只压一次”改成“每写一步，重新读一次”</text>
+
+  <g filter="url(#s2)">
+    <rect x="65" y="150" width="1470" height="270" rx="24" fill="#fff" stroke="#d8def0" stroke-width="2"/>
+    <text x="105" y="198" class="zh h">旧方案：所有源信息必须穿过同一个固定向量 c</text>
+    <g transform="translate(110 244)">
+      <rect x="0" y="0" width="90" height="62" rx="12" fill="#edf1ff" stroke="#aebcff"/><text x="45" y="38" text-anchor="middle" class="zh b">我</text>
+      <rect x="110" y="0" width="90" height="62" rx="12" fill="#edf1ff" stroke="#aebcff"/><text x="155" y="38" text-anchor="middle" class="zh b">喜欢</text>
+      <rect x="220" y="0" width="90" height="62" rx="12" fill="#edf1ff" stroke="#aebcff"/><text x="265" y="38" text-anchor="middle" class="zh b">机器</text>
+      <rect x="330" y="0" width="90" height="62" rx="12" fill="#edf1ff" stroke="#aebcff"/><text x="375" y="38" text-anchor="middle" class="zh b">学习</text>
+      <path d="M90 31h16M200 31h16M310 31h16M422 31h80" stroke="#7f899f" stroke-width="3" marker-end="url(#a2)"/>
+      <rect x="520" y="-12" width="120" height="86" rx="18" fill="#fff1e5" stroke="#ed8c3b" stroke-width="3"/><text x="580" y="25" text-anchor="middle" class="mono f">c=hS</text><text x="580" y="53" text-anchor="middle" class="zh tiny">固定宽度</text>
+      <path d="M642 31h88" stroke="#7f899f" stroke-width="4" marker-end="url(#a2)"/>
+      <g transform="translate(750)">
+        <rect x="0" y="0" width="88" height="62" rx="12" fill="#eaf8f4" stroke="#7fc9b8"/><text x="44" y="38" text-anchor="middle" class="mono b">I</text>
+        <rect x="108" y="0" width="88" height="62" rx="12" fill="#eaf8f4" stroke="#7fc9b8"/><text x="152" y="38" text-anchor="middle" class="mono b">like</text>
+        <rect x="216" y="0" width="105" height="62" rx="12" fill="#eaf8f4" stroke="#7fc9b8"/><text x="268" y="38" text-anchor="middle" class="mono b">machine</text>
+        <rect x="341" y="0" width="105" height="62" rx="12" fill="#eaf8f4" stroke="#7fc9b8"/><text x="393" y="38" text-anchor="middle" class="mono b">learning</text>
+      </g>
+    </g>
+    <text x="800" y="365" text-anchor="middle" class="zh s">源句越长，c 的维度并不会跟着增长；早期词、词序和多个细节会争抢同一容量。</text>
+  </g>
+
+  <path d="M800 438v48" stroke="#7f899f" stroke-width="4" marker-end="url(#a2)"/>
+
+  <g filter="url(#s2)">
+    <rect x="65" y="505" width="1470" height="320" rx="24" fill="#fff" stroke="#d8def0" stroke-width="2"/>
+    <text x="105" y="552" class="zh h">Attention：第 t 步用自己的 Query，得到自己的权重 αₜ 和 context cₜ</text>
+    <g transform="translate(110 602)">
+      <g>
+        <rect x="0" y="0" width="100" height="62" rx="12" fill="#edf1ff" stroke="#aebcff"/><text x="50" y="28" text-anchor="middle" class="mono b">h₁</text><text x="50" y="51" text-anchor="middle" class="zh tiny">我</text>
+        <rect x="125" y="0" width="100" height="62" rx="12" fill="#edf1ff" stroke="#aebcff"/><text x="175" y="28" text-anchor="middle" class="mono b">h₂</text><text x="175" y="51" text-anchor="middle" class="zh tiny">喜欢</text>
+        <rect x="250" y="0" width="100" height="62" rx="12" fill="#edf1ff" stroke="#aebcff"/><text x="300" y="28" text-anchor="middle" class="mono b">h₃</text><text x="300" y="51" text-anchor="middle" class="zh tiny">机器</text>
+        <rect x="375" y="0" width="100" height="62" rx="12" fill="#edf1ff" stroke="#aebcff"/><text x="425" y="28" text-anchor="middle" class="mono b">h₄</text><text x="425" y="51" text-anchor="middle" class="zh tiny">学习</text>
+        <text x="238" y="93" text-anchor="middle" class="zh s">Encoder 保留每个源位置的状态</text>
+      </g>
+      <g transform="translate(560 -18)">
+        <rect x="0" y="0" width="315" height="115" rx="17" fill="#f7f4ff" stroke="#c8b7f1"/>
+        <text x="158" y="31" text-anchor="middle" class="mono f">eₜᵢ = score(sₜ₋₁, hᵢ)</text>
+        <text x="158" y="63" text-anchor="middle" class="mono f">αₜ = softmax(eₜ)</text>
+        <text x="158" y="94" text-anchor="middle" class="mono f">cₜ = Σᵢ αₜᵢhᵢ</text>
+      </g>
+      <path d="M477 31h78" stroke="#7f899f" stroke-width="3" marker-end="url(#a2)"/>
+      <path d="M878 31h75" stroke="#7f899f" stroke-width="3" marker-end="url(#a2)"/>
+      <g transform="translate(970 -22)">
+        <rect x="0" y="0" width="290" height="125" rx="17" fill="#eaf8f4" stroke="#7fc9b8"/>
+        <text x="145" y="31" text-anchor="middle" class="zh b">当前要生成 learning</text>
+        <text x="25" y="65" class="mono s">我</text><rect x="60" y="53" width="175" height="14" rx="7" fill="#e4e8f0"/><rect x="60" y="53" width="28" height="14" rx="7" fill="#8b5cf6"/><text x="248" y="66" class="mono tiny">.09</text>
+        <text x="25" y="89" class="mono s">机器</text><rect x="60" y="77" width="175" height="14" rx="7" fill="#e4e8f0"/><rect x="60" y="77" width="128" height="14" rx="7" fill="#8b5cf6"/><text x="248" y="90" class="mono tiny">.66</text>
+        <text x="25" y="113" class="mono s">学习</text><rect x="60" y="101" width="175" height="14" rx="7" fill="#e4e8f0"/><rect x="60" y="101" width="90" height="14" rx="7" fill="#8b5cf6"/><text x="248" y="114" class="mono tiny">.25</text>
+      </g>
+    </g>
+    <rect x="110" y="746" width="1315" height="52" rx="13" fill="#fff8ee" stroke="#f1c98f"/>
+    <text x="768" y="778" text-anchor="middle" class="zh s">下一步 Query 改变，整行权重也会改变。Attention 是可微分的软检索，不等于可靠的因果解释。</text>
+  </g>
+  <text x="800" y="870" text-anchor="middle" class="zh tiny">RNN Attention 的 Query/Key/Value 直觉后来被 Transformer 保留；变化的是循环被 Self-Attention 替代。</text>
+</svg>

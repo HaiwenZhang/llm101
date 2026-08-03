@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="570" viewBox="0 0 1200 570" role="img" aria-labelledby="title desc">
+  <title id="title">重要性采样如何用旧策略样本估计新策略期望</title>
+  <desc id="desc">旧策略更常采到左侧动作，新策略更偏好右侧动作；通过新旧概率比重新加权，但分布不重叠会导致高方差。</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f8faff"/><stop offset="1" stop-color="#fffaf3"/></linearGradient><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0l9 5-9 5z" fill="#5368d9"/></marker></defs>
+  <rect width="1200" height="570" rx="30" fill="url(#bg)"/>
+  <text x="60" y="68" font-family="system-ui,sans-serif" font-size="28" font-weight="700" fill="#182342">重要性采样：样本没变，统计权重变了</text>
+  <text x="60" y="102" font-family="system-ui,sans-serif" font-size="17" fill="#5c6787">前提是旧策略覆盖新策略关心的区域；否则少量样本会背负巨大权重</text>
+  <g font-family="system-ui,sans-serif">
+    <rect x="65" y="155" width="430" height="290" rx="22" fill="#fff" stroke="#c7cee2"/>
+    <text x="280" y="195" text-anchor="middle" font-size="20" font-weight="700" fill="#263761">旧策略 μ 负责采样</text>
+    <line x1="115" y1="390" x2="450" y2="390" stroke="#aeb7cf" stroke-width="2"/>
+    <path d="M115 390 C180 385 178 225 265 220 C350 225 348 378 450 390" fill="#dfe4fa" stroke="#5368d9" stroke-width="4"/>
+    <circle cx="190" cy="342" r="8" fill="#5368d9"/><circle cx="225" cy="278" r="8" fill="#5368d9"/><circle cx="265" cy="235" r="8" fill="#5368d9"/><circle cx="300" cy="260" r="8" fill="#5368d9"/><circle cx="340" cy="331" r="8" fill="#5368d9"/>
+    <text x="280" y="425" text-anchor="middle" font-size="14" fill="#68728d">这些动作真的出现在 rollout 中</text>
+
+    <rect x="705" y="155" width="430" height="290" rx="22" fill="#fff" stroke="#c7cee2"/>
+    <text x="920" y="195" text-anchor="middle" font-size="20" font-weight="700" fill="#205c50">新策略 π 想估计的期望</text>
+    <line x1="755" y1="390" x2="1090" y2="390" stroke="#aeb7cf" stroke-width="2"/>
+    <path d="M755 390 C835 385 840 354 885 305 C930 255 964 226 1005 225 C1072 233 1062 377 1090 390" fill="#d9f1eb" stroke="#28987d" stroke-width="4"/>
+    <circle cx="830" cy="360" r="6" fill="#5368d9"/><circle cx="865" cy="330" r="8" fill="#5368d9"/><circle cx="905" cy="286" r="11" fill="#5368d9"/><circle cx="940" cy="260" r="14" fill="#5368d9"/><circle cx="980" cy="238" r="18" fill="#d76158"/>
+    <text x="920" y="425" text-anchor="middle" font-size="14" fill="#68728d">圆越大：π(a)/μ(a) 的权重越高</text>
+  </g>
+  <path d="M500 300h187" stroke="#5368d9" stroke-width="3" marker-end="url(#a)"/><text x="594" y="273" text-anchor="middle" font-family="system-ui,sans-serif" font-size="18" font-weight="700" fill="#5368d9">乘概率比</text><text x="594" y="327" text-anchor="middle" font-family="system-ui,sans-serif" font-size="15" fill="#5c6787">w(a)=π(a)/μ(a)</text>
+  <rect x="65" y="478" width="1070" height="54" rx="16" fill="#fff0ef"/><text x="600" y="512" text-anchor="middle" font-family="system-ui,sans-serif" font-size="16" fill="#6d3b37">危险信号：新策略重视、旧策略几乎不采样的区域，会产生极大的比率和估计方差。</text>
+</svg>

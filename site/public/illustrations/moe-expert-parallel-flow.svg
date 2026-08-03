@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">MoE 专家并行的跨卡数据流</title>
+  <desc id="desc">原始 GPU 持有一批 token，Router 得到专家编号后将 token 按专家排序并通过 All-to-All 发到专家所在 GPU；各 GPU 对本地专家执行 grouped GEMM，再通过第二次 All-to-All 送回原卡，恢复 token 顺序并按门控权重聚合。</desc>
+  <rect width="1200" height="650" rx="30" fill="#f8faff"/>
+  <text x="55" y="63" font-family="system-ui,sans-serif" font-size="29" font-weight="700" fill="#182342">专家不在本卡时，一层 MoE 要经历两次“搬家”</text>
+  <text x="55" y="99" font-family="system-ui,sans-serif" font-size="17" fill="#5c6787">计算稀疏不等于通信免费：token 表示要发到专家所在设备，算完还要回到原序列位置</text>
+  <g font-family="system-ui,sans-serif">
+    <g transform="translate(55 150)">
+      <rect width="190" height="330" rx="20" fill="#eef1ff" stroke="#8799e9" stroke-width="2"/>
+      <text x="95" y="39" text-anchor="middle" font-size="19" font-weight="700" fill="#25345d">① 原卡持有 token</text>
+      <g transform="translate(29 83)" font-size="13" fill="#25345d">
+        <text y="16">GPU 0</text><g transform="translate(52)"><rect width="34" height="30" rx="6" fill="#dfe4fa"/><text x="17" y="20" text-anchor="middle">A</text><rect x="39" width="34" height="30" rx="6" fill="#dfe4fa"/><text x="56" y="20" text-anchor="middle">B</text><rect x="78" width="34" height="30" rx="6" fill="#dfe4fa"/><text x="95" y="20" text-anchor="middle">C</text></g>
+        <text y="72">GPU 1</text><g transform="translate(52 56)"><rect width="34" height="30" rx="6" fill="#dfe4fa"/><text x="17" y="20" text-anchor="middle">D</text><rect x="39" width="34" height="30" rx="6" fill="#dfe4fa"/><text x="56" y="20" text-anchor="middle">E</text><rect x="78" width="34" height="30" rx="6" fill="#dfe4fa"/><text x="95" y="20" text-anchor="middle">F</text></g>
+        <text y="128">GPU 2</text><g transform="translate(52 112)"><rect width="34" height="30" rx="6" fill="#dfe4fa"/><text x="17" y="20" text-anchor="middle">G</text><rect x="39" width="34" height="30" rx="6" fill="#dfe4fa"/><text x="56" y="20" text-anchor="middle">H</text></g>
+      </g>
+      <rect x="28" y="251" width="134" height="47" rx="10" fill="#dfe4fa"/><text x="95" y="271" text-anchor="middle" font-size="12" fill="#25345d">Router 产出</text><text x="95" y="288" text-anchor="middle" font-size="12" fill="#25345d">expert_id + gate</text>
+    </g>
+    <g transform="translate(280 150)">
+      <rect width="190" height="330" rx="20" fill="#fff4e5" stroke="#dfa84e" stroke-width="2"/>
+      <text x="95" y="39" text-anchor="middle" font-size="19" font-weight="700" fill="#684c1e">② Pack / 排序</text>
+      <text x="95" y="67" text-anchor="middle" font-size="13" fill="#745f43">按目标专家连续排放</text>
+      <g transform="translate(29 100)" font-size="12" fill="#684c1e">
+        <text y="17">E1</text><g transform="translate(32)"><rect width="31" height="30" rx="5" fill="#f4dfb9"/><text x="15" y="20" text-anchor="middle">A</text><rect x="35" width="31" height="30" rx="5" fill="#f4dfb9"/><text x="50" y="20" text-anchor="middle">D</text></g>
+        <text y="64">E2</text><g transform="translate(32 47)"><rect width="31" height="30" rx="5" fill="#f4dfb9"/><text x="15" y="20" text-anchor="middle">B</text><rect x="35" width="31" height="30" rx="5" fill="#f4dfb9"/><text x="50" y="20" text-anchor="middle">G</text><rect x="70" width="31" height="30" rx="5" fill="#f4dfb9"/><text x="85" y="20" text-anchor="middle">H</text></g>
+        <text y="111">E3</text><g transform="translate(32 94)"><rect width="31" height="30" rx="5" fill="#f4dfb9"/><text x="15" y="20" text-anchor="middle">C</text></g>
+        <text y="158">E4</text><g transform="translate(32 141)"><rect width="31" height="30" rx="5" fill="#f4dfb9"/><text x="15" y="20" text-anchor="middle">E</text><rect x="35" width="31" height="30" rx="5" fill="#f4dfb9"/><text x="50" y="20" text-anchor="middle">F</text></g>
+      </g>
+      <text x="95" y="288" text-anchor="middle" font-size="12" fill="#745f43">记录 inverse permutation</text>
+    </g>
+    <g transform="translate(505 150)">
+      <rect width="190" height="330" rx="20" fill="#f3efff" stroke="#a28de1" stroke-width="2"/>
+      <text x="95" y="39" text-anchor="middle" font-size="19" font-weight="700" fill="#44336d">③ All-to-All</text>
+      <text x="95" y="67" text-anchor="middle" font-size="13" fill="#665682">发到专家所在设备</text>
+      <g transform="translate(32 100)" fill="none" stroke="#8068c6" stroke-width="3">
+        <path d="M0 0L120 120"/><path d="M40 0l40 120"/><path d="M80 0L40 120"/><path d="M120 0L0 120"/>
+      </g>
+      <g transform="translate(27 90)" fill="#dfd5fa" stroke="#fff" stroke-width="2"><circle cx="5" cy="10" r="8"/><circle cx="45" cy="10" r="8"/><circle cx="85" cy="10" r="8"/><circle cx="125" cy="10" r="8"/><circle cx="5" cy="140" r="8"/><circle cx="45" cy="140" r="8"/><circle cx="85" cy="140" r="8"/><circle cx="125" cy="140" r="8"/></g>
+      <rect x="27" y="260" width="136" height="42" rx="10" fill="#dfd5fa"/><text x="95" y="277" text-anchor="middle" font-size="12" fill="#44336d">瓶颈看字节量、拓扑</text><text x="95" y="293" text-anchor="middle" font-size="12" fill="#44336d">以及最忙的专家</text>
+    </g>
+    <g transform="translate(730 150)">
+      <rect width="190" height="330" rx="20" fill="#eaf8f4" stroke="#72baa7" stroke-width="2"/>
+      <text x="95" y="39" text-anchor="middle" font-size="19" font-weight="700" fill="#205c50">④ Grouped GEMM</text>
+      <text x="95" y="67" text-anchor="middle" font-size="13" fill="#4c6f67">同一专家 token 批量算</text>
+      <g transform="translate(25 98)" font-size="13" fill="#205c50">
+        <rect width="140" height="48" rx="10" fill="#d5eee8"/><text x="70" y="29" text-anchor="middle">GPU 0：E1, E2</text>
+        <rect y="61" width="140" height="48" rx="10" fill="#d5eee8"/><text x="70" y="90" text-anchor="middle">GPU 1：E3</text>
+        <rect y="122" width="140" height="48" rx="10" fill="#d5eee8"/><text x="70" y="151" text-anchor="middle">GPU 2：E4</text>
+      </g>
+      <rect x="25" y="260" width="140" height="42" rx="10" fill="#d5eee8"/><text x="95" y="277" text-anchor="middle" font-size="12" fill="#205c50">小批次太碎时</text><text x="95" y="293" text-anchor="middle" font-size="12" fill="#205c50">kernel 利用率也会下降</text>
+    </g>
+    <g transform="translate(955 150)">
+      <rect width="190" height="330" rx="20" fill="#fff0ef" stroke="#d9867f" stroke-width="2"/>
+      <text x="95" y="39" text-anchor="middle" font-size="19" font-weight="700" fill="#6f2e2a">⑤ 返回并合并</text>
+      <text x="95" y="67" text-anchor="middle" font-size="13" fill="#805450">第二次 All-to-All</text>
+      <g transform="translate(29 102)" font-size="13" fill="#6f2e2a">
+        <rect width="132" height="36" rx="8" fill="#f6d6d3"/><text x="66" y="23" text-anchor="middle">按原 GPU 发回</text>
+        <path d="M66 45v35" stroke="#d9867f" stroke-width="3"/><path d="M59 71l7 10 7-10" fill="none" stroke="#d9867f" stroke-width="3"/>
+        <rect y="88" width="132" height="36" rx="8" fill="#f6d6d3"/><text x="66" y="111" text-anchor="middle">恢复 token 顺序</text>
+        <path d="M66 133v35" stroke="#d9867f" stroke-width="3"/><path d="M59 159l7 10 7-10" fill="none" stroke="#d9867f" stroke-width="3"/>
+        <rect y="176" width="132" height="51" rx="8" fill="#f6d6d3"/><text x="66" y="198" text-anchor="middle">Σ gate × expert</text><text x="66" y="216" text-anchor="middle">恢复 [B,T,d]</text>
+      </g>
+    </g>
+  </g>
+  <g fill="none" stroke="#5368d9" stroke-width="3"><path d="M245 315h25"/><path d="M470 315h25"/><path d="M695 315h25"/><path d="M920 315h25"/></g>
+  <g fill="#5368d9"><path d="M270 315l-10-7v14z"/><path d="M495 315l-10-7v14z"/><path d="M720 315l-10-7v14z"/><path d="M945 315l-10-7v14z"/></g>
+  <g font-family="system-ui,sans-serif">
+    <rect x="75" y="535" width="1050" height="77" rx="16" fill="#eef1ff"/>
+    <text x="600" y="561" text-anchor="middle" font-size="14" font-weight="700" fill="#25345d">总参数账：所有专家都要存　｜　激活计算账：每 token 只跑 k 个专家　｜　系统账：两次通信 + 分桶 + 缓冲 + 最慢专家</text>
+    <text x="600" y="585" text-anchor="middle" font-size="13" fill="#596683">只报告 activated parameters，会漏掉显存驻留、网络拥塞、padding/容量浪费和 grouped GEMM 利用率</text>
+  </g>
+</svg>

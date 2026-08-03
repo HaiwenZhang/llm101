@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+  <title id="title">RoPE 用相对旋转角编码距离</title>
+  <desc id="desc">展示同一个二维特征在位置 m 和 n 被分别旋转，点积中的绝对旋转抵消，只留下角度差 n-m。</desc>
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f8fbff"/><stop offset="1" stop-color="#f7f2ff"/></linearGradient>
+    <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 10 5 0 10z" fill="#596fe5"/></marker>
+    <style>.zh{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.t{font-size:40px;font-weight:800;fill:#17213a}.sub{font-size:23px;fill:#66708a}.h{font-size:27px;font-weight:800;fill:#17213a}.s{font-size:21px;fill:#66708a}.f{font-size:26px;font-weight:750;fill:#17213a}.tiny{font-size:18px;fill:#788299}</style>
+  </defs>
+  <rect width="1200" height="560" rx="30" fill="url(#bg3)"/>
+  <text x="60" y="66" class="zh t">RoPE：不把“位置编号”塞进向量，而是旋转 Q 和 K</text>
+  <text x="60" y="104" class="zh sub">在每一对二维通道里，位置越靠后，旋转角越大</text>
+
+  <g transform="translate(185 315)">
+    <circle r="132" fill="#fff" stroke="#cfd7ed" stroke-width="3"/><path d="M-145 0H145M0-145V145" stroke="#dfe4f0" stroke-width="2"/>
+    <path d="M0 0L103-56" stroke="#596fe5" stroke-width="7" marker-end="url(#a3)"/><text x="100" y="-76" class="mono h">Rₘq</text>
+    <path d="M0 0L55-112" stroke="#8b5cf6" stroke-width="7" marker-end="url(#a3)"/><text x="24" y="-128" class="mono h">Rₙk</text>
+    <path d="M80-44A92 92 0 0 0 42-80" fill="none" stroke="#e08a35" stroke-width="5"/>
+    <text x="84" y="-92" class="mono s">(n-m)θ</text>
+    <text x="40" y="185" text-anchor="middle" class="zh s">点积只关心相对角度差</text>
+  </g>
+
+  <path d="M455 315H545" stroke="#7d879c" stroke-width="4" marker-end="url(#a3)"/>
+  <g transform="translate(590 178)">
+    <rect x="0" y="0" width="540" height="266" rx="22" fill="#fff" stroke="#d4dbed" stroke-width="2"/>
+    <text x="270" y="50" text-anchor="middle" class="zh h">为什么会只剩相对位置？</text>
+    <text x="270" y="104" text-anchor="middle" class="mono f">(Rₘq)ᵀ(Rₙk) = qᵀRₘᵀRₙk</text>
+    <text x="270" y="151" text-anchor="middle" class="mono f">= qᵀRₙ₋ₘk</text>
+    <text x="270" y="198" text-anchor="middle" class="zh s">旋转矩阵满足 RₘᵀRₙ = Rₙ₋ₘ</text>
+    <text x="270" y="232" text-anchor="middle" class="zh tiny">不同通道使用不同频率：高频看局部，低频变化更慢</text>
+  </g>
+  <text x="600" y="520" text-anchor="middle" class="zh tiny">RoPE 给点积加入相对位置信号，但超出训练长度后是否可靠仍取决于频率、训练数据和缩放方案。</text>
+</svg>

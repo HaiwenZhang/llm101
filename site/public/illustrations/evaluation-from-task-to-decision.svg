@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">从用户决策到评测结论的七步链路</title>
+  <desc id="desc">可靠评测从用户和失败代价出发，定义任务单位和数据分布，冻结模型提示解码配置，保存原始输出，选择与决策一致的指标，再用配对统计估计不确定性，最后按切片与错误类型决定是否上线。</desc>
+  <rect width="1200" height="680" rx="30" fill="#f8faff"/>
+  <text x="55" y="63" font-family="system-ui,sans-serif" font-size="29" font-weight="700" fill="#182342">指标不是起点：先定义谁在什么场景做什么决定</text>
+  <text x="55" y="99" font-family="system-ui,sans-serif" font-size="17" fill="#5c6787">“模型 A 比 B 高 2 分”只有在数据、推理配置、统计不确定性和失败代价都明确时才有意义</text>
+  <g font-family="system-ui,sans-serif">
+    <g transform="translate(55 153)">
+      <rect width="1090" height="100" rx="20" fill="#eef1ff" stroke="#8799e9" stroke-width="2"/>
+      <g font-size="13" fill="#25345d">
+        <text x="78" y="33" text-anchor="middle" font-size="17" font-weight="700">① 决策</text><text x="78" y="59" text-anchor="middle">谁使用？</text><text x="78" y="80" text-anchor="middle">错哪类最贵？</text>
+        <text x="244" y="33" text-anchor="middle" font-size="17" font-weight="700">② Task unit</text><text x="244" y="59" text-anchor="middle">一题 / 一轮 / 一任务？</text><text x="244" y="80" text-anchor="middle">成功条件可观察？</text>
+        <text x="415" y="33" text-anchor="middle" font-size="17" font-weight="700">③ Dataset</text><text x="415" y="59" text-anchor="middle">真实分布与切片</text><text x="415" y="80" text-anchor="middle">train/dev/test 隔离</text>
+        <text x="586" y="33" text-anchor="middle" font-size="17" font-weight="700">④ Inference</text><text x="586" y="59" text-anchor="middle">checkpoint / prompt</text><text x="586" y="80" text-anchor="middle">template / decoding</text>
+        <text x="757" y="33" text-anchor="middle" font-size="17" font-weight="700">⑤ Raw outputs</text><text x="757" y="59" text-anchor="middle">原始文本 / tool trace</text><text x="757" y="80" text-anchor="middle">成本与 finish reason</text>
+        <text x="928" y="33" text-anchor="middle" font-size="17" font-weight="700">⑥ Scoring</text><text x="928" y="59" text-anchor="middle">自动 + Judge + 人工</text><text x="928" y="80" text-anchor="middle">rubric 与阈值</text>
+        <text x="1040" y="33" text-anchor="middle" font-size="17" font-weight="700">⑦ Decision</text><text x="1040" y="59" text-anchor="middle">CI / slices</text><text x="1040" y="80" text-anchor="middle">上线 / 拒绝</text>
+      </g>
+      <path d="M155 18v64M327 18v64M499 18v64M670 18v64M842 18v64M1010 18v64" stroke="#cbd3eb" stroke-width="2"/>
+    </g>
+    <g transform="translate(55 303)">
+      <rect width="330" height="234" rx="20" fill="#fff4e5" stroke="#dfa84e" stroke-width="2"/>
+      <text x="165" y="40" text-anchor="middle" font-size="19" font-weight="700" fill="#684c1e">样本级记录：不能只存一个平均分</text>
+      <g transform="translate(29 72)" font-size="12" fill="#684c1e"><rect width="272" height="31" rx="7" fill="#f4dfb9"/><text x="136" y="21" text-anchor="middle">item_id / slice / gold / source</text><rect y="40" width="272" height="31" rx="7" fill="#f4dfb9"/><text x="136" y="61" text-anchor="middle">raw output / parsed output / error type</text><rect y="80" width="272" height="31" rx="7" fill="#f4dfb9"/><text x="136" y="101" text-anchor="middle">score / judge rationale / human label</text><rect y="120" width="272" height="31" rx="7" fill="#f4dfb9"/><text x="136" y="141" text-anchor="middle">input/output token / latency / tool calls</text></g>
+      <text x="165" y="213" text-anchor="middle" font-size="12" fill="#745f43">有样本级配对，才能做 paired bootstrap 和错误切片</text>
+    </g>
+    <g transform="translate(435 303)">
+      <rect width="330" height="234" rx="20" fill="#eaf8f4" stroke="#72baa7" stroke-width="2"/>
+      <text x="165" y="40" text-anchor="middle" font-size="19" font-weight="700" fill="#205c50">三层不确定性</text>
+      <g transform="translate(30 75)" font-size="12" fill="#205c50"><rect width="270" height="39" rx="8" fill="#d5eee8"/><text x="135" y="25" text-anchor="middle">样本不确定性：换一批题会怎样？</text><rect y="50" width="270" height="39" rx="8" fill="#d5eee8"/><text x="135" y="75" text-anchor="middle">推理随机性：换 seed / rollout 会怎样？</text><rect y="100" width="270" height="39" rx="8" fill="#d5eee8"/><text x="135" y="125" text-anchor="middle">评分误差：Judge / 人工是否一致？</text></g>
+      <text x="165" y="213" text-anchor="middle" font-size="12" fill="#4c6f67">误差条必须说明覆盖哪一层，不能只写 ±</text>
+    </g>
+    <g transform="translate(815 303)">
+      <rect width="330" height="234" rx="20" fill="#fff0ef" stroke="#d9867f" stroke-width="2"/>
+      <text x="165" y="40" text-anchor="middle" font-size="19" font-weight="700" fill="#6f2e2a">发布前最后问三次</text>
+      <g transform="translate(28 74)" font-size="13" fill="#6f2e2a"><text y="15">1. 平均提升是否覆盖关键切片？</text><text y="58">2. 差异 CI 是否仍跨过 0 / 非劣界？</text><text y="101">3. 质量收益是否值得延迟与成本？</text><rect y="132" width="274" height="37" rx="9" fill="#f6d6d3"/><text x="137" y="156" text-anchor="middle" font-weight="700">若答案不明确，就不是“已证明更好”</text></g>
+    </g>
+  </g>
+  <rect x="105" y="580" width="990" height="48" rx="14" fill="#eef1ff"/><text x="600" y="609" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" fill="#25345d">可复现评测的最小单位：数据版本 + 完整推理配置 + 样本级原始输出 + 评分代码/量表 + 不确定性方法</text>
+</svg>

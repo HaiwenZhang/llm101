@@ -1,0 +1,26 @@
+{
+  "name": "llm101",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "content:build": "node scripts/build_site_content.mjs && npm run courses:index && npm run curriculum:index && npm run chapter:readings && npm run curriculum:depth-audit && npm run beginner:renumber",
+    "beginner:renumber": "node scripts/renumber_beginner_lessons.mjs",
+    "mermaid:check": "node scripts/check_mermaid.mjs",
+    "courses:index": "python3 scripts/build_course_pages.py",
+    "courses:fetch:berkeley": "python3 scripts/fetch_berkeley_deeprl.py",
+    "curriculum:index": "python3 scripts/build_curriculum_coverage.py",
+    "curriculum:depth-audit": "python3 scripts/build_two_course_depth_audit.py",
+    "chapter:readings": "python3 scripts/build_chapter_readings.py",
+    "corpus:extract:courses": "python3 scripts/extract_course_corpus.py --scope all --threads 4",
+    "corpus:extract:book": "python3 scripts/extract_book_opendataloader.py '大模型基础 完整版.pdf' output/books/llm-foundations-opendataloader",
+    "docs:dev": "npm run mermaid:check && vitepress dev site --host 0.0.0.0",
+    "docs:build": "npm run mermaid:check && vitepress build site && node scripts/fix_pages_base.mjs",
+    "docs:preview": "vitepress preview site --host 0.0.0.0"
+  },
+  "dependencies": {
+    "markdown-it-mathjax3": "^4.3.2",
+    "mermaid": "^11.12.0",
+    "vitepress": "^1.6.4",
+    "vue": "^3.5.13"
+  }
+}

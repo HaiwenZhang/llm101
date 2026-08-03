@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="540" viewBox="0 0 1200 540" role="img" aria-labelledby="title desc">
+  <title id="title">状态、奖励、回报与价值的时间关系</title><desc id="desc">动作连接相邻状态，即时奖励出现在转移上；回报是未来奖励之和，价值是执行策略时回报的条件期望。</desc>
+  <rect width="1200" height="540" rx="30" fill="#f8faff"/>
+  <text x="60" y="68" font-family="system-ui,sans-serif" font-size="28" font-weight="700" fill="#182342">奖励是一次转移的收据，价值是从当前位置开始的未来预算</text>
+  <text x="60" y="102" font-family="system-ui,sans-serif" font-size="17" fill="#5c6787">索引写法可能用 rₜ 或 rₜ₊₁；关键是始终说明奖励属于哪次状态转移</text>
+  <g font-family="system-ui,sans-serif">
+    <g transform="translate(75 210)"><circle cx="70" cy="70" r="64" fill="#eef1ff" stroke="#8799e9" stroke-width="3"/><text x="70" y="64" text-anchor="middle" font-size="22" font-weight="700" fill="#25345d">状态 s₀</text><text x="70" y="91" text-anchor="middle" font-size="14" fill="#596683">prompt</text></g>
+    <g transform="translate(360 210)"><circle cx="70" cy="70" r="64" fill="#eef1ff" stroke="#8799e9" stroke-width="3"/><text x="70" y="64" text-anchor="middle" font-size="22" font-weight="700" fill="#25345d">状态 s₁</text><text x="70" y="91" text-anchor="middle" font-size="14" fill="#596683">prompt + token</text></g>
+    <g transform="translate(645 210)"><circle cx="70" cy="70" r="64" fill="#eef1ff" stroke="#8799e9" stroke-width="3"/><text x="70" y="64" text-anchor="middle" font-size="22" font-weight="700" fill="#25345d">状态 s₂</text><text x="70" y="91" text-anchor="middle" font-size="14" fill="#596683">继续生成</text></g>
+    <g transform="translate(930 210)"><circle cx="70" cy="70" r="64" fill="#eaf8f4" stroke="#72baa7" stroke-width="3"/><text x="70" y="64" text-anchor="middle" font-size="22" font-weight="700" fill="#205c50">终止 s₃</text><text x="70" y="91" text-anchor="middle" font-size="14" fill="#4c6f67">verifier</text></g>
+    <path d="M214 280h146M499 280h146M784 280h146" stroke="#5368d9" stroke-width="4"/>
+    <path d="M345 269l15 11-15 11M630 269l15 11-15 11M915 269l15 11-15 11" fill="none" stroke="#5368d9" stroke-width="4"/>
+    <text x="287" y="252" text-anchor="middle" font-size="16" fill="#5368d9">动作 a₀</text><text x="572" y="252" text-anchor="middle" font-size="16" fill="#5368d9">动作 a₁</text><text x="857" y="252" text-anchor="middle" font-size="16" fill="#5368d9">动作 a₂</text>
+    <text x="287" y="315" text-anchor="middle" font-size="15" fill="#c4772c">奖励 r₀</text><text x="572" y="315" text-anchor="middle" font-size="15" fill="#c4772c">奖励 r₁</text><text x="857" y="315" text-anchor="middle" font-size="15" fill="#c4772c">奖励 r₂</text>
+    <rect x="75" y="405" width="500" height="72" rx="16" fill="#fff4e5"/><text x="100" y="434" font-size="16" font-weight="700" fill="#684c1e">Return G₀</text><text x="100" y="460" font-size="15" fill="#745f43">这条真实轨迹以后发生的奖励：r₀ + γr₁ + γ²r₂</text>
+    <rect x="625" y="405" width="500" height="72" rx="16" fill="#eaf8f4"/><text x="650" y="434" font-size="16" font-weight="700" fill="#205c50">Value Vπ(s₀)</text><text x="650" y="460" font-size="15" fill="#4c6f67">从状态 s₀ 按策略 π 继续行动时，G₀ 的条件期望</text>
+  </g>
+</svg>

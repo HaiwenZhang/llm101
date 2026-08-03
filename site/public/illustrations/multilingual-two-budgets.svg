@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">多语言模型同时受到数据份额与 Token 切分成本两本账的约束</title>
+  <desc id="desc">上方的数据账从原始网页占比经采样温度得到各语言训练 token 份额；下方的 tokenizer 账从语义等价文本得到不同 token 长度，影响训练样本数、上下文容量、延迟与价格；两本账共同决定真实语言公平性。</desc>
+  <rect width="1200" height="680" rx="30" fill="#f8faff"/>
+  <text x="58" y="64" font-family="system-ui,sans-serif" font-size="29" font-weight="700" fill="#182342">多语言公平有两本账：拿到多少 Token，以及每个 Token 能装多少内容</text>
+  <text x="58" y="101" font-family="system-ui,sans-serif" font-size="17" fill="#5c6787">重采样只改变训练份额；Tokenizer 还会改变语义密度、上下文、延迟和按 Token 计价</text>
+
+  <g font-family="system-ui,sans-serif">
+    <g transform="translate(58 150)">
+      <rect width="1084" height="178" rx="22" fill="#eef1ff" stroke="#8799e9" stroke-width="2"/>
+      <text x="28" y="40" font-size="20" font-weight="700" fill="#25345d">账本 A · 数据与训练份额</text>
+      <g transform="translate(30 68)">
+        <rect width="230" height="76" rx="14" fill="#fff" stroke="#cbd3eb"/><text x="115" y="29" text-anchor="middle" font-size="15" font-weight="700" fill="#25345d">原始网页分布 pₗ</text><text x="115" y="54" text-anchor="middle" font-size="13" fill="#5c6787">英语多，低资源语言少</text>
+        <path d="M270 38h92" stroke="#8799e9" stroke-width="3"/><path d="m350 30 14 8-14 8" fill="none" stroke="#8799e9" stroke-width="3"/>
+        <rect x="375" width="284" height="76" rx="14" fill="#fff" stroke="#cbd3eb"/><text x="517" y="28" text-anchor="middle" font-size="15" font-weight="700" fill="#25345d">qₗ ∝ pₗ<tspan baseline-shift="super" font-size="10">α</tspan></text><text x="517" y="54" text-anchor="middle" font-size="13" fill="#5c6787">α&lt;1 压平分布，但可能重复小语料</text>
+        <path d="M670 38h92" stroke="#8799e9" stroke-width="3"/><path d="m750 30 14 8-14 8" fill="none" stroke="#8799e9" stroke-width="3"/>
+        <rect x="775" width="249" height="76" rx="14" fill="#dfe5ff" stroke="#8799e9"/><text x="899" y="29" text-anchor="middle" font-size="15" font-weight="700" fill="#25345d">训练 Token 配额</text><text x="899" y="54" text-anchor="middle" font-size="13" fill="#5c6787">每种语言被抽到多少次</text>
+      </g>
+    </g>
+
+    <g transform="translate(58 366)">
+      <rect width="1084" height="178" rx="22" fill="#fff4e5" stroke="#dfa84e" stroke-width="2"/>
+      <text x="28" y="40" font-size="20" font-weight="700" fill="#684c1e">账本 B · Tokenizer 的语义成本</text>
+      <g transform="translate(30 68)">
+        <rect width="230" height="76" rx="14" fill="#fff" stroke="#ead2a5"/><text x="115" y="29" text-anchor="middle" font-size="15" font-weight="700" fill="#684c1e">语义等价消息</text><text x="115" y="54" text-anchor="middle" font-size="13" fill="#80653b">不同语言表达同一件事</text>
+        <path d="M270 38h92" stroke="#dfa84e" stroke-width="3"/><path d="m350 30 14 8-14 8" fill="none" stroke="#dfa84e" stroke-width="3"/>
+        <rect x="375" width="284" height="76" rx="14" fill="#fff" stroke="#ead2a5"/><text x="517" y="28" text-anchor="middle" font-size="15" font-weight="700" fill="#684c1e">Token length / fertility</text><text x="517" y="54" text-anchor="middle" font-size="13" fill="#80653b">切得越碎，同样内容消耗越多位置</text>
+        <path d="M670 38h92" stroke="#dfa84e" stroke-width="3"/><path d="m750 30 14 8-14 8" fill="none" stroke="#dfa84e" stroke-width="3"/>
+        <rect x="775" width="249" height="76" rx="14" fill="#f7dfb4" stroke="#dfa84e"/><text x="899" y="25" text-anchor="middle" font-size="14" font-weight="700" fill="#684c1e">语义样本 / 上下文</text><text x="899" y="47" text-anchor="middle" font-size="13" fill="#80653b">延迟 / KV Cache / 价格</text><text x="899" y="66" text-anchor="middle" font-size="12" fill="#80653b">全部一起变化</text>
+      </g>
+    </g>
+  </g>
+
+  <path d="M600 328v38" stroke="#8799e9" stroke-width="3" stroke-dasharray="6 6"/>
+  <rect x="181" y="584" width="838" height="50" rx="15" fill="#eaf8f4"/>
+  <text x="600" y="614" text-anchor="middle" font-family="system-ui,sans-serif" font-size="15" font-weight="700" fill="#205c50">公平评测必须同时报告：分语言能力 + Token 成本 + 延迟 + 上下文容量 + 安全表现</text>
+</svg>

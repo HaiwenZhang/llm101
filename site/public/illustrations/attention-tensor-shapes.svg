@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">多头自注意力的张量形状流水线</title>
+  <desc id="desc">输入 X 经过三张投影矩阵得到 Q K V，拆成多个头，计算每个头的 T 乘 T 分数矩阵，经过缩放、掩码和 Softmax 后混合 V，最后拼接并经过输出投影回到原隐藏维度。</desc>
+  <rect width="1200" height="700" rx="30" fill="#f8faff"/>
+  <text x="55" y="65" font-family="system-ui,sans-serif" font-size="28" font-weight="700" fill="#182342">多头 Attention：维度被分组，不是复制 h 份完整模型</text>
+  <text x="55" y="101" font-family="system-ui,sans-serif" font-size="17" fill="#5c6787">示例：B=2，T=4，d=8，h=2，因此每个 head 的 dₕ=4</text>
+  <g font-family="system-ui,sans-serif">
+    <rect x="55" y="164" width="175" height="110" rx="18" fill="#eef1ff" stroke="#8799e9" stroke-width="2"/>
+    <text x="142" y="202" text-anchor="middle" font-size="20" font-weight="700" fill="#25345d">输入 X</text><text x="142" y="237" text-anchor="middle" font-size="16" fill="#596683">[B,T,d]</text><text x="142" y="260" text-anchor="middle" font-size="14" fill="#596683">[2,4,8]</text>
+
+    <rect x="295" y="142" width="190" height="62" rx="15" fill="#edf7ff" stroke="#67a7cf" stroke-width="2"/><text x="390" y="172" text-anchor="middle" font-size="16" font-weight="700" fill="#204f69">Q = XW<tspan baseline-shift="sub" font-size="11">Q</tspan></text><text x="390" y="193" text-anchor="middle" font-size="13" fill="#527083">[2,4,8]</text>
+    <rect x="295" y="218" width="190" height="62" rx="15" fill="#edf7ff" stroke="#67a7cf" stroke-width="2"/><text x="390" y="248" text-anchor="middle" font-size="16" font-weight="700" fill="#204f69">K = XW<tspan baseline-shift="sub" font-size="11">K</tspan></text><text x="390" y="269" text-anchor="middle" font-size="13" fill="#527083">[2,4,8]</text>
+    <rect x="295" y="294" width="190" height="62" rx="15" fill="#edf7ff" stroke="#67a7cf" stroke-width="2"/><text x="390" y="324" text-anchor="middle" font-size="16" font-weight="700" fill="#204f69">V = XW<tspan baseline-shift="sub" font-size="11">V</tspan></text><text x="390" y="345" text-anchor="middle" font-size="13" fill="#527083">[2,4,8]</text>
+    <path d="M230 219H278" stroke="#5368d9" stroke-width="3"/><path d="M267 210l12 9-12 9" fill="none" stroke="#5368d9" stroke-width="3"/>
+
+    <rect x="555" y="164" width="205" height="192" rx="20" fill="#fff4e5" stroke="#dfa84e" stroke-width="2"/>
+    <text x="657" y="204" text-anchor="middle" font-size="19" font-weight="700" fill="#684c1e">Reshape + Transpose</text><text x="657" y="239" text-anchor="middle" font-size="15" fill="#745f43">[B,T,d]</text><text x="657" y="270" text-anchor="middle" font-size="15" fill="#745f43">↓ 拆 h 个 head</text><text x="657" y="301" text-anchor="middle" font-size="15" fill="#745f43">[B,h,T,dₕ]</text><text x="657" y="330" text-anchor="middle" font-size="14" fill="#745f43">[2,2,4,4]</text>
+    <path d="M485 249H538" stroke="#5368d9" stroke-width="3"/><path d="M527 240l12 9-12 9" fill="none" stroke="#5368d9" stroke-width="3"/>
+
+    <rect x="830" y="142" width="315" height="238" rx="22" fill="#eaf8f4" stroke="#72baa7" stroke-width="2"/>
+    <text x="987" y="183" text-anchor="middle" font-size="20" font-weight="700" fill="#205c50">每个 head 独立检索</text><text x="987" y="221" text-anchor="middle" font-size="15" fill="#4c6f67">QKᵀ / √dₕ → [B,h,T,T]</text><text x="987" y="253" text-anchor="middle" font-size="15" fill="#4c6f67">+ mask，按最后一维 Softmax</text><text x="987" y="285" text-anchor="middle" font-size="15" fill="#4c6f67">权重 A × V → [B,h,T,dₕ]</text>
+    <g transform="translate(890 312)" fill="#d5eee8"><rect width="35" height="35" rx="6"/><rect x="43" width="35" height="35" rx="6"/><rect x="86" width="35" height="35" rx="6"/><rect x="129" width="35" height="35" rx="6"/></g>
+    <text x="1082" y="336" font-size="13" fill="#4c6f67">每个 Query 一行</text>
+    <path d="M760 249H813" stroke="#5368d9" stroke-width="3"/><path d="M802 240l12 9-12 9" fill="none" stroke="#5368d9" stroke-width="3"/>
+
+    <rect x="192" y="474" width="330" height="128" rx="20" fill="#eef1ff" stroke="#8799e9" stroke-width="2"/>
+    <text x="357" y="514" text-anchor="middle" font-size="19" font-weight="700" fill="#25345d">Concat heads</text><text x="357" y="548" text-anchor="middle" font-size="15" fill="#596683">[B,h,T,dₕ] → [B,T,h·dₕ]</text><text x="357" y="578" text-anchor="middle" font-size="14" fill="#596683">[2,2,4,4] → [2,4,8]</text>
+    <rect x="664" y="474" width="330" height="128" rx="20" fill="#fff4e5" stroke="#dfa84e" stroke-width="2"/>
+    <text x="829" y="514" text-anchor="middle" font-size="19" font-weight="700" fill="#684c1e">输出投影 W<tspan baseline-shift="sub" font-size="12">O</tspan></text><text x="829" y="548" text-anchor="middle" font-size="15" fill="#745f43">混合不同 head 的特征</text><text x="829" y="578" text-anchor="middle" font-size="14" fill="#745f43">输出仍是 [B,T,d] = [2,4,8]</text>
+    <path d="M987 380V423H357V458" fill="none" stroke="#5368d9" stroke-width="3"/><path d="M348 447l9 12 9-12" fill="none" stroke="#5368d9" stroke-width="3"/>
+    <path d="M522 538H647" stroke="#5368d9" stroke-width="3"/><path d="M636 529l12 9-12 9" fill="none" stroke="#5368d9" stroke-width="3"/>
+  </g>
+  <text x="600" y="652" text-anchor="middle" font-family="system-ui,sans-serif" font-size="15" fill="#5c6787">h 个 head 合起来仍是 d 维；固定 d 时，不应把 4d² 的 Q/K/V/O 参数再乘一次 h</text>
+</svg>

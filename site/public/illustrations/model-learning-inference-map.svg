@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">建模、学习与推断三件事组成机器学习系统</title>
+  <desc id="desc">模型把输入输出对映射成分数与概率；学习用训练数据和损失更新参数；推断在参数冻结后通过取最大、采样或搜索选择输出；验证与测试数据不参与梯度。</desc>
+  <rect width="1200" height="650" rx="30" fill="#f8faff"/>
+  <text x="60" y="65" font-family="system-ui,sans-serif" font-size="28" font-weight="700" fill="#182342">任何学习系统都要回答三件事：怎么算、怎么学、怎么用</text>
+  <text x="60" y="101" font-family="system-ui,sans-serif" font-size="17" fill="#5c6787">“模型”只负责可计算的分数函数；数据划分、损失、更新和输出选择共同决定完整系统</text>
+  <g font-family="system-ui,sans-serif">
+    <rect x="55" y="155" width="305" height="275" rx="22" fill="#eef1ff" stroke="#8799e9" stroke-width="2"/>
+    <circle cx="95" cy="198" r="21" fill="#5368d9"/><text x="95" y="205" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">1</text>
+    <text x="130" y="205" font-size="22" font-weight="700" fill="#25345d">建模 / 参数化</text>
+    <text x="82" y="254" font-size="16" fill="#596683">输入 x + 候选输出 y</text><text x="82" y="288" font-size="16" fill="#596683">↓</text><text x="82" y="322" font-size="16" fill="#596683">分数 sθ(x,y) / logits</text><text x="82" y="356" font-size="16" fill="#596683">↓ Softmax</text><text x="82" y="390" font-size="16" fill="#596683">概率 pθ(y|x)</text>
+
+    <rect x="447" y="155" width="305" height="275" rx="22" fill="#fff4e5" stroke="#dfa84e" stroke-width="2"/>
+    <circle cx="487" cy="198" r="21" fill="#c88925"/><text x="487" y="205" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">2</text>
+    <text x="522" y="205" font-size="22" font-weight="700" fill="#684c1e">学习 / 训练</text>
+    <text x="474" y="254" font-size="16" fill="#745f43">训练对 (x, y*)</text><text x="474" y="288" font-size="16" fill="#745f43">↓ 与模型概率比较</text><text x="474" y="322" font-size="16" fill="#745f43">loss = −log pθ(y*|x)</text><text x="474" y="356" font-size="16" fill="#745f43">↓ 反向传播梯度</text><text x="474" y="390" font-size="16" fill="#745f43">更新参数 θ</text>
+
+    <rect x="839" y="155" width="305" height="275" rx="22" fill="#eaf8f4" stroke="#72baa7" stroke-width="2"/>
+    <circle cx="879" cy="198" r="21" fill="#419b83"/><text x="879" y="205" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">3</text>
+    <text x="914" y="205" font-size="22" font-weight="700" fill="#205c50">推断 / 使用</text>
+    <text x="866" y="254" font-size="16" fill="#4c6f67">冻结参数 θ</text><text x="866" y="288" font-size="16" fill="#4c6f67">↓ 计算概率或价值</text><text x="866" y="322" font-size="16" fill="#4c6f67">argmax / 采样 / 搜索</text><text x="866" y="356" font-size="16" fill="#4c6f67">↓</text><text x="866" y="390" font-size="16" fill="#4c6f67">类别、文本、文档或动作</text>
+  </g>
+  <path d="M360 292H432" stroke="#5368d9" stroke-width="3"/><path d="M421 283l12 9-12 9" fill="none" stroke="#5368d9" stroke-width="3"/>
+  <path d="M752 292H824" stroke="#5368d9" stroke-width="3"/><path d="M813 283l12 9-12 9" fill="none" stroke="#5368d9" stroke-width="3"/>
+  <path d="M600 430V490H207V430" fill="none" stroke="#c88925" stroke-width="3" stroke-dasharray="7 6"/>
+  <text x="405" y="481" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" fill="#745f43">训练时反复更新 θ</text>
+  <g font-family="system-ui,sans-serif">
+    <rect x="90" y="528" width="265" height="74" rx="16" fill="#eef1ff"/><text x="222" y="557" text-anchor="middle" font-size="16" font-weight="700" fill="#25345d">Train：参与梯度</text><text x="222" y="582" text-anchor="middle" font-size="14" fill="#596683">拟合参数</text>
+    <rect x="467" y="528" width="265" height="74" rx="16" fill="#fff4e5"/><text x="599" y="557" text-anchor="middle" font-size="16" font-weight="700" fill="#684c1e">Validation：反复比较</text><text x="599" y="582" text-anchor="middle" font-size="14" fill="#745f43">选超参数与 checkpoint</text>
+    <rect x="844" y="528" width="265" height="74" rx="16" fill="#eaf8f4"/><text x="976" y="557" text-anchor="middle" font-size="16" font-weight="700" fill="#205c50">Test：最后一次</text><text x="976" y="582" text-anchor="middle" font-size="14" fill="#4c6f67">估计最终泛化</text>
+  </g>
+</svg>

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">LoRA 零初始化后的前两步梯度流</title>
+  <desc id="desc">初始化时 A 随机而 B 为零，所以增量 BA 为零、模型输出等于底座。第一次反向传播中 B 的梯度由输出梯度乘 A 转置得到，通常非零；A 的梯度含 B 转置，因此此时为零。优化器更新 B 后，第二次反向传播 A 才开始获得梯度。</desc>
+  <rect width="1200" height="650" rx="30" fill="#f8faff"/>
+  <text x="55" y="63" font-family="system-ui,sans-serif" font-size="29" font-weight="700" fill="#182342">B=0 不会把 LoRA 永久“冻死”：第一步先打开 B，第二步 A 才开始动</text>
+  <text x="55" y="99" font-family="system-ui,sans-serif" font-size="17" fill="#5c6787">令 ΔW=BA，A 随机初始化、B=0；初始输出保持底座不变，但两块矩阵的首步梯度并不相同</text>
+  <g font-family="system-ui,sans-serif">
+    <g transform="translate(55 150)">
+      <rect width="330" height="370" rx="22" fill="#eef1ff" stroke="#8799e9" stroke-width="2"/>
+      <text x="165" y="42" text-anchor="middle" font-size="21" font-weight="700" fill="#25345d">① 挂载适配器：step 0</text>
+      <g transform="translate(38 86)" font-size="13" fill="#25345d"><rect width="105" height="72" rx="12" fill="#dfe4fa"/><text x="52" y="28" text-anchor="middle" font-weight="700">A 随机</text><text x="52" y="51" text-anchor="middle">r × dᵢₙ</text><rect x="145" width="105" height="72" rx="12" fill="#dfe4fa"/><text x="197" y="28" text-anchor="middle" font-weight="700">B = 0</text><text x="197" y="51" text-anchor="middle">dₒᵤₜ × r</text><path d="M105 36h30" stroke="#5368d9" stroke-width="3"/><path d="M125 29l11 7-11 7" fill="none" stroke="#5368d9" stroke-width="3"/></g>
+      <text x="165" y="201" text-anchor="middle" font-size="16" font-weight="700" fill="#25345d">ΔW = BA = 0</text>
+      <path d="M165 220v36" stroke="#5368d9" stroke-width="3"/><path d="M158 248l7 10 7-10" fill="none" stroke="#5368d9" stroke-width="3"/>
+      <rect x="49" y="265" width="232" height="64" rx="12" fill="#dfe4fa"/><text x="165" y="290" text-anchor="middle" font-size="14" fill="#25345d">y = Wx + (α/r)BAx</text><text x="165" y="314" text-anchor="middle" font-size="13" font-weight="700" fill="#25345d">初始 y 与冻结底座完全一致</text>
+    </g>
+    <g transform="translate(435 150)">
+      <rect width="330" height="370" rx="22" fill="#fff4e5" stroke="#dfa84e" stroke-width="2"/>
+      <text x="165" y="42" text-anchor="middle" font-size="21" font-weight="700" fill="#684c1e">② 第一次 backward</text>
+      <text x="165" y="77" text-anchor="middle" font-size="13" fill="#745f43">把对 ΔW 的梯度记作 G</text>
+      <g transform="translate(37 103)" font-size="13" fill="#684c1e"><rect width="256" height="72" rx="12" fill="#f4dfb9"/><text x="128" y="27" text-anchor="middle" font-weight="700">∂L/∂B = G Aᵀ</text><text x="128" y="52" text-anchor="middle">A 随机，通常 ≠ 0　→ B 会更新</text><rect y="92" width="256" height="72" rx="12" fill="#f4dfb9"/><text x="128" y="119" text-anchor="middle" font-weight="700">∂L/∂A = Bᵀ G</text><text x="128" y="144" text-anchor="middle">此时 B=0，所以 = 0　→ A 暂不动</text></g>
+      <rect x="37" y="296" width="256" height="42" rx="10" fill="#f4dfb9"/><text x="165" y="322" text-anchor="middle" font-size="13" fill="#684c1e">optimizer.step() 后：B ≠ 0</text>
+    </g>
+    <g transform="translate(815 150)">
+      <rect width="330" height="370" rx="22" fill="#eaf8f4" stroke="#72baa7" stroke-width="2"/>
+      <text x="165" y="42" text-anchor="middle" font-size="21" font-weight="700" fill="#205c50">③ 第二次及以后</text>
+      <g transform="translate(38 87)" font-size="13" fill="#205c50"><rect width="105" height="72" rx="12" fill="#d5eee8"/><text x="52" y="28" text-anchor="middle" font-weight="700">A</text><text x="52" y="51" text-anchor="middle">已有随机基底</text><rect x="145" width="105" height="72" rx="12" fill="#d5eee8"/><text x="197" y="28" text-anchor="middle" font-weight="700">B ≠ 0</text><text x="197" y="51" text-anchor="middle">首步已打开</text><path d="M105 36h30" stroke="#419b83" stroke-width="3"/><path d="M125 29l11 7-11 7" fill="none" stroke="#419b83" stroke-width="3"/></g>
+      <text x="165" y="202" text-anchor="middle" font-size="15" font-weight="700" fill="#205c50">ΔW=BA 开始非零</text>
+      <g transform="translate(36 230)" font-size="13" fill="#205c50"><rect width="258" height="47" rx="10" fill="#d5eee8"/><text x="129" y="29" text-anchor="middle">∂L/∂B 通常继续非零</text><rect y="58" width="258" height="47" rx="10" fill="#d5eee8"/><text x="129" y="87" text-anchor="middle">∂L/∂A = BᵀG 也可非零</text></g>
+      <text x="165" y="348" text-anchor="middle" font-size="12" fill="#4c6f67">两块矩阵随后共同学习低秩更新</text>
+    </g>
+  </g>
+  <g fill="none" stroke="#5368d9" stroke-width="3"><path d="M385 335h40"/><path d="M765 335h40"/></g><g fill="#5368d9"><path d="M425 335l-11-7v14z"/><path d="M805 335l-11-7v14z"/></g>
+  <rect x="105" y="565" width="990" height="49" rx="14" fill="#eef1ff"/><text x="600" y="595" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" fill="#25345d">也可以把 A=0、B 随机，但首步梯度顺序会对调；初始化约定必须和使用的 LoRA 实现核对</text>
+</svg>

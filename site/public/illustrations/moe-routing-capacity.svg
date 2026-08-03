@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">MoE 从 Router 概率到容量溢出的五步流程</title>
+  <desc id="desc">一批 token 先计算 Router logits 和 softmax 概率，再做 Top-k 离散选择，按照专家分桶；每位专家只有有限容量，超出的 assignment 需要丢弃、重路由或使用 dropless 计算。</desc>
+  <rect width="1200" height="680" rx="30" fill="#f8faff"/>
+  <text x="55" y="63" font-family="system-ui,sans-serif" font-size="29" font-weight="700" fill="#182342">一次路由有两道门：Top-k 决定“想去哪里”，容量决定“能不能进去”</text>
+  <text x="55" y="99" font-family="system-ui,sans-serif" font-size="17" fill="#5c6787">示例：N=8 个 token、E=4 位专家、k=2、容量因子 CF=1.0，所以每专家容量 C=⌈Nk/E⌉=4</text>
+  <g font-family="system-ui,sans-serif">
+    <g transform="translate(55 150)">
+      <rect width="190" height="390" rx="20" fill="#eef1ff" stroke="#8799e9" stroke-width="2"/>
+      <text x="95" y="38" text-anchor="middle" font-size="20" font-weight="700" fill="#25345d">① Token 表示</text>
+      <text x="95" y="65" text-anchor="middle" font-size="13" fill="#596683">每个 token 一个向量 hₜ</text>
+      <g transform="translate(34 96)" font-size="14" fill="#25345d">
+        <g><rect width="122" height="28" rx="7" fill="#dfe4fa"/><text x="61" y="19" text-anchor="middle">def</text></g>
+        <g transform="translate(0 36)"><rect width="122" height="28" rx="7" fill="#dfe4fa"/><text x="61" y="19" text-anchor="middle">return</text></g>
+        <g transform="translate(0 72)"><rect width="122" height="28" rx="7" fill="#dfe4fa"/><text x="61" y="19" text-anchor="middle">巴黎</text></g>
+        <g transform="translate(0 108)"><rect width="122" height="28" rx="7" fill="#dfe4fa"/><text x="61" y="19" text-anchor="middle">法国</text></g>
+        <g transform="translate(0 144)"><rect width="122" height="28" rx="7" fill="#dfe4fa"/><text x="61" y="19" text-anchor="middle">∫</text></g>
+        <g transform="translate(0 180)"><rect width="122" height="28" rx="7" fill="#dfe4fa"/><text x="61" y="19" text-anchor="middle">矩阵</text></g>
+        <g transform="translate(0 216)"><rect width="122" height="28" rx="7" fill="#dfe4fa"/><text x="61" y="19" text-anchor="middle">你好</text></g>
+        <g transform="translate(0 252)"><rect width="122" height="28" rx="7" fill="#dfe4fa"/><text x="61" y="19" text-anchor="middle">&lt;xml&gt;</text></g>
+      </g>
+    </g>
+    <g transform="translate(275 150)">
+      <rect width="200" height="390" rx="20" fill="#fff4e5" stroke="#dfa84e" stroke-width="2"/>
+      <text x="100" y="38" text-anchor="middle" font-size="20" font-weight="700" fill="#684c1e">② Router 概率</text>
+      <text x="100" y="65" text-anchor="middle" font-size="13" fill="#745f43">softmax(hₜWᵣ)</text>
+      <g transform="translate(34 101)" font-size="12" fill="#684c1e">
+        <text x="0" y="0">def 的四位专家：</text>
+        <rect y="18" width="132" height="32" rx="6" fill="#f4dfb9"/><rect y="18" width="72" height="32" rx="6" fill="#dfa84e"/><text x="7" y="39">E1 55%</text>
+        <rect y="62" width="132" height="32" rx="6" fill="#f4dfb9"/><rect y="62" width="12" height="32" rx="6" fill="#dfa84e"/><text x="7" y="83">E2 9%</text>
+        <rect y="106" width="132" height="32" rx="6" fill="#f4dfb9"/><rect y="106" width="44" height="32" rx="6" fill="#dfa84e"/><text x="7" y="127">E3 33%</text>
+        <rect y="150" width="132" height="32" rx="6" fill="#f4dfb9"/><rect y="150" width="4" height="32" rx="6" fill="#dfa84e"/><text x="7" y="171">E4 3%</text>
+      </g>
+      <rect x="25" y="316" width="150" height="46" rx="10" fill="#f4dfb9"/><text x="100" y="336" text-anchor="middle" font-size="12" fill="#684c1e">概率连续可导</text><text x="100" y="352" text-anchor="middle" font-size="12" fill="#684c1e">但尚未真正分配</text>
+    </g>
+    <g transform="translate(505 150)">
+      <rect width="185" height="390" rx="20" fill="#f3efff" stroke="#a28de1" stroke-width="2"/>
+      <text x="92" y="38" text-anchor="middle" font-size="20" font-weight="700" fill="#44336d">③ Top-2</text>
+      <text x="92" y="65" text-anchor="middle" font-size="13" fill="#665682">离散选择 + 门内归一化</text>
+      <g transform="translate(25 104)">
+        <rect width="135" height="62" rx="12" fill="#dfd5fa"/><text x="67" y="25" text-anchor="middle" font-size="14" font-weight="700" fill="#44336d">E1 被选中</text><text x="67" y="46" text-anchor="middle" font-size="12" fill="#665682">权重 62.5%</text>
+        <rect y="82" width="135" height="62" rx="12" fill="#dfd5fa"/><text x="67" y="107" text-anchor="middle" font-size="14" font-weight="700" fill="#44336d">E3 被选中</text><text x="67" y="128" text-anchor="middle" font-size="12" fill="#665682">权重 37.5%</text>
+        <rect y="190" width="135" height="58" rx="12" fill="#ece9f5"/><text x="67" y="214" text-anchor="middle" font-size="13" fill="#665682">E2 / E4</text><text x="67" y="234" text-anchor="middle" font-size="12" fill="#665682">本 token 不计算</text>
+      </g>
+    </g>
+    <g transform="translate(720 150)">
+      <rect width="200" height="390" rx="20" fill="#eaf8f4" stroke="#72baa7" stroke-width="2"/>
+      <text x="100" y="38" text-anchor="middle" font-size="20" font-weight="700" fill="#205c50">④ 按专家分桶</text>
+      <text x="100" y="65" text-anchor="middle" font-size="13" fill="#4c6f67">16 个 assignment 排队</text>
+      <g transform="translate(28 98)" font-size="12" fill="#205c50">
+        <text y="15">E1</text><g transform="translate(28)"><rect width="28" height="28" rx="5" fill="#bfe4da"/><rect x="32" width="28" height="28" rx="5" fill="#bfe4da"/><rect x="64" width="28" height="28" rx="5" fill="#bfe4da"/><rect x="96" width="28" height="28" rx="5" fill="#bfe4da"/></g>
+        <text y="70">E2</text><g transform="translate(28 55)"><rect width="28" height="28" rx="5" fill="#bfe4da"/><rect x="32" width="28" height="28" rx="5" fill="#bfe4da"/><rect x="64" width="28" height="28" rx="5" fill="#bfe4da"/></g>
+        <text y="125">E3</text><g transform="translate(28 110)"><rect width="28" height="28" rx="5" fill="#bfe4da"/><rect x="32" width="28" height="28" rx="5" fill="#bfe4da"/><rect x="64" width="28" height="28" rx="5" fill="#bfe4da"/><rect x="96" width="28" height="28" rx="5" fill="#bfe4da"/><rect x="128" width="28" height="28" rx="5" fill="#bfe4da"/></g>
+        <text y="180">E4</text><g transform="translate(28 165)"><rect width="28" height="28" rx="5" fill="#bfe4da"/><rect x="32" width="28" height="28" rx="5" fill="#bfe4da"/><rect x="64" width="28" height="28" rx="5" fill="#bfe4da"/><rect x="96" width="28" height="28" rx="5" fill="#bfe4da"/></g>
+      </g>
+      <rect x="25" y="316" width="150" height="46" rx="10" fill="#d5eee8"/><text x="100" y="336" text-anchor="middle" font-size="12" fill="#205c50">负载 = 4 / 3 / 5 / 4</text><text x="100" y="352" text-anchor="middle" font-size="12" fill="#205c50">平均正好是 4</text>
+    </g>
+    <g transform="translate(950 150)">
+      <rect width="195" height="390" rx="20" fill="#fff0ef" stroke="#d9867f" stroke-width="2"/>
+      <text x="97" y="38" text-anchor="middle" font-size="20" font-weight="700" fill="#6f2e2a">⑤ 容量检查</text>
+      <text x="97" y="65" text-anchor="middle" font-size="13" fill="#805450">每专家最多 4 个</text>
+      <g transform="translate(27 101)" font-size="13" fill="#6f2e2a">
+        <rect width="141" height="45" rx="9" fill="#f6d6d3"/><text x="70" y="28" text-anchor="middle">E1：4 / 4 ✓</text>
+        <rect y="57" width="141" height="45" rx="9" fill="#f6d6d3"/><text x="70" y="85" text-anchor="middle">E2：3 / 4 ✓</text>
+        <rect y="114" width="141" height="69" rx="9" fill="#e9a8a2"/><text x="70" y="140" text-anchor="middle" font-weight="700">E3：5 / 4 溢出</text><text x="70" y="162" text-anchor="middle">最后 1 个待处理</text>
+        <rect y="195" width="141" height="45" rx="9" fill="#f6d6d3"/><text x="70" y="223" text-anchor="middle">E4：4 / 4 ✓</text>
+      </g>
+      <text x="97" y="316" text-anchor="middle" font-size="12" fill="#805450">丢弃 / 重路由 / dropless</text><text x="97" y="337" text-anchor="middle" font-size="12" fill="#805450">三者速度与数值不同</text>
+    </g>
+  </g>
+  <g fill="none" stroke="#5368d9" stroke-width="3"><path d="M245 345h20"/><path d="M475 345h20"/><path d="M690 345h20"/><path d="M920 345h20"/></g>
+  <g fill="#5368d9"><path d="M265 345l-10-7v14z"/><path d="M495 345l-10-7v14z"/><path d="M710 345l-10-7v14z"/><path d="M940 345l-10-7v14z"/></g>
+  <rect x="115" y="582" width="970" height="58" rx="15" fill="#eef1ff"/><text x="600" y="606" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" font-weight="700" fill="#25345d">重要：提高容量因子只是在系统层面“多留座位”，不会让 Router 自动学会均匀分工</text><text x="600" y="627" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" fill="#596683">路由质量、负载均衡与设备缓冲是三个需要分别观测的变量</text>
+</svg>

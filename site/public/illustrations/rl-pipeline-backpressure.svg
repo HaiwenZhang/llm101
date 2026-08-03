@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="540" viewBox="0 0 1200 540" role="img" aria-labelledby="title desc">
+  <title id="title">Rollout、验证器和训练器流水线中的反压</title><desc id="desc">三个阶段通过有界队列连接；任何阶段变慢都会形成队列堆积、GPU 空等或样本陈旧。</desc>
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0l9 5-9 5z" fill="#5368d9"/></marker></defs>
+  <rect width="1200" height="540" rx="30" fill="#f8faff"/>
+  <text x="60" y="68" font-family="system-ui,sans-serif" font-size="28" font-weight="700" fill="#182342">流水线吞吐由最慢阶段决定，队列只会把等待藏起来</text>
+  <text x="60" y="102" font-family="system-ui,sans-serif" font-size="17" fill="#5c6787">有界队列和版本门限把反压显式化，避免无限堆积陈旧轨迹</text>
+  <g font-family="system-ui,sans-serif">
+    <g transform="translate(60 185)"><rect width="250" height="180" rx="22" fill="#eef1ff" stroke="#8799e9" stroke-width="2"/><text x="125" y="47" text-anchor="middle" font-size="21" font-weight="700" fill="#25345d">Rollout GPU</text><text x="125" y="86" text-anchor="middle" font-size="15" fill="#596683">连续批处理</text><text x="125" y="113" text-anchor="middle" font-size="15" fill="#596683">长短轨迹混合</text><rect x="50" y="140" width="150" height="12" rx="6" fill="#5368d9"/></g>
+    <g transform="translate(475 185)"><rect width="250" height="180" rx="22" fill="#fff4e5" stroke="#dfa84e" stroke-width="2"/><text x="125" y="47" text-anchor="middle" font-size="21" font-weight="700" fill="#684c1e">Verifier / Env</text><text x="125" y="86" text-anchor="middle" font-size="15" fill="#745f43">沙箱 · 工具 · 单测</text><text x="125" y="113" text-anchor="middle" font-size="15" fill="#745f43">超时与尾延迟</text><rect x="50" y="140" width="150" height="12" rx="6" fill="#cf8b2d"/></g>
+    <g transform="translate(890 185)"><rect width="250" height="180" rx="22" fill="#eaf8f4" stroke="#72baa7" stroke-width="2"/><text x="125" y="47" text-anchor="middle" font-size="21" font-weight="700" fill="#205c50">Trainer GPU</text><text x="125" y="86" text-anchor="middle" font-size="15" fill="#4c6f67">log-prob · advantage</text><text x="125" y="113" text-anchor="middle" font-size="15" fill="#4c6f67">反向与 checkpoint</text><rect x="50" y="140" width="150" height="12" rx="6" fill="#28987d"/></g>
+    <path d="M310 275h147M725 275h147" stroke="#5368d9" stroke-width="4" marker-end="url(#a)"/>
+    <g transform="translate(335 220)"><rect width="100" height="110" rx="15" fill="#fff" stroke="#c7cee2"/><text x="50" y="31" text-anchor="middle" font-size="13" fill="#596683">轨迹队列</text><rect x="18" y="45" width="64" height="10" rx="5" fill="#dfe4fa"/><rect x="18" y="63" width="64" height="10" rx="5" fill="#dfe4fa"/><rect x="18" y="81" width="64" height="10" rx="5" fill="#dfe4fa"/></g>
+    <g transform="translate(750 220)"><rect width="100" height="110" rx="15" fill="#fff" stroke="#c7cee2"/><text x="50" y="31" text-anchor="middle" font-size="13" fill="#596683">训练缓冲</text><rect x="18" y="45" width="64" height="10" rx="5" fill="#f4dfb9"/><rect x="18" y="63" width="64" height="10" rx="5" fill="#f4dfb9"/></g>
+    <rect x="210" y="418" width="780" height="58" rx="16" fill="#fff0ef"/><text x="600" y="453" text-anchor="middle" font-size="16" fill="#6d3b37">队列增长 = 上游吞吐 − 下游吞吐；队列越长，等待与 policy lag 越大。</text>
+  </g>
+</svg>

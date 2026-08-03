@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">四类语言模型解码目标对比</title>
+  <desc id="desc">MAP 搜索寻找单个最高概率序列，祖先采样按模型分布随机抽一条，截断采样先用温度和 Top-k 或 Top-p 构造新分布再抽样，Best-of-N 生成多个候选后由验证器或奖励选择一个。四者优化目标和失败模式不同。</desc>
+  <rect width="1200" height="650" rx="30" fill="#f8faff"/>
+  <text x="55" y="63" font-family="system-ui,sans-serif" font-size="29" font-weight="700" fill="#182342">“从概率里选文字”至少有四种不同目标</text>
+  <text x="55" y="99" font-family="system-ui,sans-serif" font-size="17" fill="#5c6787">先问希望得到 mode、分布样本、截断后的样本还是验证器最爱的一条，再谈具体参数</text>
+  <g font-family="system-ui,sans-serif">
+    <g transform="translate(55 150)">
+      <rect width="255" height="365" rx="20" fill="#eef1ff" stroke="#8799e9" stroke-width="2"/>
+      <text x="127" y="39" text-anchor="middle" font-size="20" font-weight="700" fill="#25345d">① MAP / Beam</text>
+      <text x="127" y="68" text-anchor="middle" font-size="13" fill="#596683">找单个概率最大的序列</text>
+      <g transform="translate(28 98)" fill="none" stroke="#8799e9" stroke-width="2"><path d="M100 0L40 66M100 0l60 66M40 66L5 132M40 66l45 66M160 66l-45 66M160 66l40 66"/></g>
+      <g transform="translate(28 98)" fill="#dfe4fa" stroke="#fff" stroke-width="2"><circle cx="100" r="11"/><circle cx="40" cy="66" r="11"/><circle cx="160" cy="66" r="11"/><circle cx="5" cy="132" r="11"/><circle cx="85" cy="132" r="11"/><circle cx="115" cy="132" r="11"/><circle cx="200" cy="132" r="11"/></g>
+      <path d="M128 98L68 164 33 230" fill="none" stroke="#5368d9" stroke-width="6"/>
+      <text x="127" y="262" text-anchor="middle" font-size="13" font-weight="700" fill="#25345d">mode-seeking</text>
+      <text x="127" y="287" text-anchor="middle" font-size="12" fill="#596683">Beam 只是近似搜索</text><text x="127" y="307" text-anchor="middle" font-size="12" fill="#596683">Greedy 甚至不保证全局 MAP</text>
+      <rect x="30" y="326" width="195" height="25" rx="7" fill="#dfe4fa"/><text x="127" y="344" text-anchor="middle" font-size="11" fill="#25345d">风险：短、重复、并不典型</text>
+    </g>
+    <g transform="translate(335 150)">
+      <rect width="255" height="365" rx="20" fill="#fff4e5" stroke="#dfa84e" stroke-width="2"/>
+      <text x="127" y="39" text-anchor="middle" font-size="20" font-weight="700" fill="#684c1e">② 祖先采样</text>
+      <text x="127" y="68" text-anchor="middle" font-size="13" fill="#745f43">逐步从原始 pθ 抽样</text>
+      <g transform="translate(39 103)" font-size="12" fill="#684c1e"><rect width="177" height="32" rx="7" fill="#f4dfb9"/><rect width="88" height="32" rx="7" fill="#dfa84e"/><text x="8" y="21">A 50%</text><text x="104" y="21">其余 50%</text><path d="M88 42v39" stroke="#dfa84e" stroke-width="3"/><path d="M81 73l7 10 7-10" fill="none" stroke="#dfa84e" stroke-width="3"/><rect y="87" width="177" height="32" rx="7" fill="#f4dfb9"/><rect y="87" width="47" height="32" rx="7" fill="#dfa84e"/><text x="8" y="108">B 27%</text><text x="104" y="108">其余 73%</text><path d="M47 129v39" stroke="#dfa84e" stroke-width="3"/><path d="M40 160l7 10 7-10" fill="none" stroke="#dfa84e" stroke-width="3"/><rect y="174" width="177" height="32" rx="7" fill="#f4dfb9"/><text x="88" y="195" text-anchor="middle">… 直到 EOS</text></g>
+      <text x="127" y="330" text-anchor="middle" font-size="11" fill="#745f43">无变换时，完整序列样本来自 pθ(y|x)</text><text x="127" y="348" text-anchor="middle" font-size="11" fill="#745f43">风险：长序列累计抽到 heavy tail</text>
+    </g>
+    <g transform="translate(615 150)">
+      <rect width="255" height="365" rx="20" fill="#eaf8f4" stroke="#72baa7" stroke-width="2"/>
+      <text x="127" y="39" text-anchor="middle" font-size="20" font-weight="700" fill="#205c50">③ 截断 / 温度采样</text>
+      <text x="127" y="68" text-anchor="middle" font-size="13" fill="#4c6f67">先把 pθ 改成 q，再抽样</text>
+      <g transform="translate(34 103)" font-size="12" fill="#205c50"><rect width="187" height="39" rx="8" fill="#d5eee8"/><text x="93" y="25" text-anchor="middle">logits / T</text><path d="M93 47v29" stroke="#419b83" stroke-width="3"/><path d="M86 68l7 10 7-10" fill="none" stroke="#419b83" stroke-width="3"/><rect y="83" width="187" height="39" rx="8" fill="#d5eee8"/><text x="93" y="108" text-anchor="middle">Top-k / Top-p / Min-p</text><path d="M93 130v29" stroke="#419b83" stroke-width="3"/><path d="M86 151l7 10 7-10" fill="none" stroke="#419b83" stroke-width="3"/><rect y="166" width="187" height="39" rx="8" fill="#d5eee8"/><text x="93" y="191" text-anchor="middle">重新归一化 q</text></g>
+      <text x="127" y="330" text-anchor="middle" font-size="11" fill="#4c6f67">不再是原始模型分布的精确样本</text><text x="127" y="348" text-anchor="middle" font-size="11" fill="#4c6f67">目标：减少尾部错误，保留适量多样性</text>
+    </g>
+    <g transform="translate(895 150)">
+      <rect width="250" height="365" rx="20" fill="#f3efff" stroke="#a28de1" stroke-width="2"/>
+      <text x="125" y="39" text-anchor="middle" font-size="20" font-weight="700" fill="#44336d">④ Best-of-N / 验证</text>
+      <text x="125" y="68" text-anchor="middle" font-size="13" fill="#665682">先生成多条，再按外部目标选</text>
+      <g transform="translate(25 100)" font-size="12" fill="#44336d"><rect width="132" height="31" rx="7" fill="#dfd5fa"/><text x="66" y="21" text-anchor="middle">候选 y₁　score 0.4</text><rect y="41" width="132" height="31" rx="7" fill="#dfd5fa"/><text x="66" y="62" text-anchor="middle">候选 y₂　score 0.9</text><rect y="82" width="132" height="31" rx="7" fill="#dfd5fa"/><text x="66" y="103" text-anchor="middle">候选 y₃　score 0.6</text><rect y="123" width="132" height="31" rx="7" fill="#dfd5fa"/><text x="66" y="144" text-anchor="middle">… yₙ</text><path d="M143 77h40" stroke="#8068c6" stroke-width="3"/><path d="M173 70l11 7-11 7" fill="none" stroke="#8068c6" stroke-width="3"/><rect x="154" y="91" width="46" height="53" rx="8" fill="#dfd5fa"/><text x="177" y="112" text-anchor="middle">选</text><text x="177" y="132" text-anchor="middle">y₂</text></g>
+      <text x="125" y="289" text-anchor="middle" font-size="12" font-weight="700" fill="#44336d">ŷ = argmax R(x,yᵢ)</text>
+      <text x="125" y="321" text-anchor="middle" font-size="11" fill="#665682">质量取决于候选覆盖 + scorer</text><text x="125" y="339" text-anchor="middle" font-size="11" fill="#665682">风险：成本 N 倍、reward hacking</text>
+    </g>
+  </g>
+  <rect x="105" y="565" width="990" height="49" rx="14" fill="#eef1ff"/><text x="600" y="595" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" fill="#25345d">Greedy/Beam 改“搜索”，Temperature/Top-p 改“采样分布”，Best-of-N 又增加了“选择器”；三类旋钮不要混成一张参数表</text>
+</svg>

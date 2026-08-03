@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="590" viewBox="0 0 1200 590" role="img" aria-labelledby="title desc">
+  <title id="title">Sequence KD 与 Sequence Interpolation 选择不同训练目标</title>
+  <desc id="desc">教师 Beam 中，Seq-KD 选择教师概率最高的候选 A，Sequence Interpolation 选择与人工 Gold 最相近的候选 B，二者解决的目标不同。</desc>
+  <rect width="1200" height="590" rx="30" fill="#f8faff"/>
+  <text x="55" y="65" font-family="system-ui,sans-serif" font-size="28" font-weight="700" fill="#182342">同一个 Teacher Beam，Seq-KD 与 Seq-Inter 为什么选不同答案</text>
+  <text x="55" y="101" font-family="system-ui,sans-serif" font-size="17" fill="#5c6787">示意数字只用于读方法：一个追教师模式，一个把教师偏好与人工目标拉近</text>
+  <g font-family="system-ui,sans-serif">
+    <rect x="55" y="166" width="190" height="95" rx="18" fill="#eef1ff" stroke="#8799e9" stroke-width="2"/>
+    <text x="150" y="204" text-anchor="middle" font-size="18" font-weight="700" fill="#25345d">输入 x</text><text x="150" y="235" text-anchor="middle" font-size="14" fill="#596683">“翻译这句话”</text>
+    <path d="M245 214H315" stroke="#5368d9" stroke-width="3"/><path d="M304 205l12 9-12 9" fill="none" stroke="#5368d9" stroke-width="3"/>
+    <rect x="316" y="146" width="228" height="135" rx="20" fill="#eaf8f4" stroke="#72baa7" stroke-width="2"/>
+    <text x="430" y="188" text-anchor="middle" font-size="19" font-weight="700" fill="#205c50">Teacher + Beam Search</text><text x="430" y="221" text-anchor="middle" font-size="14" fill="#4c6f67">搜索候选完整序列</text><text x="430" y="250" text-anchor="middle" font-size="14" fill="#4c6f67">不保存指数大的全序列分布</text>
+
+    <rect x="600" y="130" width="530" height="76" rx="16" fill="#fff4e5" stroke="#dfa84e" stroke-width="2"/>
+    <text x="625" y="161" font-size="17" font-weight="700" fill="#684c1e">候选 A · 教师模式</text><text x="625" y="187" font-size="14" fill="#745f43">Teacher q = 0.46　｜　与 Gold 相似度 = 0.62</text>
+    <rect x="600" y="226" width="530" height="76" rx="16" fill="#eef1ff" stroke="#8799e9" stroke-width="2"/>
+    <text x="625" y="257" font-size="17" font-weight="700" fill="#25345d">候选 B · 更接近人工参考</text><text x="625" y="283" font-size="14" fill="#596683">Teacher q = 0.31　｜　与 Gold 相似度 = 0.91</text>
+    <rect x="600" y="322" width="530" height="76" rx="16" fill="#f1f3f8" stroke="#a9b0c2" stroke-width="2"/>
+    <text x="625" y="353" font-size="17" font-weight="700" fill="#3d465d">候选 C · 另一种合理表达</text><text x="625" y="379" font-size="14" fill="#6d7486">Teacher q = 0.13　｜　与 Gold 相似度 = 0.74</text>
+    <path d="M544 214H585" stroke="#5368d9" stroke-width="3"/><path d="M574 205l12 9-12 9" fill="none" stroke="#5368d9" stroke-width="3"/>
+
+    <rect x="55" y="442" width="335" height="100" rx="18" fill="#fff4e5" stroke="#dfa84e" stroke-width="2"/>
+    <text x="222" y="477" text-anchor="middle" font-size="18" font-weight="700" fill="#684c1e">Seq-KD 训练目标：候选 A</text><text x="222" y="507" text-anchor="middle" font-size="14" fill="#745f43">近似 argmax q(t|x)，集中学习教师模式</text>
+    <rect x="432" y="442" width="335" height="100" rx="18" fill="#eef1ff" stroke="#8799e9" stroke-width="2"/>
+    <text x="599" y="477" text-anchor="middle" font-size="18" font-weight="700" fill="#25345d">Seq-Inter 训练目标：候选 B</text><text x="599" y="507" text-anchor="middle" font-size="14" fill="#596683">在 Beam 内选择与 Gold 最相近者</text>
+    <rect x="809" y="442" width="321" height="100" rx="18" fill="#eaf8f4" stroke="#72baa7" stroke-width="2"/>
+    <text x="969" y="477" text-anchor="middle" font-size="18" font-weight="700" fill="#205c50">Hard-label：原始 Gold</text><text x="969" y="507" text-anchor="middle" font-size="14" fill="#4c6f67">保留人工数据，但没有教师全局偏好</text>
+  </g>
+</svg>

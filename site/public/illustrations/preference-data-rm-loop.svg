@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+  <title id="title">偏好数据、奖励模型与策略优化的分布闭环</title><desc id="desc">策略产生回答，标注者比较，奖励模型学习，再由策略针对奖励优化；策略分布改变后需要重新收集数据和评测。</desc>
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0l9 5-9 5z" fill="#5368d9"/></marker></defs>
+  <rect width="1200" height="560" rx="30" fill="#f8faff"/>
+  <text x="60" y="68" font-family="system-ui,sans-serif" font-size="28" font-weight="700" fill="#182342">RLHF 是分布闭环：策略改变后，旧偏好数据不再代表新输出</text>
+  <text x="60" y="102" font-family="system-ui,sans-serif" font-size="17" fill="#5c6787">奖励模型只在标注数据覆盖的区域被监督，策略优化却会主动寻找覆盖边界</text>
+  <g font-family="system-ui,sans-serif">
+    <g transform="translate(70 190)"><rect width="220" height="150" rx="22" fill="#eef1ff" stroke="#8799e9" stroke-width="2"/><text x="110" y="48" text-anchor="middle" font-size="20" font-weight="700" fill="#25345d">策略采样</text><text x="110" y="83" text-anchor="middle" font-size="15" fill="#596683">同一 prompt</text><text x="110" y="108" text-anchor="middle" font-size="15" fill="#596683">生成 A / B / C</text></g>
+    <g transform="translate(350 190)"><rect width="220" height="150" rx="22" fill="#fff4e5" stroke="#dfa84e" stroke-width="2"/><text x="110" y="48" text-anchor="middle" font-size="20" font-weight="700" fill="#684c1e">比较标注</text><text x="110" y="83" text-anchor="middle" font-size="15" fill="#745f43">规范 + 人群 + 界面</text><text x="110" y="108" text-anchor="middle" font-size="15" fill="#745f43">得到 A ≻ B</text></g>
+    <g transform="translate(630 190)"><rect width="220" height="150" rx="22" fill="#eaf8f4" stroke="#72baa7" stroke-width="2"/><text x="110" y="48" text-anchor="middle" font-size="20" font-weight="700" fill="#205c50">奖励模型</text><text x="110" y="83" text-anchor="middle" font-size="15" fill="#4c6f67">学习相对分数差</text><text x="110" y="108" text-anchor="middle" font-size="15" fill="#4c6f67">只在数据区间校准</text></g>
+    <g transform="translate(910 190)"><rect width="220" height="150" rx="22" fill="#fff0ef" stroke="#d8847e" stroke-width="2"/><text x="110" y="48" text-anchor="middle" font-size="20" font-weight="700" fill="#69332f">策略优化</text><text x="110" y="83" text-anchor="middle" font-size="15" fill="#76504d">最大化 reward − KL</text><text x="110" y="108" text-anchor="middle" font-size="15" fill="#76504d">输出分布发生改变</text></g>
+  </g>
+  <path d="M290 265h42M570 265h42M850 265h42" stroke="#5368d9" stroke-width="4" marker-end="url(#a)"/>
+  <path d="M1020 350c0 120-840 120-840 4" fill="none" stroke="#d76158" stroke-width="4" stroke-dasharray="10 8" marker-end="url(#a)"/>
+  <text x="600" y="470" text-anchor="middle" font-family="system-ui,sans-serif" font-size="17" font-weight="700" fill="#a64f48">重新采样、红队与独立人类评测</text>
+  <text x="600" y="503" text-anchor="middle" font-family="system-ui,sans-serif" font-size="15" fill="#5c6787">若只在旧 reward 上继续优化，分数可能上涨，真实偏好却下降。</text>
+</svg>

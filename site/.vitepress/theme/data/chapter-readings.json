@@ -1,0 +1,3196 @@
+{
+  "00-model": {
+    "lesson_title": "第 00 课 模型、参数与训练",
+    "target_id": "00",
+    "reading_question": "模型的参数、数据、目标函数和计算资源分别决定什么，哪些结论不能由参数量单独推出？",
+    "lectures": [
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L01",
+        "title": "导论与高级 NLP 基础",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-01-intro.pdf",
+        "pages": 62
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L02",
+        "title": "学习表示：文字如何进入模型",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-02-representations.pdf",
+        "pages": 68
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L03",
+        "title": "自回归语言建模",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-03-lm.pdf",
+        "pages": 60
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "A Neural Probabilistic Language Model",
+        "url": "https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf",
+        "guide_url": "",
+        "pages": 19,
+        "source": "CMU Advanced NLP L03",
+        "question": "模型的参数、数据、目标函数和计算资源分别决定什么，哪些结论不能由参数量单独推出？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Natural Language Understanding with Distributed Representation (Ch. 1)",
+        "url": "https://arxiv.org/pdf/1511.07916.pdf",
+        "guide_url": "",
+        "pages": 124,
+        "source": "CMU Advanced NLP L01",
+        "question": "模型的参数、数据、目标函数和计算资源分别决定什么，哪些结论不能由参数量单独推出？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Natural Language Understanding with Distributed Representation (Ch. 2, Ch. 3)",
+        "url": "https://arxiv.org/pdf/1511.07916.pdf",
+        "guide_url": "",
+        "pages": 124,
+        "source": "CMU Advanced NLP L02",
+        "question": "模型的参数、数据、目标函数和计算资源分别决定什么，哪些结论不能由参数量单独推出？"
+      }
+    ]
+  },
+  "01-token": {
+    "lesson_title": "第 01 课 从文字到 Token",
+    "target_id": "01",
+    "reading_question": "分词算法优化的目标是什么，它对序列长度、稀有词和不同语言造成了什么代价？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L14",
+        "title": "分词与多语言",
+        "label": "Guest Lecture Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture14-guest-julie-tokenization-multilinguality.pdf",
+        "pages": 76
+      },
+      {
+        "course": "Stanford CS336",
+        "session": "L01",
+        "title": "课程总览与从零实现 Tokenizer",
+        "label": "Lecture 1 Executable Slides",
+        "url": "/lectures/?trace=var/traces/lecture_01.json",
+        "pages": 0
+      },
+      {
+        "course": "NTU Applied Deep Learning",
+        "session": "W02",
+        "title": "第 2 周：Attention 到 BERT",
+        "label": "Attention Mechanism",
+        "url": "https://www.csie.ntu.edu.tw/~miulab/f114-adl/doc/250908_Attention.pdf",
+        "pages": 28
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Neural Machine Translation of Rare Words with Subword Units",
+        "url": "https://arxiv.org/pdf/1508.07909.pdf",
+        "guide_url": "",
+        "pages": 11,
+        "source": "Stanford CS224N L14",
+        "question": "分词算法优化的目标是什么，它对序列长度、稀有词和不同语言造成了什么代价？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Do All Languages Cost the Same? Tokenization in the Era of Commercial Language Models",
+        "url": "https://aclanthology.org/2023.emnlp-main.614.pdf",
+        "guide_url": "",
+        "pages": 20,
+        "source": "Stanford CS224N L14",
+        "question": "分词算法优化的目标是什么，它对序列长度、稀有词和不同语言造成了什么代价？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Jurafsky & Martin Chapter 2",
+        "url": "https://web.stanford.edu/~jurafsky/slp3/2.pdf",
+        "guide_url": "",
+        "pages": 36,
+        "source": "Stanford CS224N L14",
+        "question": "分词算法优化的目标是什么，它对序列长度、稀有词和不同语言造成了什么代价？"
+      }
+    ]
+  },
+  "02-vector": {
+    "lesson_title": "第 02 课 向量、矩阵与 Word Embeddings",
+    "target_id": "02",
+    "reading_question": "表示是怎样从共现信号学出来的，内在相似度又为什么不等于下游任务有效？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L02",
+        "title": "词向量：让词变成可计算的坐标",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture02-wordvecs.pdf",
+        "pages": 44
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L02",
+        "title": "学习表示：文字如何进入模型",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-02-representations.pdf",
+        "pages": 68
+      },
+      {
+        "course": "NTU Applied Deep Learning",
+        "session": "SUP",
+        "title": "弹性补充：词向量与 BERT 变体",
+        "label": "Word Embeddings",
+        "url": "https://www.csie.ntu.edu.tw/~miulab/f111-adl/doc/220929_WordEmbeddings.pdf",
+        "pages": 48
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Efficient Estimation of Word Representations in Vector Space",
+        "url": "https://arxiv.org/pdf/1301.3781.pdf",
+        "guide_url": "",
+        "pages": 12,
+        "source": "Stanford CS224N L02",
+        "question": "表示是怎样从共现信号学出来的，内在相似度又为什么不等于下游任务有效？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "GloVe: Global Vectors for Word Representation",
+        "url": "http://nlp.stanford.edu/pubs/glove.pdf",
+        "guide_url": "",
+        "pages": 12,
+        "source": "Stanford CS224N L02",
+        "question": "表示是怎样从共现信号学出来的，内在相似度又为什么不等于下游任务有效？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Distributed Representations of Words and Phrases and their Compositionality",
+        "url": "http://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf",
+        "guide_url": "",
+        "pages": 9,
+        "source": "Stanford CS224N L02",
+        "question": "表示是怎样从共现信号学出来的，内在相似度又为什么不等于下游任务有效？"
+      }
+    ]
+  },
+  "03-training": {
+    "lesson_title": "第 04 课 损失、梯度与训练",
+    "target_id": "03",
+    "reading_question": "损失怎样沿计算图传回每张矩阵，作者用什么检查梯度和优化是否正确？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L03",
+        "title": "神经网络与反向传播",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture03-neuralnets.pdf",
+        "pages": 80
+      },
+      {
+        "course": "Stanford CS224N",
+        "session": "S01",
+        "title": "Python 复习课",
+        "label": "Python Review Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w25/2024%20CS224N%20Python%20Review%20Session%20Slides.pptx.pdf",
+        "pages": 66
+      },
+      {
+        "course": "Stanford CS336",
+        "session": "L02",
+        "title": "浮点数、张量形状、计算量与 PyTorch",
+        "label": "Lecture 2 Executable Slides",
+        "url": "/lectures/?trace=var/traces/lecture_02.json",
+        "pages": 0
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Derivatives, Backpropagation, and Vectorization",
+        "url": "http://cs231n.stanford.edu/handouts/derivatives.pdf",
+        "guide_url": "",
+        "pages": 7,
+        "source": "Stanford CS224N L03",
+        "question": "损失怎样沿计算图传回每张矩阵，作者用什么检查梯度和优化是否正确？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "matrix calculus notes",
+        "url": "https://web.stanford.edu/class/cs224n/readings/gradient-notes.pdf",
+        "guide_url": "",
+        "pages": 7,
+        "source": "Stanford CS224N L03",
+        "question": "损失怎样沿计算图传回每张矩阵，作者用什么检查梯度和优化是否正确？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Review of differential calculus",
+        "url": "https://web.stanford.edu/class/cs224n/readings/review-differential-calculus.pdf",
+        "guide_url": "",
+        "pages": 10,
+        "source": "Stanford CS224N L03",
+        "question": "损失怎样沿计算图传回每张矩阵，作者用什么检查梯度和优化是否正确？"
+      }
+    ]
+  },
+  "04-attention": {
+    "lesson_title": "第 06 课 Attention 从零拆解",
+    "target_id": "04",
+    "reading_question": "Query、Key、Value 分别承担什么角色，注意力权重改变时信息流怎样变化？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L05",
+        "title": "Transformer",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture05-transformers.pdf",
+        "pages": 70
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L05",
+        "title": "架构二：Attention 与 Transformer",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-05-attention-transformers.pdf",
+        "pages": 68
+      },
+      {
+        "course": "Stanford CS336",
+        "session": "L04",
+        "title": "Attention 替代路线与混合专家",
+        "label": "Lecture 4 Slides",
+        "url": "https://stanford-cs336.github.io/spring2026/",
+        "pages": 60
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Attention Is All You Need",
+        "url": "https://arxiv.org/pdf/1706.03762.pdf",
+        "guide_url": "",
+        "pages": 15,
+        "source": "Stanford CS224N L05",
+        "question": "Query、Key、Value 分别承担什么角色，注意力权重改变时信息流怎样变化？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Jurafsky and Martin Chapter 9 (The Transformer)",
+        "url": "https://web.stanford.edu/~jurafsky/slp3/9.pdf",
+        "guide_url": "",
+        "pages": 18,
+        "source": "Stanford CS224N L05",
+        "question": "Query、Key、Value 分别承担什么角色，注意力权重改变时信息流怎样变化？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "On Layer Normalization in the Transformer Architecture",
+        "url": "https://arxiv.org/pdf/2002.04745.pdf",
+        "guide_url": "",
+        "pages": 17,
+        "source": "CMU Advanced NLP L05",
+        "question": "Query、Key、Value 分别承担什么角色，注意力权重改变时信息流怎样变化？"
+      }
+    ]
+  },
+  "05-transformer": {
+    "lesson_title": "第 07 课 图解完整 Transformer",
+    "target_id": "05",
+    "reading_question": "论文究竟改变了 Transformer Block 的哪一步，收益来自表达能力还是训练/系统效率？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L05",
+        "title": "Transformer",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture05-transformers.pdf",
+        "pages": 70
+      },
+      {
+        "course": "Stanford CS224N",
+        "session": "S02",
+        "title": "Hugging Face Transformers 实作课",
+        "label": "Tutorial Slides",
+        "url": "https://web.stanford.edu/class/cs224n/materials/hf_transformers_tutorial.pdf",
+        "pages": 20
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L05",
+        "title": "架构二：Attention 与 Transformer",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-05-attention-transformers.pdf",
+        "pages": 68
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Attention Is All You Need",
+        "url": "https://arxiv.org/pdf/1706.03762.pdf",
+        "guide_url": "",
+        "pages": 15,
+        "source": "Stanford CS224N L05",
+        "question": "论文究竟改变了 Transformer Block 的哪一步，收益来自表达能力还是训练/系统效率？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "On Layer Normalization in the Transformer Architecture",
+        "url": "https://arxiv.org/pdf/2002.04745.pdf",
+        "guide_url": "",
+        "pages": 17,
+        "source": "CMU Advanced NLP L05",
+        "question": "论文究竟改变了 Transformer Block 的哪一步，收益来自表达能力还是训练/系统效率？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints",
+        "url": "https://arxiv.org/pdf/2305.13245.pdf",
+        "guide_url": "",
+        "pages": 7,
+        "source": "CMU Advanced NLP L05",
+        "question": "论文究竟改变了 Transformer Block 的哪一步，收益来自表达能力还是训练/系统效率？"
+      }
+    ]
+  },
+  "06-generation": {
+    "lesson_title": "第 12 课 生成、Prefill 与 KV Cache",
+    "target_id": "06",
+    "reading_question": "训练时并行预测与推理时逐 token 生成有何不同，缓存和验证把成本转移到了哪里？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L13",
+        "title": "推理（二）：验证与测试时计算",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture13-reasoning-part2.pdf",
+        "pages": 59
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L09",
+        "title": "推理：解码算法",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-09-decoding.pdf",
+        "pages": 62
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L23",
+        "title": "测试时扩展",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-23-inference-scaling.pdf",
+        "pages": 74
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Fast Inference from Transformers via Speculative Decoding",
+        "url": "https://arxiv.org/pdf/2211.17192.pdf",
+        "guide_url": "",
+        "pages": 13,
+        "source": "Stanford CS224N L13",
+        "question": "训练时并行预测与推理时逐 token 生成有何不同，缓存和验证把成本转移到了哪里？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "From Decoding to Meta-Generation: Inference-time Algorithms for Large Language Models (Sections 1-3)",
+        "url": "https://arxiv.org/pdf/2406.16838.pdf",
+        "guide_url": "",
+        "pages": 53,
+        "source": "CMU Advanced NLP L09",
+        "question": "训练时并行预测与推理时逐 token 生成有何不同，缓存和验证把成本转移到了哪里？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "From Decoding to Meta-Generation: Inference-time Algorithms for Large Language Models (Sections 4-7)",
+        "url": "https://arxiv.org/pdf/2406.16838.pdf",
+        "guide_url": "",
+        "pages": 53,
+        "source": "CMU Advanced NLP L23",
+        "question": "训练时并行预测与推理时逐 token 生成有何不同，缓存和验证把成本转移到了哪里？"
+      }
+    ]
+  },
+  "07-moe": {
+    "lesson_title": "第 13 课 MoE 从零拆解",
+    "target_id": "07",
+    "reading_question": "总参数、激活参数与通信量要怎样分开报告，路由失衡会怎样破坏收益？",
+    "lectures": [
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L21",
+        "title": "混合专家模型 MoE",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-21-moe.pdf",
+        "pages": 55
+      },
+      {
+        "course": "Stanford CS336",
+        "session": "L04",
+        "title": "Attention 替代路线与混合专家",
+        "label": "Lecture 4 Slides",
+        "url": "https://stanford-cs336.github.io/spring2026/",
+        "pages": 60
+      },
+      {
+        "course": "NTU Applied Deep Learning",
+        "session": "W05",
+        "title": "第 5 周：RAG 与 MoE",
+        "label": "Retrieval-Augmented Generation",
+        "url": "https://www.csie.ntu.edu.tw/~miulab/f114-adl/doc/251013_RAG.pdf",
+        "pages": 60
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Switch Transformer",
+        "url": "https://arxiv.org/pdf/2101.03961.pdf",
+        "guide_url": "",
+        "pages": 40,
+        "source": "LLM Systems L19",
+        "question": "总参数、激活参数与通信量要怎样分开报告，路由失衡会怎样破坏收益？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "OLMoE: Open Mixture-of-Experts Language Models",
+        "url": "https://arxiv.org/pdf/2409.02060.pdf",
+        "guide_url": "",
+        "pages": 63,
+        "source": "CMU Advanced NLP L21",
+        "question": "总参数、激活参数与通信量要怎样分开报告，路由失衡会怎样破坏收益？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "DeepSeekMoE: Towards Ultimate Expert Specialization in Mixture-of-Experts Language Models",
+        "url": "https://arxiv.org/pdf/2401.06066.pdf",
+        "guide_url": "",
+        "pages": 33,
+        "source": "CMU Advanced NLP L21",
+        "question": "总参数、激活参数与通信量要怎样分开报告，路由失衡会怎样破坏收益？"
+      }
+    ]
+  },
+  "08-post-training": {
+    "lesson_title": "第 17 课 从预训练到 Agent",
+    "target_id": "28",
+    "reading_question": "SFT、偏好学习和在线 RL 分别提供什么监督，策略分布何时发生变化？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L08",
+        "title": "后训练：SFT、RLHF 与 DPO",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture08-posttraining.pdf",
+        "pages": 64
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L17",
+        "title": "强化学习二：大模型应用",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-17-rl-llms.pdf",
+        "pages": 67
+      },
+      {
+        "course": "Stanford CS336",
+        "session": "L15",
+        "title": "中训练、指令微调与偏好对齐",
+        "label": "Lecture 15 Slides",
+        "url": "https://stanford-cs336.github.io/spring2026/",
+        "pages": 65
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Training language models to follow instructions with human feedback",
+        "url": "https://arxiv.org/pdf/2203.02155.pdf",
+        "guide_url": "",
+        "pages": 68,
+        "source": "CMU Advanced NLP L17",
+        "question": "SFT、偏好学习和在线 RL 分别提供什么监督，策略分布何时发生变化？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Scaling Instruction-Finetuned Language Models",
+        "url": "https://arxiv.org/pdf/2210.11416.pdf",
+        "guide_url": "",
+        "pages": 54,
+        "source": "Stanford CS224N L08",
+        "question": "SFT、偏好学习和在线 RL 分别提供什么监督，策略分布何时发生变化？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Deep reinforcement learning from human preferences",
+        "url": "https://arxiv.org/pdf/1706.03741.pdf",
+        "guide_url": "",
+        "pages": 17,
+        "source": "CMU Advanced NLP L17",
+        "question": "SFT、偏好学习和在线 RL 分别提供什么监督，策略分布何时发生变化？"
+      }
+    ]
+  },
+  "09-k3-map": {
+    "lesson_title": "第 52 课 Kimi K3 全景拼装",
+    "target_id": null,
+    "reading_question": "K3 的架构、训练与系统组件分别解决哪个规模瓶颈，论文证据支持到什么程度？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L07",
+        "title": "预训练：规模、系统与数据",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture07-pretraining.pdf",
+        "pages": 56
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L06",
+        "title": "学习一：预训练",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-06-pretraining.pdf",
+        "pages": 57
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Kimi K3: Open Frontier Intelligence",
+        "url": "https://arxiv.org/pdf/2607.24653",
+        "guide_url": "/papers/kimi_k3",
+        "pages": 47,
+        "source": "核心论文库",
+        "question": "K3 的架构、训练与系统组件分别解决哪个规模瓶颈，论文证据支持到什么程度？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Kimi Linear: An Expressive, Efficient Attention Architecture",
+        "url": "https://arxiv.org/pdf/2510.26692",
+        "guide_url": "/papers/kimi_linear",
+        "pages": 28,
+        "source": "核心论文库",
+        "question": "K3 的架构、训练与系统组件分别解决哪个规模瓶颈，论文证据支持到什么程度？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "LatentMoE: Toward Optimal Accuracy per FLOP and Parameter in Mixture of Experts",
+        "url": "https://arxiv.org/pdf/2601.18089",
+        "guide_url": "/papers/latent_moe",
+        "pages": 18,
+        "source": "核心论文库",
+        "question": "K3 的架构、训练与系统组件分别解决哪个规模瓶颈，论文证据支持到什么程度？"
+      }
+    ]
+  },
+  "10-language-models": {
+    "lesson_title": "第 05 课 语言模型怎样一步步长出来",
+    "target_id": "10",
+    "reading_question": "每代语言模型解决了前代的哪个瓶颈，又引入了什么新的依赖或成本？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L01",
+        "title": "NLP 的历史与课程地图",
+        "label": "课程导论 Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture01-intro.pdf",
+        "pages": 21
+      },
+      {
+        "course": "Stanford CS224N",
+        "session": "L04",
+        "title": "语言模型与循环神经网络",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture04-rnnlm.pdf",
+        "pages": 59
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L01",
+        "title": "导论与高级 NLP 基础",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-01-intro.pdf",
+        "pages": 62
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Recurrent neural network based language model",
+        "url": "https://www.isca-archive.org/interspeech_2010/mikolov10_interspeech.pdf",
+        "guide_url": "",
+        "pages": 4,
+        "source": "CMU Advanced NLP L04",
+        "question": "每代语言模型解决了前代的哪个瓶颈，又引入了什么新的依赖或成本？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "A Neural Probabilistic Language Model",
+        "url": "https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf",
+        "guide_url": "",
+        "pages": 19,
+        "source": "CMU Advanced NLP L03",
+        "question": "每代语言模型解决了前代的哪个瓶颈，又引入了什么新的依赖或成本？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Natural Language Understanding with Distributed Representation (Ch. 1)",
+        "url": "https://arxiv.org/pdf/1511.07916.pdf",
+        "guide_url": "",
+        "pages": 124,
+        "source": "CMU Advanced NLP L01",
+        "question": "每代语言模型解决了前代的哪个瓶颈，又引入了什么新的依赖或成本？"
+      }
+    ]
+  },
+  "11-decoding": {
+    "lesson_title": "第 35 课 从概率到文字：解码与采样",
+    "target_id": "11",
+    "reading_question": "解码算法改变的是模型分布还是搜索过程，它怎样影响质量、多样性与延迟？",
+    "lectures": [
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L09",
+        "title": "推理：解码算法",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-09-decoding.pdf",
+        "pages": 62
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L23",
+        "title": "测试时扩展",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-23-inference-scaling.pdf",
+        "pages": 74
+      },
+      {
+        "course": "Stanford CS336",
+        "session": "L10",
+        "title": "大模型推理工作负载与优化",
+        "label": "Lecture 10 Executable Slides",
+        "url": "/lectures/?trace=var/traces/lecture_10.json",
+        "pages": 0
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "From Decoding to Meta-Generation: Inference-time Algorithms for Large Language Models (Sections 1-3)",
+        "url": "https://arxiv.org/pdf/2406.16838.pdf",
+        "guide_url": "",
+        "pages": 53,
+        "source": "CMU Advanced NLP L09",
+        "question": "解码算法改变的是模型分布还是搜索过程，它怎样影响质量、多样性与延迟？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "From Decoding to Meta-Generation: Inference-time Algorithms for Large Language Models (Sections 4-7)",
+        "url": "https://arxiv.org/pdf/2406.16838.pdf",
+        "guide_url": "",
+        "pages": 53,
+        "source": "CMU Advanced NLP L23",
+        "question": "解码算法改变的是模型分布还是搜索过程，它怎样影响质量、多样性与延迟？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning",
+        "url": "https://arxiv.org/pdf/2501.12948.pdf",
+        "guide_url": "",
+        "pages": 86,
+        "source": "CMU Advanced NLP L23",
+        "question": "解码算法改变的是模型分布还是搜索过程，它怎样影响质量、多样性与延迟？"
+      }
+    ]
+  },
+  "12-evaluation": {
+    "lesson_title": "第 46 课 大模型到底怎样评测",
+    "target_id": "12",
+    "reading_question": "基准分数对应什么任务分布，污染、提示格式和统计不确定性会怎样改变结论？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L11",
+        "title": "基准测试与评测",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture11-evaluation.pdf",
+        "pages": 77
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L13",
+        "title": "评测技术",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-13-evaluation.pdf",
+        "pages": 33
+      },
+      {
+        "course": "Stanford CS336",
+        "session": "L12",
+        "title": "从困惑度到 Agent 的评测",
+        "label": "Lecture 12 Executable Slides",
+        "url": "/lectures/?trace=var/traces/lecture_12.json",
+        "pages": 0
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Adding Error Bars to Evals: A Statistical Approach to Language Model Evaluations",
+        "url": "https://arxiv.org/pdf/2411.00640.pdf",
+        "guide_url": "",
+        "pages": 14,
+        "source": "CMU Advanced NLP L13",
+        "question": "基准分数对应什么任务分布，污染、提示格式和统计不确定性会怎样改变结论？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Holistic Evaluation of Language Models",
+        "url": "https://arxiv.org/pdf/2211.09110.pdf",
+        "guide_url": "",
+        "pages": 162,
+        "source": "Stanford CS224N L11",
+        "question": "基准分数对应什么任务分布，污染、提示格式和统计不确定性会怎样改变结论？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Measuring Massive Multitask Language Understanding",
+        "url": "https://arxiv.org/pdf/2009.03300.pdf",
+        "guide_url": "",
+        "pages": 27,
+        "source": "Stanford CS224N L11",
+        "question": "基准分数对应什么任务分布，污染、提示格式和统计不确定性会怎样改变结论？"
+      }
+    ]
+  },
+  "13-architectures": {
+    "lesson_title": "第 11 课 大模型架构总览",
+    "target_id": "13",
+    "reading_question": "架构差异改变的是状态、信息混合还是计算路径，比较时哪些预算必须保持一致？",
+    "lectures": [
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L04",
+        "title": "架构一：循环神经网络",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-04-rnns.pdf",
+        "pages": 52
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L05",
+        "title": "架构二：Attention 与 Transformer",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-05-attention-transformers.pdf",
+        "pages": 68
+      },
+      {
+        "course": "Stanford CS336",
+        "session": "L03",
+        "title": "语言模型架构与超参数",
+        "label": "Lecture 3 Slides",
+        "url": "https://stanford-cs336.github.io/spring2026/",
+        "pages": 67
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "On Layer Normalization in the Transformer Architecture",
+        "url": "https://arxiv.org/pdf/2002.04745.pdf",
+        "guide_url": "",
+        "pages": 17,
+        "source": "CMU Advanced NLP L05",
+        "question": "架构差异改变的是状态、信息混合还是计算路径，比较时哪些预算必须保持一致？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Recurrent neural network based language model",
+        "url": "https://www.isca-archive.org/interspeech_2010/mikolov10_interspeech.pdf",
+        "guide_url": "",
+        "pages": 4,
+        "source": "CMU Advanced NLP L04",
+        "question": "架构差异改变的是状态、信息混合还是计算路径，比较时哪些预算必须保持一致？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "RoFormer: Enhanced Transformer with Rotary Position Embedding",
+        "url": "https://arxiv.org/pdf/2104.09864.pdf",
+        "guide_url": "",
+        "pages": 14,
+        "source": "CMU Advanced NLP L05",
+        "question": "架构差异改变的是状态、信息混合还是计算路径，比较时哪些预算必须保持一致？"
+      }
+    ]
+  },
+  "14-bert": {
+    "lesson_title": "第 08 课 Encoder-only 与 BERT",
+    "target_id": "14",
+    "reading_question": "双向 Masked LM 学到了什么表示，它为什么适合编码任务而不能直接因果生成？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L07",
+        "title": "预训练：规模、系统与数据",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture07-pretraining.pdf",
+        "pages": 56
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L06",
+        "title": "学习一：预训练",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-06-pretraining.pdf",
+        "pages": 57
+      },
+      {
+        "course": "NTU Applied Deep Learning",
+        "session": "SUP",
+        "title": "弹性补充：词向量与 BERT 变体",
+        "label": "Word Embeddings",
+        "url": "https://www.csie.ntu.edu.tw/~miulab/f111-adl/doc/220929_WordEmbeddings.pdf",
+        "pages": 48
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+        "url": "https://arxiv.org/pdf/1810.04805.pdf",
+        "guide_url": "",
+        "pages": 16,
+        "source": "Stanford CS224N L07",
+        "question": "双向 Masked LM 学到了什么表示，它为什么适合编码任务而不能直接因果生成？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Jurafsky and Martin Chapter 10 (Masked Language Models)",
+        "url": "https://web.stanford.edu/~jurafsky/slp3/10.pdf",
+        "guide_url": "",
+        "pages": 20,
+        "source": "Stanford CS224N L07",
+        "question": "双向 Masked LM 学到了什么表示，它为什么适合编码任务而不能直接因果生成？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Contextual Word Representations: A Contextual Introduction",
+        "url": "https://arxiv.org/pdf/1902.06006.pdf",
+        "guide_url": "",
+        "pages": 15,
+        "source": "Stanford CS224N L07",
+        "question": "双向 Masked LM 学到了什么表示，它为什么适合编码任务而不能直接因果生成？"
+      }
+    ]
+  },
+  "15-encoder-decoder": {
+    "lesson_title": "第 09 课 Encoder-Decoder、T5 与 BART",
+    "target_id": "15",
+    "reading_question": "Encoder、跨注意力与 Decoder 各自看见什么信息，训练和推理的可见性是否一致？",
+    "lectures": [
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L04",
+        "title": "架构一：循环神经网络",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-04-rnns.pdf",
+        "pages": 52
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Neural Machine Translation by Jointly Learning to Align and Translate",
+        "url": "https://arxiv.org/pdf/1409.0473.pdf",
+        "guide_url": "",
+        "pages": 15,
+        "source": "CMU Advanced NLP L04",
+        "question": "Encoder、跨注意力与 Decoder 各自看见什么信息，训练和推理的可见性是否一致？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation",
+        "url": "https://arxiv.org/pdf/1406.1078.pdf",
+        "guide_url": "",
+        "pages": 15,
+        "source": "CMU Advanced NLP L04",
+        "question": "Encoder、跨注意力与 Decoder 各自看见什么信息，训练和推理的可见性是否一致？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Natural Language Understanding with Distributed Representation (Ch. 4, Ch. 5.5-5.6, Ch. 6)",
+        "url": "https://arxiv.org/pdf/1511.07916.pdf",
+        "guide_url": "",
+        "pages": 124,
+        "source": "CMU Advanced NLP L04",
+        "question": "Encoder、跨注意力与 Decoder 各自看见什么信息，训练和推理的可见性是否一致？"
+      }
+    ]
+  },
+  "16-decoder-ssm": {
+    "lesson_title": "第 10 课 Decoder-only、GPT、LLaMA 与非 Transformer",
+    "target_id": "16",
+    "reading_question": "自回归、循环状态与显式 Attention 各自保存什么历史，长序列代价怎样不同？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L01",
+        "title": "NLP 的历史与课程地图",
+        "label": "课程导论 Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture01-intro.pdf",
+        "pages": 21
+      },
+      {
+        "course": "Stanford CS224N",
+        "session": "L04",
+        "title": "语言模型与循环神经网络",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture04-rnnlm.pdf",
+        "pages": 59
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L03",
+        "title": "自回归语言建模",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-03-lm.pdf",
+        "pages": 60
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "On the difficulty of training Recurrent Neural Networks",
+        "url": "https://arxiv.org/pdf/1211.5063.pdf",
+        "guide_url": "",
+        "pages": 12,
+        "source": "Stanford CS224N L04",
+        "question": "自回归、循环状态与显式 Attention 各自保存什么历史，长序列代价怎样不同？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Recurrent neural network based language model",
+        "url": "https://www.isca-archive.org/interspeech_2010/mikolov10_interspeech.pdf",
+        "guide_url": "",
+        "pages": 4,
+        "source": "CMU Advanced NLP L04",
+        "question": "自回归、循环状态与显式 Attention 各自保存什么历史，长序列代价怎样不同？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "WebGPT: Browser-assisted question-answering with human feedback",
+        "url": "https://arxiv.org/pdf/2112.09332.pdf",
+        "guide_url": "",
+        "pages": 32,
+        "source": "CMU Advanced NLP L18",
+        "question": "自回归、循环状态与显式 Attention 各自保存什么历史，长序列代价怎样不同？"
+      }
+    ]
+  },
+  "17-prompting": {
+    "lesson_title": "第 18 课 Prompt 基础与上下文学习",
+    "target_id": "17",
+    "reading_question": "模型从示例中临时学到了什么，效果究竟来自任务说明、示例内容还是示例顺序？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L09",
+        "title": "高效适配：Prompt 与 PEFT",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture09-peft.pdf",
+        "pages": 67
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L07",
+        "title": "Scaling Laws 与上下文学习",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-07-pretraining2-prompting.pdf",
+        "pages": 51
+      },
+      {
+        "course": "NTU Applied Deep Learning",
+        "session": "W03",
+        "title": "第 3 周：预训练与 Prompt Learning",
+        "label": "Pretraining & Prompt Learning",
+        "url": "https://www.csie.ntu.edu.tw/~miulab/f114-adl/doc/250915_Pretraining.pdf",
+        "pages": 67
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models",
+        "url": "https://arxiv.org/pdf/2201.11903.pdf",
+        "guide_url": "",
+        "pages": 43,
+        "source": "Stanford CS224N L09",
+        "question": "模型从示例中临时学到了什么，效果究竟来自任务说明、示例内容还是示例顺序？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Language Models are Few-Shot Learners",
+        "url": "https://arxiv.org/pdf/2005.14165.pdf",
+        "guide_url": "",
+        "pages": 75,
+        "source": "Stanford CS224N L09",
+        "question": "模型从示例中临时学到了什么，效果究竟来自任务说明、示例内容还是示例顺序？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Deep Learning Scaling is Predictable, Empirically",
+        "url": "https://arxiv.org/pdf/1712.00409.pdf",
+        "guide_url": "",
+        "pages": 19,
+        "source": "CMU Advanced NLP L07",
+        "question": "模型从示例中临时学到了什么，效果究竟来自任务说明、示例内容还是示例顺序？"
+      }
+    ]
+  },
+  "18-prompt-advanced": {
+    "lesson_title": "第 19 课 Prompt 进阶：示例、分解、验证与应用",
+    "target_id": "18",
+    "reading_question": "提示方法是在增加信息、改变搜索，还是只改变输出格式，失败时如何区分？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L09",
+        "title": "高效适配：Prompt 与 PEFT",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture09-peft.pdf",
+        "pages": 67
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L07",
+        "title": "Scaling Laws 与上下文学习",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-07-pretraining2-prompting.pdf",
+        "pages": 51
+      },
+      {
+        "course": "NTU Applied Deep Learning",
+        "session": "W03",
+        "title": "第 3 周：预训练与 Prompt Learning",
+        "label": "Pretraining & Prompt Learning",
+        "url": "https://www.csie.ntu.edu.tw/~miulab/f114-adl/doc/250915_Pretraining.pdf",
+        "pages": 67
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models",
+        "url": "https://arxiv.org/pdf/2201.11903.pdf",
+        "guide_url": "",
+        "pages": 43,
+        "source": "Stanford CS224N L09",
+        "question": "提示方法是在增加信息、改变搜索，还是只改变输出格式，失败时如何区分？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Language Models are Few-Shot Learners",
+        "url": "https://arxiv.org/pdf/2005.14165.pdf",
+        "guide_url": "",
+        "pages": 75,
+        "source": "Stanford CS224N L09",
+        "question": "提示方法是在增加信息、改变搜索，还是只改变输出格式，失败时如何区分？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Deep Learning Scaling is Predictable, Empirically",
+        "url": "https://arxiv.org/pdf/1712.00409.pdf",
+        "guide_url": "",
+        "pages": 19,
+        "source": "CMU Advanced NLP L07",
+        "question": "提示方法是在增加信息、改变搜索，还是只改变输出格式，失败时如何区分？"
+      }
+    ]
+  },
+  "19-peft": {
+    "lesson_title": "第 20 课 参数高效微调全景",
+    "target_id": "19",
+    "reading_question": "可训练参数减少后，表示瓶颈落在哪里，论文是否用同数据和同预算公平比较？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L09",
+        "title": "高效适配：Prompt 与 PEFT",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture09-peft.pdf",
+        "pages": 67
+      },
+      {
+        "course": "Stanford CS224N",
+        "session": "S02",
+        "title": "Hugging Face Transformers 实作课",
+        "label": "Tutorial Slides",
+        "url": "https://web.stanford.edu/class/cs224n/materials/hf_transformers_tutorial.pdf",
+        "pages": 20
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L08",
+        "title": "微调与知识蒸馏",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-08-finetuning.pdf",
+        "pages": 40
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+        "url": "https://arxiv.org/pdf/2106.09685.pdf",
+        "guide_url": "",
+        "pages": 26,
+        "source": "CMU Advanced NLP L08",
+        "question": "可训练参数减少后，表示瓶颈落在哪里，论文是否用同数据和同预算公平比较？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "QLoRA: Efficient Finetuning of Quantized LLMs",
+        "url": "https://arxiv.org/pdf/2305.14314.pdf",
+        "guide_url": "",
+        "pages": 26,
+        "source": "CMU Advanced NLP L08",
+        "question": "可训练参数减少后，表示瓶颈落在哪里，论文是否用同数据和同预算公平比较？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Language Models are Few-Shot Learners",
+        "url": "https://arxiv.org/pdf/2005.14165.pdf",
+        "guide_url": "",
+        "pages": 75,
+        "source": "Stanford CS224N L09",
+        "question": "可训练参数减少后，表示瓶颈落在哪里，论文是否用同数据和同预算公平比较？"
+      }
+    ]
+  },
+  "20-lora": {
+    "lesson_title": "第 21 课 LoRA 深入：秩、目标层、合并与实验",
+    "target_id": "20",
+    "reading_question": "低秩分解限制了哪些更新方向，rank、目标层和缩放系数怎样影响容量？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L09",
+        "title": "高效适配：Prompt 与 PEFT",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture09-peft.pdf",
+        "pages": 67
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L08",
+        "title": "微调与知识蒸馏",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-08-finetuning.pdf",
+        "pages": 40
+      },
+      {
+        "course": "LLM Systems",
+        "session": "L18",
+        "title": "大模型高效微调",
+        "label": "Slides",
+        "url": "https://llmsystem.github.io/llmsystem2025spring/assets/files/llmsys-18-peft-1555d9a7770e87fb10e2e95bf46ef12d.pdf",
+        "pages": 45
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+        "url": "https://arxiv.org/pdf/2106.09685.pdf",
+        "guide_url": "",
+        "pages": 26,
+        "source": "CMU Advanced NLP L08",
+        "question": "低秩分解限制了哪些更新方向，rank、目标层和缩放系数怎样影响容量？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "QLoRA: Efficient Finetuning of Quantized LLMs",
+        "url": "https://arxiv.org/pdf/2305.14314.pdf",
+        "guide_url": "",
+        "pages": 26,
+        "source": "CMU Advanced NLP L08",
+        "question": "低秩分解限制了哪些更新方向，rank、目标层和缩放系数怎样影响容量？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Language Models are Few-Shot Learners",
+        "url": "https://arxiv.org/pdf/2005.14165.pdf",
+        "guide_url": "",
+        "pages": 75,
+        "source": "Stanford CS224N L09",
+        "question": "低秩分解限制了哪些更新方向，rank、目标层和缩放系数怎样影响容量？"
+      }
+    ]
+  },
+  "21-model-editing": {
+    "lesson_title": "第 22 课 模型编辑",
+    "target_id": "21",
+    "reading_question": "一次知识更新是否同时满足有效性、泛化、局部性和持久性？",
+    "lectures": [
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L10",
+        "title": "建模一：检索与 RAG",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-10-rag.pdf",
+        "pages": 189
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "When Not to Trust Language Models: Investigating Effectiveness of Parametric and Non-Parametric Memories",
+        "url": "https://arxiv.org/pdf/2212.10511.pdf",
+        "guide_url": "",
+        "pages": 19,
+        "source": "CMU Advanced NLP L10",
+        "question": "一次知识更新是否同时满足有效性、泛化、局部性和持久性？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Retrieval-based Language Models and Applications",
+        "url": "https://aclanthology.org/2023.acl-tutorials.6.pdf",
+        "guide_url": "",
+        "pages": 6,
+        "source": "CMU Advanced NLP L10",
+        "question": "一次知识更新是否同时满足有效性、泛化、局部性和持久性？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Reliable, Adaptable, and Attributable Language Models with Retrieval",
+        "url": "https://arxiv.org/pdf/2403.03187.pdf",
+        "guide_url": "",
+        "pages": 21,
+        "source": "CMU Advanced NLP L10",
+        "question": "一次知识更新是否同时满足有效性、泛化、局部性和持久性？"
+      }
+    ]
+  },
+  "22-rag": {
+    "lesson_title": "第 39 课 RAG 基础架构",
+    "target_id": "22",
+    "reading_question": "检索到底补充了哪类外部记忆，检索错、证据错和生成错怎样分开定位？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L10",
+        "title": "Agent、工具调用与 RAG",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture10-rag-agents.pdf",
+        "pages": 72
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L08",
+        "title": "微调与知识蒸馏",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-08-finetuning.pdf",
+        "pages": 40
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L10",
+        "title": "建模一：检索与 RAG",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-10-rag.pdf",
+        "pages": 189
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+        "url": "https://arxiv.org/pdf/2005.11401.pdf",
+        "guide_url": "",
+        "pages": 19,
+        "source": "Stanford CS224N L10",
+        "question": "检索到底补充了哪类外部记忆，检索错、证据错和生成错怎样分开定位？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Retrieval-based Language Models and Applications",
+        "url": "https://aclanthology.org/2023.acl-tutorials.6.pdf",
+        "guide_url": "",
+        "pages": 6,
+        "source": "CMU Advanced NLP L10",
+        "question": "检索到底补充了哪类外部记忆，检索错、证据错和生成错怎样分开定位？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection",
+        "url": "https://arxiv.org/pdf/2310.11511.pdf",
+        "guide_url": "",
+        "pages": 30,
+        "source": "CMU Advanced NLP L10",
+        "question": "检索到底补充了哪类外部记忆，检索错、证据错和生成错怎样分开定位？"
+      }
+    ]
+  },
+  "23-rag-retrieval": {
+    "lesson_title": "第 40 课 RAG 检索系统深入",
+    "target_id": "23",
+    "reading_question": "召回器、向量表示和重排器分别优化什么指标，离线召回怎样传导到最终答案？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L10",
+        "title": "Agent、工具调用与 RAG",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture10-rag-agents.pdf",
+        "pages": 72
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L10",
+        "title": "建模一：检索与 RAG",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-10-rag.pdf",
+        "pages": 189
+      },
+      {
+        "course": "NTU Applied Deep Learning",
+        "session": "W05",
+        "title": "第 5 周：RAG 与 MoE",
+        "label": "Retrieval-Augmented Generation",
+        "url": "https://www.csie.ntu.edu.tw/~miulab/f114-adl/doc/251013_RAG.pdf",
+        "pages": 60
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Retrieval-based Language Models and Applications",
+        "url": "https://aclanthology.org/2023.acl-tutorials.6.pdf",
+        "guide_url": "",
+        "pages": 6,
+        "source": "CMU Advanced NLP L10",
+        "question": "召回器、向量表示和重排器分别优化什么指标，离线召回怎样传导到最终答案？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+        "url": "https://arxiv.org/pdf/2005.11401.pdf",
+        "guide_url": "",
+        "pages": 19,
+        "source": "Stanford CS224N L10",
+        "question": "召回器、向量表示和重排器分别优化什么指标，离线召回怎样传导到最终答案？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Task-aware Retrieval with Instructions",
+        "url": "https://arxiv.org/pdf/2211.09260.pdf",
+        "guide_url": "",
+        "pages": 25,
+        "source": "CMU Advanced NLP L10",
+        "question": "召回器、向量表示和重排器分别优化什么指标，离线召回怎样传导到最终答案？"
+      }
+    ]
+  },
+  "24-rag-generation": {
+    "lesson_title": "第 41 课 RAG 生成增强、效率与实践",
+    "target_id": "24",
+    "reading_question": "模型是否忠实使用证据，引用正确、答案正确与证据充分为什么不是同一件事？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L10",
+        "title": "Agent、工具调用与 RAG",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture10-rag-agents.pdf",
+        "pages": 72
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L10",
+        "title": "建模一：检索与 RAG",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-10-rag.pdf",
+        "pages": 189
+      },
+      {
+        "course": "NTU Applied Deep Learning",
+        "session": "W05",
+        "title": "第 5 周：RAG 与 MoE",
+        "label": "Retrieval-Augmented Generation",
+        "url": "https://www.csie.ntu.edu.tw/~miulab/f114-adl/doc/251013_RAG.pdf",
+        "pages": 60
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Reliable, Adaptable, and Attributable Language Models with Retrieval",
+        "url": "https://arxiv.org/pdf/2403.03187.pdf",
+        "guide_url": "",
+        "pages": 21,
+        "source": "CMU Advanced NLP L10",
+        "question": "模型是否忠实使用证据，引用正确、答案正确与证据充分为什么不是同一件事？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+        "url": "https://arxiv.org/pdf/2005.11401.pdf",
+        "guide_url": "",
+        "pages": 19,
+        "source": "Stanford CS224N L10",
+        "question": "模型是否忠实使用证据，引用正确、答案正确与证据充分为什么不是同一件事？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "OpenScholar: Synthesizing Scientific Literature with Retrieval-Augmented LMs",
+        "url": "https://arxiv.org/pdf/2411.14199.pdf",
+        "guide_url": "",
+        "pages": 53,
+        "source": "CMU Advanced NLP L10",
+        "question": "模型是否忠实使用证据，引用正确、答案正确与证据充分为什么不是同一件事？"
+      }
+    ]
+  },
+  "25-data-scaling": {
+    "lesson_title": "第 14 课 Scaling：参数、数据与算力怎样配平",
+    "target_id": "25",
+    "reading_question": "在固定 FLOPs 下参数量与训练 token 怎样配平，数据质量变化会怎样移动最优点？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L07",
+        "title": "预训练：规模、系统与数据",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture07-pretraining.pdf",
+        "pages": 56
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L06",
+        "title": "学习一：预训练",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-06-pretraining.pdf",
+        "pages": 57
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L07",
+        "title": "Scaling Laws 与上下文学习",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-07-pretraining2-prompting.pdf",
+        "pages": 51
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Training Compute-Optimal Large Language Models",
+        "url": "https://arxiv.org/pdf/2203.15556.pdf",
+        "guide_url": "",
+        "pages": 36,
+        "source": "CMU Advanced NLP L07",
+        "question": "在固定 FLOPs 下参数量与训练 token 怎样配平，数据质量变化会怎样移动最优点？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "The FineWeb Datasets: Decanting the Web for the Finest Text Data at Scale",
+        "url": "https://arxiv.org/pdf/2406.17557.pdf",
+        "guide_url": "",
+        "pages": 38,
+        "source": "CMU Advanced NLP L06",
+        "question": "在固定 FLOPs 下参数量与训练 token 怎样配平，数据质量变化会怎样移动最优点？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Deep Learning Scaling is Predictable, Empirically",
+        "url": "https://arxiv.org/pdf/1712.00409.pdf",
+        "guide_url": "",
+        "pages": 19,
+        "source": "CMU Advanced NLP L07",
+        "question": "在固定 FLOPs 下参数量与训练 token 怎样配平，数据质量变化会怎样移动最优点？"
+      }
+    ]
+  },
+  "26-training-engineering": {
+    "lesson_title": "第 15 课 自动微分、优化器、框架与 GPU",
+    "target_id": "26",
+    "reading_question": "理论 FLOPs、显存占用与真实吞吐为何不同，瓶颈在计算、内存还是数据管线？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L03",
+        "title": "神经网络与反向传播",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture03-neuralnets.pdf",
+        "pages": 80
+      },
+      {
+        "course": "Stanford CS224N",
+        "session": "S01",
+        "title": "Python 复习课",
+        "label": "Python Review Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w25/2024%20CS224N%20Python%20Review%20Session%20Slides.pptx.pdf",
+        "pages": 66
+      },
+      {
+        "course": "Stanford CS336",
+        "session": "L02",
+        "title": "浮点数、张量形状、计算量与 PyTorch",
+        "label": "Lecture 2 Executable Slides",
+        "url": "/lectures/?trace=var/traces/lecture_02.json",
+        "pages": 0
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "matrix calculus notes",
+        "url": "https://web.stanford.edu/class/cs224n/readings/gradient-notes.pdf",
+        "guide_url": "",
+        "pages": 7,
+        "source": "Stanford CS224N L03",
+        "question": "理论 FLOPs、显存占用与真实吞吐为何不同，瓶颈在计算、内存还是数据管线？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Review of differential calculus",
+        "url": "https://web.stanford.edu/class/cs224n/readings/review-differential-calculus.pdf",
+        "guide_url": "",
+        "pages": 10,
+        "source": "Stanford CS224N L03",
+        "question": "理论 FLOPs、显存占用与真实吞吐为何不同，瓶颈在计算、内存还是数据管线？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Derivatives, Backpropagation, and Vectorization",
+        "url": "http://cs231n.stanford.edu/handouts/derivatives.pdf",
+        "guide_url": "",
+        "pages": 7,
+        "source": "Stanford CS224N L03",
+        "question": "理论 FLOPs、显存占用与真实吞吐为何不同，瓶颈在计算、内存还是数据管线？"
+      }
+    ]
+  },
+  "27-distributed-training": {
+    "lesson_title": "第 16 课 分布式训练与通信",
+    "target_id": "27",
+    "reading_question": "模型状态、激活和计算分别怎样切分，哪一步通信会成为扩展瓶颈？",
+    "lectures": [
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L20",
+        "title": "并行与分布式训练",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-20-scaling-parallelism.pdf",
+        "pages": 60
+      },
+      {
+        "course": "Stanford CS336",
+        "session": "L07",
+        "title": "分布式通信与并行训练",
+        "label": "Lecture 7 Executable Slides",
+        "url": "/lectures/?trace=var/traces/lecture_07.json",
+        "pages": 0
+      },
+      {
+        "course": "Stanford CS336",
+        "session": "L08",
+        "title": "大模型并行训练基础",
+        "label": "Lecture 8 Slides",
+        "url": "https://stanford-cs336.github.io/spring2026/",
+        "pages": 73
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "ZeRO (DeepSpeed)",
+        "url": "https://arxiv.org/pdf/1910.02054.pdf",
+        "guide_url": "",
+        "pages": 24,
+        "source": "LLM Systems L21",
+        "question": "模型状态、激活和计算分别怎样切分，哪一步通信会成为扩展瓶颈？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Megatron-LM",
+        "url": "https://arxiv.org/pdf/2104.04473.pdf",
+        "guide_url": "",
+        "pages": 13,
+        "source": "LLM Systems L15",
+        "question": "模型状态、激活和计算分别怎样切分，哪一步通信会成为扩展瓶颈？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "DDP",
+        "url": "https://www.vldb.org/pvldb/vol13/p3005-li.pdf",
+        "guide_url": "",
+        "pages": 14,
+        "source": "LLM Systems L14",
+        "question": "模型状态、激活和计算分别怎样切分，哪一步通信会成为扩展瓶颈？"
+      }
+    ]
+  },
+  "28-alignment-rl": {
+    "lesson_title": "第 23 课 SFT、RLHF、DPO 与推理强化学习",
+    "target_id": "28",
+    "reading_question": "SFT、偏好学习和在线 RL 分别提供什么监督，策略分布何时发生变化？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L08",
+        "title": "后训练：SFT、RLHF 与 DPO",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture08-posttraining.pdf",
+        "pages": 64
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L17",
+        "title": "强化学习二：大模型应用",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-17-rl-llms.pdf",
+        "pages": 67
+      },
+      {
+        "course": "Stanford CS336",
+        "session": "L15",
+        "title": "中训练、指令微调与偏好对齐",
+        "label": "Lecture 15 Slides",
+        "url": "https://stanford-cs336.github.io/spring2026/",
+        "pages": 65
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Training language models to follow instructions with human feedback",
+        "url": "https://arxiv.org/pdf/2203.02155.pdf",
+        "guide_url": "",
+        "pages": 68,
+        "source": "CMU Advanced NLP L17",
+        "question": "SFT、偏好学习和在线 RL 分别提供什么监督，策略分布何时发生变化？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Scaling Instruction-Finetuned Language Models",
+        "url": "https://arxiv.org/pdf/2210.11416.pdf",
+        "guide_url": "",
+        "pages": 54,
+        "source": "Stanford CS224N L08",
+        "question": "SFT、偏好学习和在线 RL 分别提供什么监督，策略分布何时发生变化？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Deep reinforcement learning from human preferences",
+        "url": "https://arxiv.org/pdf/1706.03741.pdf",
+        "guide_url": "",
+        "pages": 17,
+        "source": "CMU Advanced NLP L17",
+        "question": "SFT、偏好学习和在线 RL 分别提供什么监督，策略分布何时发生变化？"
+      }
+    ]
+  },
+  "29-distillation": {
+    "lesson_title": "第 34 课 知识蒸馏与多教师学习",
+    "target_id": "29",
+    "reading_question": "教师传递的是答案、logits 还是当前策略轨迹，学生怎样避免只模仿表面输出？",
+    "lectures": [
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L08",
+        "title": "微调与知识蒸馏",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-08-finetuning.pdf",
+        "pages": 40
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Sequence-Level Knowledge Distillation",
+        "url": "https://arxiv.org/pdf/1606.07947.pdf",
+        "guide_url": "",
+        "pages": 11,
+        "source": "CMU Advanced NLP L08",
+        "question": "教师传递的是答案、logits 还是当前策略轨迹，学生怎样避免只模仿表面输出？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Orca: Progressive Learning from Complex Explanation Traces of GPT-4",
+        "url": "https://arxiv.org/pdf/2306.02707.pdf",
+        "guide_url": "",
+        "pages": 51,
+        "source": "CMU Advanced NLP L08",
+        "question": "教师传递的是答案、logits 还是当前策略轨迹，学生怎样避免只模仿表面输出？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+        "url": "https://arxiv.org/pdf/2106.09685.pdf",
+        "guide_url": "",
+        "pages": 26,
+        "source": "CMU Advanced NLP L08",
+        "question": "教师传递的是答案、logits 还是当前策略轨迹，学生怎样避免只模仿表面输出？"
+      }
+    ]
+  },
+  "30-quantization": {
+    "lesson_title": "第 36 课 量化与低精度计算",
+    "target_id": "30",
+    "reading_question": "权重、激活和 KV Cache 分别量化到什么精度，误差怎样被校准或吸收？",
+    "lectures": [
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L19",
+        "title": "量化",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-19-quantization.pdf",
+        "pages": 43
+      },
+      {
+        "course": "LLM Systems",
+        "session": "L16",
+        "title": "模型量化一",
+        "label": "Slides",
+        "url": "https://llmsystem.github.io/llmsystem2025spring/assets/files/llmsys-16-quantization-80e192f2e967b00c68b29faa9d9e71de.pdf",
+        "pages": 26
+      },
+      {
+        "course": "LLM Systems",
+        "session": "L17",
+        "title": "模型量化二",
+        "label": "Slides",
+        "url": "https://llmsystem.github.io/llmsystem2025spring/assets/files/llmsys-17-quantization2-bec91c67e6870c9c398fcc4a22f0b446.pdf",
+        "pages": 36
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "8-bit Optimizers via Block-wise Quantization",
+        "url": "https://arxiv.org/pdf/2110.02861.pdf",
+        "guide_url": "",
+        "pages": 20,
+        "source": "CMU Advanced NLP L19",
+        "question": "权重、激活和 KV Cache 分别量化到什么精度，误差怎样被校准或吸收？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "LLM.int8(): 8-bit Matrix Multiplication for Transformers at Scale",
+        "url": "https://arxiv.org/pdf/2208.07339.pdf",
+        "guide_url": "",
+        "pages": 20,
+        "source": "CMU Advanced NLP L19",
+        "question": "权重、激活和 KV Cache 分别量化到什么精度，误差怎样被校准或吸收？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "The case for 4-bit precision: k-bit Inference Scaling Laws",
+        "url": "https://arxiv.org/pdf/2212.09720.pdf",
+        "guide_url": "",
+        "pages": 24,
+        "source": "CMU Advanced NLP L19",
+        "question": "权重、激活和 KV Cache 分别量化到什么精度，误差怎样被校准或吸收？"
+      }
+    ]
+  },
+  "31-efficient-attention": {
+    "lesson_title": "第 37 课 FlashAttention、线性 Attention 与长上下文",
+    "target_id": "31",
+    "reading_question": "方法是否保持精确 Attention，它节省的是算术量、显存还是 HBM 访问？",
+    "lectures": [
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L22",
+        "title": "扩展序列长度",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-22-longcontext.pdf",
+        "pages": 54
+      },
+      {
+        "course": "Stanford CS336",
+        "session": "L04",
+        "title": "Attention 替代路线与混合专家",
+        "label": "Lecture 4 Slides",
+        "url": "https://stanford-cs336.github.io/spring2026/",
+        "pages": 60
+      },
+      {
+        "course": "LLM Systems",
+        "session": "L11",
+        "title": "GPU 上的 Transformer 加速一",
+        "label": "Slides",
+        "url": "https://llmsystem.github.io/llmsystem2025spring/assets/files/llmsys-11-transformer-acc-118c60f3304ec2de30bd6a80cb670613.pdf",
+        "pages": 67
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness",
+        "url": "https://arxiv.org/pdf/2205.14135.pdf",
+        "guide_url": "",
+        "pages": 34,
+        "source": "CMU Advanced NLP L22",
+        "question": "方法是否保持精确 Attention，它节省的是算术量、显存还是 HBM 访问？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Ring Attention with Blockwise Transformers for Near-Infinite Context",
+        "url": "https://arxiv.org/pdf/2310.01889.pdf",
+        "guide_url": "",
+        "pages": 16,
+        "source": "CMU Advanced NLP L22",
+        "question": "方法是否保持精确 Attention，它节省的是算术量、显存还是 HBM 访问？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "FlashAttention-4: Algorithm and Kernel Pipelining Co-Design for Asymmetric Hardware Scaling",
+        "url": "https://arxiv.org/pdf/2603.05451",
+        "guide_url": "",
+        "pages": 20,
+        "source": "CMU Advanced NLP L22",
+        "question": "方法是否保持精确 Attention，它节省的是算术量、显存还是 HBM 访问？"
+      }
+    ]
+  },
+  "32-serving-systems": {
+    "lesson_title": "第 38 课 vLLM、PagedAttention 与在线服务",
+    "target_id": "32",
+    "reading_question": "吞吐与首 token/逐 token 延迟如何权衡，缓存、批处理和调度各解决什么问题？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L13",
+        "title": "推理（二）：验证与测试时计算",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture13-reasoning-part2.pdf",
+        "pages": 59
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L09",
+        "title": "推理：解码算法",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-09-decoding.pdf",
+        "pages": 62
+      },
+      {
+        "course": "Stanford CS336",
+        "session": "L10",
+        "title": "大模型推理工作负载与优化",
+        "label": "Lecture 10 Executable Slides",
+        "url": "/lectures/?trace=var/traces/lecture_10.json",
+        "pages": 0
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Fast Inference from Transformers via Speculative Decoding",
+        "url": "https://arxiv.org/pdf/2211.17192.pdf",
+        "guide_url": "",
+        "pages": 13,
+        "source": "Stanford CS224N L13",
+        "question": "吞吐与首 token/逐 token 延迟如何权衡，缓存、批处理和调度各解决什么问题？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "From Decoding to Meta-Generation: Inference-time Algorithms for Large Language Models (Sections 1-3)",
+        "url": "https://arxiv.org/pdf/2406.16838.pdf",
+        "guide_url": "",
+        "pages": 53,
+        "source": "CMU Advanced NLP L09",
+        "question": "吞吐与首 token/逐 token 延迟如何权衡，缓存、批处理和调度各解决什么问题？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Let's Verify Step by Step",
+        "url": "https://arxiv.org/pdf/2305.20050.pdf",
+        "guide_url": "",
+        "pages": 29,
+        "source": "Stanford CS224N L13",
+        "question": "吞吐与首 token/逐 token 延迟如何权衡，缓存、批处理和调度各解决什么问题？"
+      }
+    ]
+  },
+  "33-agents": {
+    "lesson_title": "第 42 课 Agent、工具调用与 Deep Research",
+    "target_id": "33",
+    "reading_question": "Agent 的动作怎样改变环境状态，工具错误、规划错误和验证错误如何区分？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L10",
+        "title": "Agent、工具调用与 RAG",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture10-rag-agents.pdf",
+        "pages": 72
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L18",
+        "title": "基于语言模型的 Agent",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-18-zora.pdf",
+        "pages": 56
+      },
+      {
+        "course": "Stanford CS336",
+        "session": "L12",
+        "title": "从困惑度到 Agent 的评测",
+        "label": "Lecture 12 Executable Slides",
+        "url": "/lectures/?trace=var/traces/lecture_12.json",
+        "pages": 0
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "WebGPT: Browser-assisted question-answering with human feedback",
+        "url": "https://arxiv.org/pdf/2112.09332.pdf",
+        "guide_url": "",
+        "pages": 32,
+        "source": "CMU Advanced NLP L18",
+        "question": "Agent 的动作怎样改变环境状态，工具错误、规划错误和验证错误如何区分？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "World of Bits: An Open-Domain Platform for Web-Based Agents",
+        "url": "https://proceedings.mlr.press/v70/shi17a/shi17a.pdf",
+        "guide_url": "",
+        "pages": 10,
+        "source": "CMU Advanced NLP L18",
+        "question": "Agent 的动作怎样改变环境状态，工具错误、规划错误和验证错误如何区分？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "WebShop: Towards Scalable Real-World Web Interaction with Grounded Language Agents",
+        "url": "https://arxiv.org/pdf/2207.01206.pdf",
+        "guide_url": "",
+        "pages": 28,
+        "source": "CMU Advanced NLP L18",
+        "question": "Agent 的动作怎样改变环境状态，工具错误、规划错误和验证错误如何区分？"
+      }
+    ]
+  },
+  "34-multimodal": {
+    "lesson_title": "第 43 课 多模态理解、世界模型与具身智能",
+    "target_id": "34",
+    "reading_question": "视觉信息在哪一步变成 token 或潜变量，模态对齐损失与生成损失各教会了什么？",
+    "lectures": [
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L11",
+        "title": "建模二：多模态基础",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-11-multimodal.pdf",
+        "pages": 47
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L12",
+        "title": "建模三：多模态生成",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-12-multimodal-ii.pdf",
+        "pages": 45
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L15",
+        "title": "建模四：扩散模型与 Flow",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-15-multimodal-iii.pdf",
+        "pages": 43
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Multimodal RewardBench: Holistic Evaluation of Reward Models for Vision Language Models",
+        "url": "https://arxiv.org/pdf/2502.14191.pdf",
+        "guide_url": "",
+        "pages": 17,
+        "source": "Stanford CS224N L17",
+        "question": "视觉信息在哪一步变成 token 或潜变量，模态对齐损失与生成损失各教会了什么？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale",
+        "url": "https://arxiv.org/pdf/2010.11929.pdf",
+        "guide_url": "",
+        "pages": 22,
+        "source": "CMU Advanced NLP L11",
+        "question": "视觉信息在哪一步变成 token 或潜变量，模态对齐损失与生成损失各教会了什么？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Chameleon: Mixed-Modal Early-Fusion Foundation Models",
+        "url": "https://arxiv.org/pdf/2405.09818.pdf",
+        "guide_url": "",
+        "pages": 27,
+        "source": "Stanford CS224N L17",
+        "question": "视觉信息在哪一步变成 token 或潜变量，模态对齐损失与生成损失各教会了什么？"
+      }
+    ]
+  },
+  "35-applications": {
+    "lesson_title": "第 45 课 大模型应用全景",
+    "target_id": "35",
+    "reading_question": "应用价值来自底座模型、外部知识还是工作流约束，失败后应改模型还是改系统？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L14",
+        "title": "分词与多语言",
+        "label": "Guest Lecture Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture14-guest-julie-tokenization-multilinguality.pdf",
+        "pages": 76
+      },
+      {
+        "course": "LLM Systems",
+        "session": "L27",
+        "title": "应用栈与模型服务",
+        "label": "Slides",
+        "url": "https://llmsystem.github.io/llmsystem2025spring/assets/files/llmsys-15-serving-c4a70ab21cde01fb60068a256c6e163a.pdf",
+        "pages": 49
+      },
+      {
+        "course": "CMU LLM Applications",
+        "session": "L10",
+        "title": "任务型对话",
+        "label": "Slides",
+        "url": "https://storage.googleapis.com/cmu-llms/2026/2026-02-12-task.pdf",
+        "pages": 52
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Jurafsky & Martin Chapter 2",
+        "url": "https://web.stanford.edu/~jurafsky/slp3/2.pdf",
+        "guide_url": "",
+        "pages": 36,
+        "source": "Stanford CS224N L14",
+        "question": "应用价值来自底座模型、外部知识还是工作流约束，失败后应改模型还是改系统？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Neural Machine Translation of Rare Words with Subword Units",
+        "url": "https://arxiv.org/pdf/1508.07909.pdf",
+        "guide_url": "",
+        "pages": 11,
+        "source": "Stanford CS224N L14",
+        "question": "应用价值来自底座模型、外部知识还是工作流约束，失败后应改模型还是改系统？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Unsupervised Cross-lingual Representation Learning at Scale",
+        "url": "https://aclanthology.org/2020.acl-main.747.pdf",
+        "guide_url": "",
+        "pages": 12,
+        "source": "Stanford CS224N L14",
+        "question": "应用价值来自底座模型、外部知识还是工作流约束，失败后应改模型还是改系统？"
+      }
+    ]
+  },
+  "36-evaluation-research": {
+    "lesson_title": "第 47 课 基准、LLM Judge 与实验设计",
+    "target_id": "36",
+    "reading_question": "实验的比较对象、预算和置信区间是否成立，平均分是否掩盖了子群退化？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L11",
+        "title": "基准测试与评测",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture11-evaluation.pdf",
+        "pages": 77
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L13",
+        "title": "评测技术",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-13-evaluation.pdf",
+        "pages": 33
+      },
+      {
+        "course": "Stanford CS336",
+        "session": "L12",
+        "title": "从困惑度到 Agent 的评测",
+        "label": "Lecture 12 Executable Slides",
+        "url": "/lectures/?trace=var/traces/lecture_12.json",
+        "pages": 0
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Adding Error Bars to Evals: A Statistical Approach to Language Model Evaluations",
+        "url": "https://arxiv.org/pdf/2411.00640.pdf",
+        "guide_url": "",
+        "pages": 14,
+        "source": "CMU Advanced NLP L13",
+        "question": "实验的比较对象、预算和置信区间是否成立，平均分是否掩盖了子群退化？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Holistic Evaluation of Language Models",
+        "url": "https://arxiv.org/pdf/2211.09110.pdf",
+        "guide_url": "",
+        "pages": 162,
+        "source": "Stanford CS224N L11",
+        "question": "实验的比较对象、预算和置信区间是否成立，平均分是否掩盖了子群退化？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Measuring Massive Multitask Language Understanding",
+        "url": "https://arxiv.org/pdf/2009.03300.pdf",
+        "guide_url": "",
+        "pages": 27,
+        "source": "Stanford CS224N L11",
+        "question": "实验的比较对象、预算和置信区间是否成立，平均分是否掩盖了子群退化？"
+      }
+    ]
+  },
+  "37-safety": {
+    "lesson_title": "第 49 课 安全、社会风险与攻击防护",
+    "target_id": "37",
+    "reading_question": "风险来自训练数据、模型行为还是部署场景，缓解措施是否只改变表面拒答率？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L16",
+        "title": "NLP 的社会影响与风险",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture16-impact-on-humanity.pdf",
+        "pages": 49
+      },
+      {
+        "course": "Stanford CS224N",
+        "session": "L19",
+        "title": "2026 年 NLP 开放问题",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture19-open-questions.pdf",
+        "pages": 90
+      },
+      {
+        "course": "Berkeley Deep RL",
+        "session": "L25",
+        "title": "挑战与开放问题",
+        "label": "Lecture 25: Challenges and Open Problems",
+        "url": "https://rail.eecs.berkeley.edu/deeprlcourse/static/slides/lec-25.pdf",
+        "pages": 44
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "NLP 的社会影响与风险（课程专题讲义）",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture16-impact-on-humanity.pdf",
+        "guide_url": "",
+        "pages": 49,
+        "source": "Stanford CS224N L16",
+        "question": "风险来自训练数据、模型行为还是部署场景，缓解措施是否只改变表面拒答率？"
+      }
+    ]
+  },
+  "38-deployment": {
+    "lesson_title": "第 50 课 部署、监控与成本",
+    "target_id": "38",
+    "reading_question": "线上质量、延迟、成本和可恢复性如何共同定义成功，监控信号能否定位根因？",
+    "lectures": [
+      {
+        "course": "LLM Systems",
+        "session": "L27",
+        "title": "应用栈与模型服务",
+        "label": "Slides",
+        "url": "https://llmsystem.github.io/llmsystem2025spring/assets/files/llmsys-15-serving-c4a70ab21cde01fb60068a256c6e163a.pdf",
+        "pages": 49
+      },
+      {
+        "course": "CMU LLM Applications",
+        "session": "L25",
+        "title": "大模型应用部署",
+        "label": "Slides",
+        "url": "https://storage.googleapis.com/cmu-llms/2026/2026-03-16-deployment.pdf",
+        "pages": 36
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Mooncake: A KVCache-centric Disaggregated Architecture for LLM Serving",
+        "url": "https://arxiv.org/pdf/2407.00079",
+        "guide_url": "/papers/mooncake",
+        "pages": 23,
+        "source": "核心论文库",
+        "question": "线上质量、延迟、成本和可恢复性如何共同定义成功，监控信号能否定位根因？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Efficient Memory Management for Large Language Model Serving with PagedAttention",
+        "url": "https://arxiv.org/pdf/2309.06180",
+        "guide_url": "/papers/pagedattention_vllm",
+        "pages": 16,
+        "source": "核心论文库",
+        "question": "线上质量、延迟、成本和可恢复性如何共同定义成功，监控信号能否定位根因？"
+      }
+    ]
+  },
+  "39-research-method": {
+    "lesson_title": "第 51 课 怎样做一次可信的大模型研究",
+    "target_id": "39",
+    "reading_question": "论文的因果主张由哪个消融支撑，替代解释是否被同预算实验排除？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L06",
+        "title": "研究项目设计与实践建议",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture06-final-project.pdf",
+        "pages": 53
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L14",
+        "title": "研究技能与实验设计",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-14-experimentation.pdf",
+        "pages": 60
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Adding Error Bars to Evals: A Statistical Approach to Language Model Evaluations",
+        "url": "https://arxiv.org/pdf/2411.00640.pdf",
+        "guide_url": "",
+        "pages": 14,
+        "source": "CMU Advanced NLP L14",
+        "question": "论文的因果主张由哪个消融支撑，替代解释是否被同预算实验排除？"
+      }
+    ]
+  },
+  "40-rl-language-model": {
+    "lesson_title": "第 25 课 把语言模型写成强化学习问题",
+    "target_id": "40",
+    "reading_question": "状态、动作、奖励和策略在语言生成中分别是什么，终局奖励怎样传回早期 token？",
+    "lectures": [
+      {
+        "course": "Berkeley Deep RL",
+        "session": "L01",
+        "title": "导论：强化学习解决什么问题",
+        "label": "Lecture 1: Introduction",
+        "url": "https://rail.eecs.berkeley.edu/deeprlcourse/static/slides/lec-1.pdf",
+        "pages": 38
+      },
+      {
+        "course": "Berkeley Deep RL",
+        "session": "L02",
+        "title": "行为克隆（一）：从专家示范学习",
+        "label": "Lecture 2: Behavioral Cloning",
+        "url": "https://rail.eecs.berkeley.edu/deeprlcourse/static/slides/lec-2.pdf",
+        "pages": 39
+      },
+      {
+        "course": "Berkeley Deep RL",
+        "session": "L03",
+        "title": "行为克隆（二）：数据聚合与模仿学习",
+        "label": "Lecture 3: Behavioral Cloning Part 2",
+        "url": "https://rail.eecs.berkeley.edu/deeprlcourse/static/slides/lec-3.pdf",
+        "pages": 32
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Training Language Models to Follow Instructions with Human Feedback",
+        "url": "https://arxiv.org/pdf/2203.02155",
+        "guide_url": "/papers/instructgpt",
+        "pages": 68,
+        "source": "核心论文库",
+        "question": "状态、动作、奖励和策略在语言生成中分别是什么，终局奖励怎样传回早期 token？"
+      }
+    ]
+  },
+  "41-rl-mdp-value": {
+    "lesson_title": "第 26 课 MDP、回报与价值函数",
+    "target_id": "41",
+    "reading_question": "价值函数估计的是哪段未来回报，bootstrap 带来的偏差和方差怎样权衡？",
+    "lectures": [
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L16",
+        "title": "强化学习一：基础",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-16-rl.pdf",
+        "pages": 50
+      },
+      {
+        "course": "Berkeley Deep RL",
+        "session": "L04",
+        "title": "强化学习基础：MDP、回报与价值",
+        "label": "Lecture 4: RL Basics",
+        "url": "https://rail.eecs.berkeley.edu/deeprlcourse/static/slides/lec-4.pdf",
+        "pages": 41
+      },
+      {
+        "course": "Berkeley Deep RL",
+        "session": "L07",
+        "title": "价值型强化学习",
+        "label": "Lecture 7: Value-Based RL",
+        "url": "https://rail.eecs.berkeley.edu/deeprlcourse/static/slides/lec-7.pdf",
+        "pages": 20
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "High-Dimensional Continuous Control Using Generalized Advantage Estimation",
+        "url": "https://arxiv.org/pdf/1506.02438.pdf",
+        "guide_url": "",
+        "pages": 14,
+        "source": "CMU Advanced NLP L16",
+        "question": "价值函数估计的是哪段未来回报，bootstrap 带来的偏差和方差怎样权衡？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Proximal Policy Optimization Algorithms",
+        "url": "https://arxiv.org/pdf/1707.06347.pdf",
+        "guide_url": "",
+        "pages": 12,
+        "source": "CMU Advanced NLP L16",
+        "question": "价值函数估计的是哪段未来回报，bootstrap 带来的偏差和方差怎样权衡？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Training Language Models to Follow Instructions with Human Feedback",
+        "url": "https://arxiv.org/pdf/2203.02155",
+        "guide_url": "/papers/instructgpt",
+        "pages": 68,
+        "source": "核心论文库",
+        "question": "价值函数估计的是哪段未来回报，bootstrap 带来的偏差和方差怎样权衡？"
+      }
+    ]
+  },
+  "42-rl-policy-gradient": {
+    "lesson_title": "第 27 课 策略梯度与 REINFORCE",
+    "target_id": "42",
+    "reading_question": "log-prob 梯度为什么能提高高回报动作概率，baseline 怎样降方差而不改期望？",
+    "lectures": [
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L16",
+        "title": "强化学习一：基础",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-16-rl.pdf",
+        "pages": 50
+      },
+      {
+        "course": "Berkeley Deep RL",
+        "session": "L05",
+        "title": "策略梯度：直接提高好动作的概率",
+        "label": "Lecture 5: Policy Gradients",
+        "url": "https://rail.eecs.berkeley.edu/deeprlcourse/static/slides/lec-5.pdf",
+        "pages": 23
+      },
+      {
+        "course": "Berkeley Deep RL",
+        "session": "L21",
+        "title": "期中复习（一）",
+        "label": "Lecture 21: Midterm Review Part 1",
+        "url": "https://rail.eecs.berkeley.edu/deeprlcourse/static/slides/lec-21.pdf",
+        "pages": 34
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Proximal Policy Optimization Algorithms",
+        "url": "https://arxiv.org/pdf/1707.06347.pdf",
+        "guide_url": "",
+        "pages": 12,
+        "source": "CMU Advanced NLP L16",
+        "question": "log-prob 梯度为什么能提高高回报动作概率，baseline 怎样降方差而不改期望？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "High-Dimensional Continuous Control Using Generalized Advantage Estimation",
+        "url": "https://arxiv.org/pdf/1506.02438.pdf",
+        "guide_url": "",
+        "pages": 14,
+        "source": "CMU Advanced NLP L16",
+        "question": "log-prob 梯度为什么能提高高回报动作概率，baseline 怎样降方差而不改期望？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Training Language Models to Follow Instructions with Human Feedback",
+        "url": "https://arxiv.org/pdf/2203.02155",
+        "guide_url": "/papers/instructgpt",
+        "pages": 68,
+        "source": "核心论文库",
+        "question": "log-prob 梯度为什么能提高高回报动作概率，baseline 怎样降方差而不改期望？"
+      }
+    ]
+  },
+  "43-rl-actor-critic": {
+    "lesson_title": "第 28 课 Actor-Critic 与 GAE",
+    "target_id": "43",
+    "reading_question": "Actor 与 Critic 分别学什么，GAE 的参数怎样在偏差和方差之间移动？",
+    "lectures": [
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L16",
+        "title": "强化学习一：基础",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-16-rl.pdf",
+        "pages": 50
+      },
+      {
+        "course": "Berkeley Deep RL",
+        "session": "L06",
+        "title": "Actor-Critic：用价值网络指导策略",
+        "label": "Lecture 6: Actor Critic",
+        "url": "https://rail.eecs.berkeley.edu/deeprlcourse/static/slides/lec-6.pdf",
+        "pages": 33
+      },
+      {
+        "course": "Berkeley Deep RL",
+        "session": "L21",
+        "title": "期中复习（一）",
+        "label": "Lecture 21: Midterm Review Part 1",
+        "url": "https://rail.eecs.berkeley.edu/deeprlcourse/static/slides/lec-21.pdf",
+        "pages": 34
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "High-Dimensional Continuous Control Using Generalized Advantage Estimation",
+        "url": "https://arxiv.org/pdf/1506.02438.pdf",
+        "guide_url": "",
+        "pages": 14,
+        "source": "CMU Advanced NLP L16",
+        "question": "Actor 与 Critic 分别学什么，GAE 的参数怎样在偏差和方差之间移动？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Proximal Policy Optimization Algorithms",
+        "url": "https://arxiv.org/pdf/1707.06347.pdf",
+        "guide_url": "",
+        "pages": 12,
+        "source": "CMU Advanced NLP L16",
+        "question": "Actor 与 Critic 分别学什么，GAE 的参数怎样在偏差和方差之间移动？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Training Language Models to Follow Instructions with Human Feedback",
+        "url": "https://arxiv.org/pdf/2203.02155",
+        "guide_url": "/papers/instructgpt",
+        "pages": 68,
+        "source": "核心论文库",
+        "question": "Actor 与 Critic 分别学什么，GAE 的参数怎样在偏差和方差之间移动？"
+      }
+    ]
+  },
+  "44-rl-ppo": {
+    "lesson_title": "第 29 课 重要性采样、TRPO 与 PPO",
+    "target_id": "44",
+    "reading_question": "新旧策略比率为什么会失控，clip 或 trust region 实际限制了什么？",
+    "lectures": [
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L16",
+        "title": "强化学习一：基础",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-16-rl.pdf",
+        "pages": 50
+      },
+      {
+        "course": "Berkeley Deep RL",
+        "session": "L09",
+        "title": "高级策略梯度（一）：重要性采样",
+        "label": "Lecture 9: Advanced Policy Gradients Part 1",
+        "url": "https://rail.eecs.berkeley.edu/deeprlcourse/static/slides/lec-9.pdf",
+        "pages": 16
+      },
+      {
+        "course": "Berkeley Deep RL",
+        "session": "L10",
+        "title": "高级策略梯度（二）：约束更新幅度",
+        "label": "Lecture 10: Advanced Policy Gradients Part 2",
+        "url": "https://rail.eecs.berkeley.edu/deeprlcourse/static/slides/lec-10.pdf",
+        "pages": 33
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Proximal Policy Optimization Algorithms",
+        "url": "https://arxiv.org/pdf/1707.06347.pdf",
+        "guide_url": "",
+        "pages": 12,
+        "source": "CMU Advanced NLP L16",
+        "question": "新旧策略比率为什么会失控，clip 或 trust region 实际限制了什么？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "High-Dimensional Continuous Control Using Generalized Advantage Estimation",
+        "url": "https://arxiv.org/pdf/1506.02438.pdf",
+        "guide_url": "",
+        "pages": 14,
+        "source": "CMU Advanced NLP L16",
+        "question": "新旧策略比率为什么会失控，clip 或 trust region 实际限制了什么？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Training Language Models to Follow Instructions with Human Feedback",
+        "url": "https://arxiv.org/pdf/2203.02155",
+        "guide_url": "/papers/instructgpt",
+        "pages": 68,
+        "source": "核心论文库",
+        "question": "新旧策略比率为什么会失控，clip 或 trust region 实际限制了什么？"
+      }
+    ]
+  },
+  "45-rlhf-preference": {
+    "lesson_title": "第 30 课 奖励模型、RLHF 与 DPO",
+    "target_id": "45",
+    "reading_question": "偏好标签怎样变成奖励或直接变成策略梯度，参考模型承担什么约束？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L08",
+        "title": "后训练：SFT、RLHF 与 DPO",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture08-posttraining.pdf",
+        "pages": 64
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L17",
+        "title": "强化学习二：大模型应用",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-17-rl-llms.pdf",
+        "pages": 67
+      },
+      {
+        "course": "Stanford CS336",
+        "session": "L15",
+        "title": "中训练、指令微调与偏好对齐",
+        "label": "Lecture 15 Slides",
+        "url": "https://stanford-cs336.github.io/spring2026/",
+        "pages": 65
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+        "url": "https://arxiv.org/pdf/2305.18290.pdf",
+        "guide_url": "",
+        "pages": 27,
+        "source": "Stanford CS224N L08",
+        "question": "偏好标签怎样变成奖励或直接变成策略梯度，参考模型承担什么约束？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Deep reinforcement learning from human preferences",
+        "url": "https://arxiv.org/pdf/1706.03741.pdf",
+        "guide_url": "",
+        "pages": 17,
+        "source": "CMU Advanced NLP L17",
+        "question": "偏好标签怎样变成奖励或直接变成策略梯度，参考模型承担什么约束？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Fine-Tuning Language Models from Human Preferences",
+        "url": "https://arxiv.org/pdf/1909.08593.pdf",
+        "guide_url": "",
+        "pages": 26,
+        "source": "CMU Advanced NLP L17",
+        "question": "偏好标签怎样变成奖励或直接变成策略梯度，参考模型承担什么约束？"
+      }
+    ]
+  },
+  "46-verifiable-rewards": {
+    "lesson_title": "第 31 课 GRPO、可验证奖励与推理 RL",
+    "target_id": "46",
+    "reading_question": "可验证奖励覆盖了哪些能力，组内相对优势和长轨迹采样会引入什么偏差？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L08",
+        "title": "后训练：SFT、RLHF 与 DPO",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture08-posttraining.pdf",
+        "pages": 64
+      },
+      {
+        "course": "Stanford CS224N",
+        "session": "L12",
+        "title": "推理（一）：让模型展开思考",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture12-reasoning-part1.pdf",
+        "pages": 68
+      },
+      {
+        "course": "Stanford CS224N",
+        "session": "L13",
+        "title": "推理（二）：验证与测试时计算",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture13-reasoning-part2.pdf",
+        "pages": 59
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning",
+        "url": "https://arxiv.org/pdf/2501.12948.pdf",
+        "guide_url": "",
+        "pages": 86,
+        "source": "CMU Advanced NLP L17",
+        "question": "可验证奖励覆盖了哪些能力，组内相对优势和长轨迹采样会引入什么偏差？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models",
+        "url": "https://arxiv.org/pdf/2201.11903.pdf",
+        "guide_url": "",
+        "pages": 43,
+        "source": "Stanford CS224N L12",
+        "question": "可验证奖励覆盖了哪些能力，组内相对优势和长轨迹采样会引入什么偏差？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Self-Consistency Improves Chain of Thought Reasoning in Language Models",
+        "url": "https://arxiv.org/pdf/2203.11171.pdf",
+        "guide_url": "",
+        "pages": 24,
+        "source": "Stanford CS224N L12",
+        "question": "可验证奖励覆盖了哪些能力，组内相对优势和长轨迹采样会引入什么偏差？"
+      }
+    ]
+  },
+  "47-rl-agent": {
+    "lesson_title": "第 32 课 离线 RL、探索与 Agent",
+    "target_id": "47",
+    "reading_question": "离线轨迹与当前策略分布差多远，探索、信用分配和环境可靠性怎样影响 Agent？",
+    "lectures": [
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L18",
+        "title": "基于语言模型的 Agent",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-18-zora.pdf",
+        "pages": 56
+      },
+      {
+        "course": "Berkeley Deep RL",
+        "session": "L02",
+        "title": "行为克隆（一）：从专家示范学习",
+        "label": "Lecture 2: Behavioral Cloning",
+        "url": "https://rail.eecs.berkeley.edu/deeprlcourse/static/slides/lec-2.pdf",
+        "pages": 39
+      },
+      {
+        "course": "Berkeley Deep RL",
+        "session": "L03",
+        "title": "行为克隆（二）：数据聚合与模仿学习",
+        "label": "Lecture 3: Behavioral Cloning Part 2",
+        "url": "https://rail.eecs.berkeley.edu/deeprlcourse/static/slides/lec-3.pdf",
+        "pages": 32
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments",
+        "url": "https://arxiv.org/pdf/2404.07972.pdf",
+        "guide_url": "",
+        "pages": 51,
+        "source": "CMU Advanced NLP L18",
+        "question": "离线轨迹与当前策略分布差多远，探索、信用分配和环境可靠性怎样影响 Agent？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "World of Bits: An Open-Domain Platform for Web-Based Agents",
+        "url": "https://proceedings.mlr.press/v70/shi17a/shi17a.pdf",
+        "guide_url": "",
+        "pages": 10,
+        "source": "CMU Advanced NLP L18",
+        "question": "离线轨迹与当前策略分布差多远，探索、信用分配和环境可靠性怎样影响 Agent？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "WebGPT: Browser-assisted question-answering with human feedback",
+        "url": "https://arxiv.org/pdf/2112.09332.pdf",
+        "guide_url": "",
+        "pages": 32,
+        "source": "CMU Advanced NLP L18",
+        "question": "离线轨迹与当前策略分布差多远，探索、信用分配和环境可靠性怎样影响 Agent？"
+      }
+    ]
+  },
+  "48-rl-systems": {
+    "lesson_title": "第 33 课 LLM RL 系统、评测与安全",
+    "target_id": "48",
+    "reading_question": "rollout、训练器、奖励/验证器和版本管理如何保持同一策略语义？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L08",
+        "title": "后训练：SFT、RLHF 与 DPO",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture08-posttraining.pdf",
+        "pages": 64
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L17",
+        "title": "强化学习二：大模型应用",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-17-rl-llms.pdf",
+        "pages": 67
+      },
+      {
+        "course": "Stanford CS336",
+        "session": "L16",
+        "title": "可验证奖励强化学习",
+        "label": "Lecture 16 Slides",
+        "url": "https://stanford-cs336.github.io/spring2026/",
+        "pages": 61
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+        "url": "https://arxiv.org/pdf/2305.18290.pdf",
+        "guide_url": "",
+        "pages": 27,
+        "source": "Stanford CS224N L08",
+        "question": "rollout、训练器、奖励/验证器和版本管理如何保持同一策略语义？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Deep reinforcement learning from human preferences",
+        "url": "https://arxiv.org/pdf/1706.03741.pdf",
+        "guide_url": "",
+        "pages": 17,
+        "source": "CMU Advanced NLP L17",
+        "question": "rollout、训练器、奖励/验证器和版本管理如何保持同一策略语义？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Fine-Tuning Language Models from Human Preferences",
+        "url": "https://arxiv.org/pdf/1909.08593.pdf",
+        "guide_url": "",
+        "pages": 26,
+        "source": "CMU Advanced NLP L17",
+        "question": "rollout、训练器、奖励/验证器和版本管理如何保持同一策略语义？"
+      }
+    ]
+  },
+  "49-reasoning-test-time": {
+    "lesson_title": "第 24 课 推理、验证器与测试时计算",
+    "target_id": "49",
+    "reading_question": "测试时多花的计算用在生成、验证还是聚合，收益曲线什么时候开始饱和？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L12",
+        "title": "推理（一）：让模型展开思考",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture12-reasoning-part1.pdf",
+        "pages": 68
+      },
+      {
+        "course": "Stanford CS224N",
+        "session": "L13",
+        "title": "推理（二）：验证与测试时计算",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture13-reasoning-part2.pdf",
+        "pages": 59
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L09",
+        "title": "推理：解码算法",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-09-decoding.pdf",
+        "pages": 62
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Let's Verify Step by Step",
+        "url": "https://arxiv.org/pdf/2305.20050.pdf",
+        "guide_url": "",
+        "pages": 29,
+        "source": "Stanford CS224N L13",
+        "question": "测试时多花的计算用在生成、验证还是聚合，收益曲线什么时候开始饱和？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models",
+        "url": "https://arxiv.org/pdf/2201.11903.pdf",
+        "guide_url": "",
+        "pages": 43,
+        "source": "Stanford CS224N L12",
+        "question": "测试时多花的计算用在生成、验证还是聚合，收益曲线什么时候开始饱和？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Fast Inference from Transformers via Speculative Decoding",
+        "url": "https://arxiv.org/pdf/2211.17192.pdf",
+        "guide_url": "",
+        "pages": 13,
+        "source": "Stanford CS224N L13",
+        "question": "测试时多花的计算用在生成、验证还是聚合，收益曲线什么时候开始饱和？"
+      }
+    ]
+  },
+  "50-multilingual": {
+    "lesson_title": "第 03 课 多语言模型、跨语言迁移与 Token 公平性",
+    "target_id": "50",
+    "reading_question": "跨语言共享参数带来迁移还是干扰，分词效率和评测覆盖是否公平？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L14",
+        "title": "分词与多语言",
+        "label": "Guest Lecture Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture14-guest-julie-tokenization-multilinguality.pdf",
+        "pages": 76
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Do All Languages Cost the Same? Tokenization in the Era of Commercial Language Models",
+        "url": "https://aclanthology.org/2023.emnlp-main.614.pdf",
+        "guide_url": "",
+        "pages": 20,
+        "source": "Stanford CS224N L14",
+        "question": "跨语言共享参数带来迁移还是干扰，分词效率和评测覆盖是否公平？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Jurafsky & Martin Chapter 2",
+        "url": "https://web.stanford.edu/~jurafsky/slp3/2.pdf",
+        "guide_url": "",
+        "pages": 36,
+        "source": "Stanford CS224N L14",
+        "question": "跨语言共享参数带来迁移还是干扰，分词效率和评测覆盖是否公平？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "Neural Machine Translation of Rare Words with Subword Units",
+        "url": "https://arxiv.org/pdf/1508.07909.pdf",
+        "guide_url": "",
+        "pages": 11,
+        "source": "Stanford CS224N L14",
+        "question": "跨语言共享参数带来迁移还是干扰，分词效率和评测覆盖是否公平？"
+      }
+    ]
+  },
+  "51-diffusion-flow": {
+    "lesson_title": "第 44 课 扩散模型、Guidance 与 Flow Matching",
+    "target_id": "51",
+    "reading_question": "加噪、去噪与概率流怎样连接，训练目标和采样算法各自近似了什么？",
+    "lectures": [
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L15",
+        "title": "建模四：扩散模型与 Flow",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-15-multimodal-iii.pdf",
+        "pages": 43
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Flow Matching for Generative Modeling",
+        "url": "https://arxiv.org/pdf/2210.02747.pdf",
+        "guide_url": "",
+        "pages": 28,
+        "source": "CMU Advanced NLP L15",
+        "question": "加噪、去噪与概率流怎样连接，训练目标和采样算法各自近似了什么？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Denoising Diffusion Probabilistic Models",
+        "url": "https://arxiv.org/pdf/2006.11239.pdf",
+        "guide_url": "",
+        "pages": 25,
+        "source": "CMU Advanced NLP L15",
+        "question": "加噪、去噪与概率流怎样连接，训练目标和采样算法各自近似了什么？"
+      }
+    ]
+  },
+  "52-interpretability": {
+    "lesson_title": "第 48 课 模型可解释性：从探针到因果干预",
+    "target_id": "52",
+    "reading_question": "方法发现的是相关特征还是因果机制，干预实验能否复现预测？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L15",
+        "title": "可解释性（官网链接待核对）",
+        "label": "官网当前链接的 Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides/cs224n-spr2024-lecture15-life-after-dpo-lambert.pdf",
+        "pages": 86
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Because we have LLMs, we Can and Should Pursue Agentic Interpretability",
+        "url": "https://arxiv.org/pdf/2506.12152.pdf",
+        "guide_url": "",
+        "pages": 15,
+        "source": "Stanford CS224N L15",
+        "question": "方法发现的是相关特征还是因果机制，干预实验能否复现预测？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Bridging the human–AI knowledge gap through concept discovery and transfer in AlphaZero",
+        "url": "https://arxiv.org/pdf/2310.16410.pdf",
+        "guide_url": "",
+        "pages": 61,
+        "source": "Stanford CS224N L15",
+        "question": "方法发现的是相关特征还是因果机制，干预实验能否复现预测？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "We Can't Understand AI Using our Existing Vocabulary",
+        "url": "https://arxiv.org/pdf/2502.07586.pdf",
+        "guide_url": "",
+        "pages": 15,
+        "source": "Stanford CS224N L15",
+        "question": "方法发现的是相关特征还是因果机制，干预实验能否复现预测？"
+      }
+    ]
+  },
+  "53-k3-capstone": {
+    "lesson_title": "第 53 课 毕业项目：从零拆解 Kimi K3",
+    "target_id": null,
+    "reading_question": "能否把 K3 的每个关键设计还原成问题、机制、资源账本、证据和适用边界？",
+    "lectures": [
+      {
+        "course": "Stanford CS224N",
+        "session": "L07",
+        "title": "预训练：规模、系统与数据",
+        "label": "Slides",
+        "url": "https://web.stanford.edu/class/cs224n/slides_w26/cs224n-2026-lecture07-pretraining.pdf",
+        "pages": 56
+      },
+      {
+        "course": "CMU Advanced NLP",
+        "session": "L17",
+        "title": "强化学习二：大模型应用",
+        "label": "Slides",
+        "url": "https://cmu-l3.github.io/anlp-spring2026/static_files/anlp-s2026-17-rl-llms.pdf",
+        "pages": 67
+      }
+    ],
+    "papers": [
+      {
+        "level": "必读",
+        "role": "建立核心机制",
+        "title": "Kimi K3: Open Frontier Intelligence",
+        "url": "https://arxiv.org/pdf/2607.24653",
+        "guide_url": "/papers/kimi_k3",
+        "pages": 47,
+        "source": "核心论文库",
+        "question": "能否把 K3 的每个关键设计还原成问题、机制、资源账本、证据和适用边界？"
+      },
+      {
+        "level": "选读",
+        "role": "比较另一条路线",
+        "title": "Kimi Linear: An Expressive, Efficient Attention Architecture",
+        "url": "https://arxiv.org/pdf/2510.26692",
+        "guide_url": "/papers/kimi_linear",
+        "pages": 28,
+        "source": "核心论文库",
+        "question": "能否把 K3 的每个关键设计还原成问题、机制、资源账本、证据和适用边界？"
+      },
+      {
+        "level": "选读",
+        "role": "补证据与边界",
+        "title": "LatentMoE: Toward Optimal Accuracy per FLOP and Parameter in Mixture of Experts",
+        "url": "https://arxiv.org/pdf/2601.18089",
+        "guide_url": "/papers/latent_moe",
+        "pages": 18,
+        "source": "核心论文库",
+        "question": "能否把 K3 的每个关键设计还原成问题、机制、资源账本、证据和适用边界？"
+      }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">GRPO 中当前策略、旧策略和参考策略的不同角色</title>
+  <desc id="desc">当前策略接受梯度；旧策略用于采样和重要性比率；参考策略提供行为正则；验证器提供任务奖励。</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f8faff"/><stop offset="1" stop-color="#fffaf4"/></linearGradient><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0l9 5-9 5z" fill="#5368d9"/></marker></defs>
+  <rect width="1200" height="520" rx="30" fill="url(#bg)"/>
+  <text x="60" y="70" font-family="system-ui,sans-serif" font-size="28" font-weight="700" fill="#182342">三个“策略”不是三个名字，而是三份不同职责的快照</text>
+  <text x="60" y="103" font-family="system-ui,sans-serif" font-size="17" fill="#5c6787">把 old 与 reference 混成一个概念，是理解 PPO / GRPO 最常见的错误之一</text>
+  <g font-family="system-ui,sans-serif">
+    <rect x="70" y="175" width="275" height="190" rx="22" fill="#eef1ff" stroke="#8999e6" stroke-width="2"/>
+    <text x="208" y="220" text-anchor="middle" font-size="22" font-weight="700" fill="#263761">旧策略 πold</text><text x="208" y="257" text-anchor="middle" font-size="16" fill="#596683">本轮 rollout 的行为策略</text><text x="208" y="286" text-anchor="middle" font-size="16" fill="#596683">保存采样时的 log probability</text><text x="208" y="323" text-anchor="middle" font-size="17" font-weight="700" fill="#5368d9">构造比率 πθ / πold</text>
+    <rect x="463" y="150" width="275" height="240" rx="22" fill="#eaf8f4" stroke="#72b9a7" stroke-width="2"/>
+    <text x="600" y="199" text-anchor="middle" font-size="22" font-weight="700" fill="#205c50">当前策略 πθ</text><text x="600" y="238" text-anchor="middle" font-size="16" fill="#4c6f67">唯一接收梯度的模型</text><text x="600" y="267" text-anchor="middle" font-size="16" fill="#4c6f67">提高正优势 token 的概率</text><text x="600" y="296" text-anchor="middle" font-size="16" fill="#4c6f67">降低负优势 token 的概率</text><rect x="530" y="327" width="140" height="34" rx="17" fill="#28987d"/><text x="600" y="350" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">optimizer.step()</text>
+    <rect x="855" y="175" width="275" height="190" rx="22" fill="#fff4e5" stroke="#dfa84e" stroke-width="2"/>
+    <text x="993" y="220" text-anchor="middle" font-size="22" font-weight="700" fill="#684c1e">参考策略 πref</text><text x="993" y="257" text-anchor="middle" font-size="16" fill="#745f43">冻结的行为锚点</text><text x="993" y="286" text-anchor="middle" font-size="16" fill="#745f43">通过 KL 惩罚限制偏移</text><text x="993" y="323" text-anchor="middle" font-size="17" font-weight="700" fill="#c1852e">是否使用由算法配方决定</text>
+  </g>
+  <path d="M345 270h101" stroke="#5368d9" stroke-width="3" marker-end="url(#a)"/><text x="397" y="252" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" fill="#5368d9">概率比</text>
+  <path d="M855 270H755" stroke="#c1852e" stroke-width="3" marker-end="url(#a)"/><text x="805" y="252" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" fill="#9b6a25">KL 锚定</text>
+  <rect x="70" y="425" width="1060" height="52" rx="16" fill="#fff" stroke="#cbd2e4"/><text x="600" y="458" text-anchor="middle" font-family="system-ui,sans-serif" font-size="16" fill="#4f5b78">验证器不属于策略：它只把回答映射为奖励 R；奖励决定方向，old/reference 决定更新的可控程度。</text>
+</svg>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">RAG claim 与 evidence 的逐条蕴含矩阵</title>
+  <desc id="desc">将生成答案拆成三个可核验 claim，与三个来源逐格判断蕴含、矛盾或无关。第一条 claim 被来源二支持，第二条被旧来源一支持但与当前来源二冲突，第三条没有来源支持。由此计算引用正确性和 claim 覆盖。</desc>
+  <rect width="1200" height="680" rx="30" fill="#f8faff"/>
+  <text x="55" y="63" font-family="system-ui,sans-serif" font-size="29" font-weight="700" fill="#182342">引用评测的单位不是“答案里有几个 [1]”，而是每条 claim 是否被对应来源蕴含</text>
+  <text x="55" y="99" font-family="system-ui,sans-serif" font-size="17" fill="#5c6787">同一来源可能支持一条、反驳另一条；版本过期也不能因为文字匹配就当作当前事实</text>
+  <g font-family="system-ui,sans-serif">
+    <g transform="translate(55 152)">
+      <rect width="1090" height="354" rx="20" fill="#ffffff" stroke="#cbd3eb" stroke-width="2"/>
+      <rect width="1090" height="62" rx="20" fill="#eef1ff"/>
+      <text x="145" y="38" text-anchor="middle" font-size="15" font-weight="700" fill="#25345d">生成答案拆出的 claim</text>
+      <text x="520" y="38" text-anchor="middle" font-size="15" font-weight="700" fill="#25345d">S1 · 2023 旧制度</text>
+      <text x="750" y="38" text-anchor="middle" font-size="15" font-weight="700" fill="#25345d">S2 · 2025 当前制度</text>
+      <text x="980" y="38" text-anchor="middle" font-size="15" font-weight="700" fill="#25345d">S3 · 员工论坛</text>
+      <path d="M380 0v354M635 0v354M865 0v354" stroke="#cbd3eb" stroke-width="2"/><path d="M0 62h1090M0 159h1090M0 256h1090" stroke="#cbd3eb" stroke-width="2"/>
+      <g font-size="13" fill="#25345d">
+        <text x="24" y="105" font-weight="700">C1</text><text x="62" y="105">“当前期限是 30 日”</text><text x="62" y="130" font-size="11" fill="#596683">答案引用 [S2]</text>
+        <text x="24" y="202" font-weight="700">C2</text><text x="62" y="202">“当前期限是 15 日”</text><text x="62" y="227" font-size="11" fill="#596683">答案引用 [S1]</text>
+        <text x="24" y="299" font-weight="700">C3</text><text x="62" y="299">“申请已经自动批准”</text><text x="62" y="324" font-size="11" fill="#596683">答案没有引用</text>
+      </g>
+      <g font-size="13" text-anchor="middle">
+        <g transform="translate(520 110)"><rect x="-68" y="-27" width="136" height="47" rx="10" fill="#f1eceb"/><text y="2" fill="#805450">无关 / 未说明</text></g>
+        <g transform="translate(750 110)"><rect x="-68" y="-27" width="136" height="47" rx="10" fill="#d5eee8"/><text y="2" font-weight="700" fill="#205c50">✓ 蕴含</text></g>
+        <g transform="translate(980 110)"><rect x="-68" y="-27" width="136" height="47" rx="10" fill="#f1eceb"/><text y="2" fill="#805450">无关</text></g>
+        <g transform="translate(520 207)"><rect x="-68" y="-27" width="136" height="47" rx="10" fill="#f4dfb9"/><text y="-5" font-weight="700" fill="#684c1e">文字蕴含</text><text y="12" font-size="11" fill="#745f43">但版本过期</text></g>
+        <g transform="translate(750 207)"><rect x="-68" y="-27" width="136" height="47" rx="10" fill="#f6d6d3"/><text y="2" font-weight="700" fill="#6f2e2a">✕ 矛盾</text></g>
+        <g transform="translate(980 207)"><rect x="-68" y="-27" width="136" height="47" rx="10" fill="#f1eceb"/><text y="2" fill="#805450">无关</text></g>
+        <g transform="translate(520 304)"><rect x="-68" y="-27" width="136" height="47" rx="10" fill="#f1eceb"/><text y="2" fill="#805450">未说明</text></g>
+        <g transform="translate(750 304)"><rect x="-68" y="-27" width="136" height="47" rx="10" fill="#f1eceb"/><text y="2" fill="#805450">未说明</text></g>
+        <g transform="translate(980 304)"><rect x="-68" y="-27" width="136" height="47" rx="10" fill="#f6d6d3"/><text y="-5" font-weight="700" fill="#6f2e2a">来源内恶意指令</text><text y="12" font-size="11" fill="#805450">不是事实证据</text></g>
+      </g>
+    </g>
+    <g transform="translate(95 550)">
+      <rect width="300" height="72" rx="14" fill="#eaf8f4"/><text x="150" y="27" text-anchor="middle" font-size="13" fill="#4c6f67">Citation correctness</text><text x="150" y="54" text-anchor="middle" font-size="19" font-weight="700" fill="#205c50">C1 [S2]：通过</text>
+      <rect x="355" width="300" height="72" rx="14" fill="#fff4e5"/><text x="505" y="27" text-anchor="middle" font-size="13" fill="#745f43">Temporal validity</text><text x="505" y="54" text-anchor="middle" font-size="19" font-weight="700" fill="#684c1e">C2 [S1]：过期</text>
+      <rect x="710" width="300" height="72" rx="14" fill="#fff0ef"/><text x="860" y="27" text-anchor="middle" font-size="13" fill="#805450">Claim coverage</text><text x="860" y="54" text-anchor="middle" font-size="19" font-weight="700" fill="#6f2e2a">C3：无可用证据</text>
+    </g>
+  </g>
+</svg>

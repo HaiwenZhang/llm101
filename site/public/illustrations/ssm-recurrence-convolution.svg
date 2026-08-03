@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="650" viewBox="0 0 1400 650" role="img" aria-labelledby="title desc">
+  <title id="title">同一个线性时不变 SSM 的递推视图和卷积视图</title>
+  <desc id="desc">左侧展示推理时逐步更新固定状态，右侧展示训练时把递推展开成由 A 的幂构成的一维卷积核。</desc>
+  <defs>
+    <linearGradient id="bg4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7fbff"/><stop offset="1" stop-color="#fff9f2"/></linearGradient>
+    <filter id="sh4" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="6" stdDeviation="9" flood-color="#24304a" flood-opacity=".1"/></filter>
+    <marker id="a4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 10 5 0 10z" fill="#7f899f"/></marker>
+    <style>.zh{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.t{font-size:40px;font-weight:800;fill:#17213a}.sub{font-size:23px;fill:#66708a}.h{font-size:28px;font-weight:800;fill:#17213a}.b{font-size:23px;font-weight:750;fill:#27324a}.s{font-size:21px;fill:#66708a}.f{font-size:25px;font-weight:750;fill:#17213a}.tiny{font-size:18px;fill:#788299}</style>
+  </defs>
+  <rect width="1400" height="650" rx="32" fill="url(#bg4)"/>
+  <text x="65" y="68" class="zh t">一个 LTI SSM，两种等价计算视图</text>
+  <text x="65" y="106" class="zh sub">推理用固定状态递推；训练可把同一递推展开成卷积</text>
+
+  <g filter="url(#sh4)">
+    <rect x="65" y="145" width="610" height="430" rx="24" fill="#fff" stroke="#d7deee" stroke-width="2"/>
+    <text x="105" y="192" class="zh h">递推视图：一次只保留 hₜ</text>
+    <g transform="translate(105 250)">
+      <rect x="0" y="0" width="105" height="70" rx="14" fill="#eef2ff" stroke="#9caef2"/><text x="52" y="43" text-anchor="middle" class="mono b">hₜ₋₁</text>
+      <rect x="208" y="0" width="105" height="70" rx="14" fill="#eef2ff" stroke="#9caef2"/><text x="260" y="43" text-anchor="middle" class="mono b">hₜ</text>
+      <rect x="416" y="0" width="105" height="70" rx="14" fill="#eef2ff" stroke="#9caef2"/><text x="468" y="43" text-anchor="middle" class="mono b">hₜ₊₁</text>
+      <path d="M108 35H204M316 35H412" stroke="#596fe5" stroke-width="5" marker-end="url(#a4)"/>
+      <text x="156" y="25" text-anchor="middle" class="mono s">Ā</text><text x="364" y="25" text-anchor="middle" class="mono s">Ā</text>
+      <text x="260" y="125" text-anchor="middle" class="mono f">hₜ = Āhₜ₋₁ + B̄xₜ</text>
+      <text x="260" y="168" text-anchor="middle" class="mono f">yₜ = Chₜ</text>
+    </g>
+    <rect x="105" y="465" width="530" height="72" rx="14" fill="#eaf8f4" stroke="#86cdbd"/>
+    <text x="370" y="494" text-anchor="middle" class="zh b">Decode：O(1) 大小状态，逐 token 更新</text>
+    <text x="370" y="523" text-anchor="middle" class="zh tiny">历史被压进 h；不能按地址重新打开某个旧 token</text>
+  </g>
+
+  <g filter="url(#sh4)">
+    <rect x="725" y="145" width="610" height="430" rx="24" fill="#fff" stroke="#d7deee" stroke-width="2"/>
+    <text x="765" y="192" class="zh h">卷积视图：先展开每个旧输入的贡献</text>
+    <g transform="translate(770 245)">
+      <rect x="0" y="0" width="90" height="58" rx="12" fill="#fff1e5" stroke="#edaa5d"/><text x="45" y="37" text-anchor="middle" class="mono b">xₜ</text>
+      <rect x="110" y="0" width="90" height="58" rx="12" fill="#fff1e5" stroke="#edaa5d"/><text x="155" y="37" text-anchor="middle" class="mono b">xₜ₋₁</text>
+      <rect x="220" y="0" width="90" height="58" rx="12" fill="#fff1e5" stroke="#edaa5d"/><text x="265" y="37" text-anchor="middle" class="mono b">xₜ₋₂</text>
+      <rect x="330" y="0" width="90" height="58" rx="12" fill="#fff1e5" stroke="#edaa5d"/><text x="375" y="37" text-anchor="middle" class="mono b">…</text>
+      <text x="45" y="104" text-anchor="middle" class="mono s">CB̄</text><text x="155" y="104" text-anchor="middle" class="mono s">CĀB̄</text><text x="265" y="104" text-anchor="middle" class="mono s">CĀ²B̄</text>
+      <path d="M0 130H420" stroke="#7f899f" stroke-width="3" marker-end="url(#a4)"/>
+      <text x="210" y="170" text-anchor="middle" class="mono f">K = [CB̄, CĀB̄, CĀ²B̄, …]</text>
+      <text x="210" y="215" text-anchor="middle" class="mono f">y = x ∗ K</text>
+    </g>
+    <rect x="765" y="465" width="530" height="72" rx="14" fill="#f4efff" stroke="#c1acf0"/>
+    <text x="1030" y="494" text-anchor="middle" class="zh b">Train：整段卷积或并行 scan</text>
+    <text x="1030" y="523" text-anchor="middle" class="zh tiny">只有参数不随 token 改变时，才存在一条固定卷积核 K</text>
+  </g>
+  <text x="700" y="620" text-anchor="middle" class="zh tiny">Mamba 令 Bₜ、Cₜ、Δₜ 随输入变化，获得选择性；代价是失去这条固定卷积核，需要 selective scan。</text>
+</svg>

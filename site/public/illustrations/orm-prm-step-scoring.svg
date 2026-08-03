@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" role="img" aria-labelledby="title desc">
+  <title id="title">ORM 与 PRM 对同一条推理轨迹的评分差异</title>
+  <desc id="desc">ORM 只在最终答案处给整条轨迹一个分数，PRM 为每个步骤评分并定位首个错误；不同聚合方式会产生长度偏差。</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#23314d" flood-opacity=".10"/></filter>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9Z" fill="#69758c"/></marker>
+    <style>.title{font:700 28px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#15233f}.sub{font:500 16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#667085}.head{font:700 20px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#1f2e49}.body{font:500 16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#45546d}.score{font:700 16px ui-monospace,SFMono-Regular,Menlo,monospace}.eq{font:600 17px ui-monospace,SFMono-Regular,Menlo,monospace;fill:#25324a}.tiny{font:600 14px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#667085}</style>
+  </defs>
+  <rect width="1200" height="600" rx="28" fill="#f7f9fc"/>
+  <text x="54" y="58" class="title">同一条推理轨迹，ORM 看终点，PRM 看每一步</text>
+  <text x="54" y="88" class="sub">过程分数更细，但“怎样把步骤分数合成整条分数”本身就是模型设计。</text>
+
+  <g filter="url(#shadow)"><rect x="54" y="128" width="1092" height="210" rx="22" fill="#fff" stroke="#d8dfeb"/></g>
+  <text x="82" y="169" class="head">推理轨迹</text>
+  <g>
+    <rect x="82" y="202" width="186" height="72" rx="14" fill="#eaf7f3" stroke="#2a9d81"/><text x="175" y="232" text-anchor="middle" class="body">步骤 1：列公式</text><text x="175" y="258" text-anchor="middle" class="score" fill="#21866e">0.99</text>
+    <path d="M268 238H302" stroke="#69758c" stroke-width="3" marker-end="url(#arrow)"/>
+    <rect x="310" y="202" width="186" height="72" rx="14" fill="#eaf7f3" stroke="#2a9d81"/><text x="403" y="232" text-anchor="middle" class="body">步骤 2：代入</text><text x="403" y="258" text-anchor="middle" class="score" fill="#21866e">0.97</text>
+    <path d="M496 238H530" stroke="#69758c" stroke-width="3" marker-end="url(#arrow)"/>
+    <rect x="538" y="202" width="186" height="72" rx="14" fill="#fff0ec" stroke="#d85f55" stroke-width="3"/><text x="631" y="232" text-anchor="middle" class="body">步骤 3：符号写反</text><text x="631" y="258" text-anchor="middle" class="score" fill="#c54c45">0.08</text>
+    <path d="M724 238H758" stroke="#69758c" stroke-width="3" marker-end="url(#arrow)"/>
+    <rect x="766" y="202" width="186" height="72" rx="14" fill="#fff6ee" stroke="#df8a45"/><text x="859" y="232" text-anchor="middle" class="body">步骤 4：继续算</text><text x="859" y="258" text-anchor="middle" class="score" fill="#b16c32">0.42</text>
+    <path d="M952 238H986" stroke="#69758c" stroke-width="3" marker-end="url(#arrow)"/>
+    <rect x="994" y="202" width="124" height="72" rx="14" fill="#fff6ee" stroke="#df8a45"/><text x="1056" y="232" text-anchor="middle" class="body">答案</text><text x="1056" y="258" text-anchor="middle" class="score" fill="#b16c32">错</text>
+  </g>
+
+  <g filter="url(#shadow)"><rect x="54" y="368" width="500" height="176" rx="22" fill="#fff" stroke="#d8dfeb"/></g>
+  <text x="82" y="410" class="head">ORM：只学整条是否正确</text>
+  <text x="82" y="448" class="eq">vₒᵣₘ(x, z, a) = 0.12</text>
+  <text x="82" y="480" class="body">知道“整条错了”，不知道首错在第 3 步。</text>
+  <text x="82" y="511" class="tiny">优点：标签便宜；缺点：信用分配粗。</text>
+
+  <g filter="url(#shadow)"><rect x="580" y="368" width="566" height="176" rx="22" fill="#fff" stroke="#d8dfeb"/></g>
+  <text x="608" y="410" class="head">PRM：逐步评分，再聚合成轨迹分数</text>
+  <text x="608" y="448" class="eq">product = ∏ₜ sₜ　 min = minₜ sₜ　 last = sₘ</text>
+  <text x="608" y="480" class="body">乘积会随步骤数变长而变小；最小值怕一次误报；末步分数依赖训练定义。</text>
+  <text x="608" y="511" class="tiny">Lightman 等使用乘积；Snell 等在其设定中发现末步聚合更好。</text>
+</svg>

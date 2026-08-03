@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">训练、Prefill 与 Decode 的计算形状对比</title>
+  <desc id="desc">训练一次处理完整输入和目标并反向传播；Prefill 并行读取完整提示并建立 KV Cache；Decode 每次只处理一个新 token，读取全部历史 Cache 并追加一格。</desc>
+  <rect width="1200" height="650" rx="30" fill="#f8faff"/>
+  <text x="55" y="65" font-family="system-ui,sans-serif" font-size="28" font-weight="700" fill="#182342">同一个 Decoder，训练、Prefill、Decode 是三种不同工作形状</text>
+  <text x="55" y="101" font-family="system-ui,sans-serif" font-size="17" fill="#5c6787">区别来自“目标是否已知、一次送入多少 token、是否反向传播、是否已有历史状态”</text>
+  <g font-family="system-ui,sans-serif">
+    <g transform="translate(55 154)">
+      <rect width="340" height="376" rx="22" fill="#eef1ff" stroke="#8799e9" stroke-width="2"/>
+      <text x="170" y="47" text-anchor="middle" font-size="22" font-weight="700" fill="#25345d">训练 Training</text><text x="170" y="76" text-anchor="middle" font-size="14" fill="#596683">输入和右移目标全部已知</text>
+      <g transform="translate(54 108)" fill="#dfe4fa" stroke="#fff" stroke-width="3"><rect width="46" height="46"/><rect x="48" width="46" height="46"/><rect x="96" width="46" height="46"/><rect x="144" width="46" height="46"/><rect x="192" width="46" height="46"/><rect y="48" width="46" height="46"/><rect x="48" y="48" width="46" height="46"/><rect x="96" y="48" width="46" height="46"/><rect x="144" y="48" width="46" height="46"/><rect x="192" y="48" width="46" height="46"/></g>
+      <text x="170" y="226" text-anchor="middle" font-size="15" fill="#596683">[B,T,d] 大矩阵并行</text><text x="170" y="259" text-anchor="middle" font-size="15" fill="#596683">Causal mask 防止偷看未来</text><text x="170" y="292" text-anchor="middle" font-size="15" fill="#596683">保存激活 + 反向传播</text>
+      <rect x="58" y="318" width="224" height="38" rx="11" fill="#dfe4fa"/><text x="170" y="342" text-anchor="middle" font-size="14" font-weight="700" fill="#34467e">关心：tokens/s、MFU、收敛</text>
+    </g>
+    <g transform="translate(430 154)">
+      <rect width="340" height="376" rx="22" fill="#fff4e5" stroke="#dfa84e" stroke-width="2"/>
+      <text x="170" y="47" text-anchor="middle" font-size="22" font-weight="700" fill="#684c1e">Prefill 读 Prompt</text><text x="170" y="76" text-anchor="middle" font-size="14" fill="#745f43">完整提示已知，未来输出未知</text>
+      <g transform="translate(54 108)" fill="#f4dfb9" stroke="#fff" stroke-width="3"><rect width="46" height="46"/><rect x="48" width="46" height="46"/><rect x="96" width="46" height="46"/><rect x="144" width="46" height="46"/><rect x="192" width="46" height="46"/><rect y="48" width="46" height="46"/><rect x="48" y="48" width="46" height="46"/><rect x="96" y="48" width="46" height="46"/><rect x="144" y="48" width="46" height="46"/><rect x="192" y="48" width="46" height="46"/></g>
+      <text x="170" y="226" text-anchor="middle" font-size="15" fill="#745f43">[B,Tprompt,d] 大矩阵并行</text><text x="170" y="259" text-anchor="middle" font-size="15" fill="#745f43">无 backward，写入每层 K/V</text><text x="170" y="292" text-anchor="middle" font-size="15" fill="#745f43">长 Prompt 常更 compute-bound</text>
+      <rect x="58" y="318" width="224" height="38" rx="11" fill="#f4dfb9"/><text x="170" y="342" text-anchor="middle" font-size="14" font-weight="700" fill="#684c1e">关心：TTFT、Prompt 吞吐</text>
+    </g>
+    <g transform="translate(805 154)">
+      <rect width="340" height="376" rx="22" fill="#eaf8f4" stroke="#72baa7" stroke-width="2"/>
+      <text x="170" y="47" text-anchor="middle" font-size="22" font-weight="700" fill="#205c50">Decode 写一个 token</text><text x="170" y="76" text-anchor="middle" font-size="14" fill="#4c6f67">新 token 依赖已经生成的前缀</text>
+      <g transform="translate(52 108)"><rect width="48" height="94" rx="9" fill="#d5eee8"/><path d="M70 47H224" stroke="#419b83" stroke-width="3"/><path d="M212 38l13 9-13 9" fill="none" stroke="#419b83" stroke-width="3"/><g fill="#d5eee8" stroke="#fff" stroke-width="3"><rect x="82" y="16" width="38" height="62"/><rect x="122" y="16" width="38" height="62"/><rect x="162" y="16" width="38" height="62"/><rect x="202" y="16" width="38" height="62"/></g></g>
+      <text x="170" y="226" text-anchor="middle" font-size="15" fill="#4c6f67">Query [B,1,d] 读取 Cache [B,T,…]</text><text x="170" y="259" text-anchor="middle" font-size="15" fill="#4c6f67">权重和 Cache 被反复搬运</text><text x="170" y="292" text-anchor="middle" font-size="15" fill="#4c6f67">小 batch 常更 memory-bound</text>
+      <rect x="58" y="318" width="224" height="38" rx="11" fill="#d5eee8"/><text x="170" y="342" text-anchor="middle" font-size="14" font-weight="700" fill="#205c50">关心：TPOT / ITL、吞吐</text>
+    </g>
+  </g>
+  <path d="M395 342H415" stroke="#5368d9" stroke-width="3"/><path d="M404 333l12 9-12 9" fill="none" stroke="#5368d9" stroke-width="3"/><path d="M770 342H790" stroke="#5368d9" stroke-width="3"/><path d="M779 333l12 9-12 9" fill="none" stroke="#5368d9" stroke-width="3"/>
+  <rect x="110" y="564" width="980" height="51" rx="14" fill="#eef1ff"/><text x="600" y="596" text-anchor="middle" font-family="system-ui,sans-serif" font-size="15" fill="#25345d">训练吞吐高 ≠ 首 token 快 ≠ 连续生成快；三种形状必须分别压测</text>
+</svg>

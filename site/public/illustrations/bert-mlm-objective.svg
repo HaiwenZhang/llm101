@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">BERT MLM 从原句采样到稀疏损失的完整流程</title>
+  <desc id="desc">先从原句随机选择百分之十五的 token 位置；选中位置中百分之八十替换为 MASK、百分之十替换为随机词、百分之十保持原词。完整污染序列经过双向 Encoder，但交叉熵只在被选中的原位置计算。</desc>
+  <rect width="1200" height="680" rx="30" fill="#f8faff"/>
+  <text x="55" y="63" font-family="system-ui,sans-serif" font-size="29" font-weight="700" fill="#182342">MLM 有三张“清单”：原句、模型输入、监督 labels</text>
+  <text x="55" y="99" font-family="system-ui,sans-serif" font-size="17" fill="#5c6787">最容易混淆的是：参与 Attention 的位置很多，直接产生 MLM loss 的位置很少</text>
+  <g font-family="system-ui,sans-serif">
+    <g transform="translate(55 150)">
+      <rect width="250" height="365" rx="20" fill="#eef1ff" stroke="#8799e9" stroke-width="2"/>
+      <text x="125" y="40" text-anchor="middle" font-size="20" font-weight="700" fill="#25345d">① 原始 token 序列</text>
+      <g transform="translate(32 86)" font-size="13" fill="#25345d">
+        <rect width="186" height="34" rx="7" fill="#dfe4fa"/><text x="93" y="22" text-anchor="middle">这家</text>
+        <rect y="43" width="186" height="34" rx="7" fill="#f6c2b5"/><text x="93" y="65" text-anchor="middle" font-weight="700">餐厅　← 被选中</text>
+        <rect y="86" width="186" height="34" rx="7" fill="#dfe4fa"/><text x="93" y="108" text-anchor="middle">的</text>
+        <rect y="129" width="186" height="34" rx="7" fill="#dfe4fa"/><text x="93" y="151" text-anchor="middle">面条</text>
+        <rect y="172" width="186" height="34" rx="7" fill="#f6c2b5"/><text x="93" y="194" text-anchor="middle" font-weight="700">很好吃　← 被选中</text>
+      </g>
+      <rect x="32" y="315" width="186" height="29" rx="8" fill="#dfe4fa"/><text x="125" y="335" text-anchor="middle" font-size="12" fill="#25345d">随机选择约 15% 位置</text>
+    </g>
+    <g transform="translate(345 150)">
+      <rect width="250" height="365" rx="20" fill="#fff4e5" stroke="#dfa84e" stroke-width="2"/>
+      <text x="125" y="40" text-anchor="middle" font-size="20" font-weight="700" fill="#684c1e">② 只污染选中位置</text>
+      <g transform="translate(28 83)" font-size="13" fill="#684c1e">
+        <rect width="194" height="54" rx="10" fill="#f4dfb9"/><text x="25" y="22">80%</text><text x="97" y="22" text-anchor="middle">餐厅</text><text x="145" y="22">→</text><text x="164" y="22" font-weight="700">[MASK]</text><text x="97" y="43" text-anchor="middle" font-size="11">占全部位置的期望 12%</text>
+        <rect y="68" width="194" height="54" rx="10" fill="#f4dfb9"/><text x="25" y="90">10%</text><text x="97" y="90" text-anchor="middle">餐厅</text><text x="145" y="90">→</text><text x="174" y="90" text-anchor="middle" font-weight="700">公园</text><text x="97" y="111" text-anchor="middle" font-size="11">随机 token，期望 1.5%</text>
+        <rect y="136" width="194" height="54" rx="10" fill="#f4dfb9"/><text x="25" y="158">10%</text><text x="97" y="158" text-anchor="middle">餐厅</text><text x="145" y="158">→</text><text x="174" y="158" text-anchor="middle" font-weight="700">餐厅</text><text x="97" y="179" text-anchor="middle" font-size="11">保持原词，期望 1.5%</text>
+      </g>
+      <text x="125" y="315" text-anchor="middle" font-size="12" fill="#745f43">三种情况的监督 target</text><text x="125" y="337" text-anchor="middle" font-size="12" font-weight="700" fill="#684c1e">始终都是原 token</text>
+    </g>
+    <g transform="translate(635 150)">
+      <rect width="250" height="365" rx="20" fill="#eaf8f4" stroke="#72baa7" stroke-width="2"/>
+      <text x="125" y="40" text-anchor="middle" font-size="20" font-weight="700" fill="#205c50">③ 双向 Encoder</text>
+      <text x="125" y="69" text-anchor="middle" font-size="13" fill="#4c6f67">所有可见 token 都参与计算</text>
+      <g transform="translate(30 104)">
+        <rect width="190" height="43" rx="8" fill="#d5eee8"/><text x="95" y="27" text-anchor="middle" font-size="13" fill="#205c50">Layer 1：双向 Attention</text>
+        <path d="M95 52v25" stroke="#419b83" stroke-width="3"/><path d="M88 69l7 10 7-10" fill="none" stroke="#419b83" stroke-width="3"/>
+        <rect y="82" width="190" height="43" rx="8" fill="#d5eee8"/><text x="95" y="109" text-anchor="middle" font-size="13" fill="#205c50">… 多层上下文混合 …</text>
+        <path d="M95 134v25" stroke="#419b83" stroke-width="3"/><path d="M88 151l7 10 7-10" fill="none" stroke="#419b83" stroke-width="3"/>
+        <rect y="164" width="190" height="43" rx="8" fill="#d5eee8"/><text x="95" y="191" text-anchor="middle" font-size="13" fill="#205c50">Layer L：每位置 hᵢ</text>
+      </g>
+      <rect x="30" y="315" width="190" height="29" rx="8" fill="#d5eee8"/><text x="125" y="335" text-anchor="middle" font-size="12" fill="#205c50">Padding mask ≠ loss mask</text>
+    </g>
+    <g transform="translate(925 150)">
+      <rect width="220" height="365" rx="20" fill="#fff0ef" stroke="#d9867f" stroke-width="2"/>
+      <text x="110" y="40" text-anchor="middle" font-size="20" font-weight="700" fill="#6f2e2a">④ 稀疏 MLM loss</text>
+      <g transform="translate(28 89)" font-size="13">
+        <rect width="164" height="39" rx="8" fill="#f1eceb"/><text x="82" y="25" text-anchor="middle" fill="#805450">这家　label = −100</text>
+        <rect y="49" width="164" height="49" rx="8" fill="#f6c2b5"/><text x="82" y="70" text-anchor="middle" font-weight="700" fill="#6f2e2a">餐厅　label = 餐厅</text><text x="82" y="89" text-anchor="middle" font-size="11" fill="#805450">计算 −ln p(餐厅)</text>
+        <rect y="108" width="164" height="39" rx="8" fill="#f1eceb"/><text x="82" y="133" text-anchor="middle" fill="#805450">的　label = −100</text>
+        <rect y="157" width="164" height="39" rx="8" fill="#f1eceb"/><text x="82" y="182" text-anchor="middle" fill="#805450">面条　label = −100</text>
+        <rect y="206" width="164" height="49" rx="8" fill="#f6c2b5"/><text x="82" y="227" text-anchor="middle" font-weight="700" fill="#6f2e2a">很好吃　label = 原词</text><text x="82" y="246" text-anchor="middle" font-size="11" fill="#805450">计算该位置 CE</text>
+      </g>
+    </g>
+  </g>
+  <g fill="none" stroke="#5368d9" stroke-width="3"><path d="M305 332h30"/><path d="M595 332h30"/><path d="M885 332h30"/></g><g fill="#5368d9"><path d="M335 332l-10-7v14z"/><path d="M625 332l-10-7v14z"/><path d="M915 332l-10-7v14z"/></g>
+  <rect x="120" y="570" width="960" height="55" rx="15" fill="#eef1ff"/><text x="600" y="592" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" font-weight="700" fill="#25345d">一批 128×32=4,096 个 token，期望只选 614.4 个位置产生直接 MLM 监督</text><text x="600" y="613" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" fill="#596683">但 Transformer 仍要为整批 4,096 个位置计算上下文表示</text>
+</svg>

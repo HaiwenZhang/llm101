@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="760" viewBox="0 0 1500 760" role="img" aria-labelledby="title desc">
+  <title id="title">Scaling Law 的三个区间与对数坐标读法</title>
+  <desc id="desc">左图展示普通坐标中损失快速下降后接近不可约误差，右图展示扣除误差下限后在对数坐标上形成直线，并标出小规模区、幂律区和误差下限区。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7f9ff"/>
+      <stop offset="1" stop-color="#fffaf3"/>
+    </linearGradient>
+    <style>
+      .zh{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+      .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+      .title{font-size:38px;font-weight:800;fill:#17213a}
+      .sub{font-size:20px;fill:#66708a}
+      .head{font-size:25px;font-weight:800;fill:#17213a}
+      .label{font-size:19px;font-weight:700;fill:#27324a}
+      .small{font-size:17px;fill:#66708a}
+      .tiny{font-size:15px;fill:#7a849b}
+      .formula{font-size:23px;font-weight:700;fill:#17213a}
+      .axis{stroke:#9099ab;stroke-width:2}
+      .grid{stroke:#dce1eb;stroke-width:1}
+    </style>
+  </defs>
+  <rect width="1500" height="760" rx="32" fill="url(#bg)"/>
+  <text x="70" y="70" class="zh title">Scaling 曲线不能只看“还在下降”：先找幂律区，再找误差下限</text>
+  <text x="70" y="108" class="zh sub">同一条规律放到普通坐标和 log-log 坐标，会暴露不同信息</text>
+
+  <g transform="translate(70 155)">
+    <rect width="640" height="500" rx="22" fill="#fff" stroke="#d9dff0" stroke-width="2"/>
+    <text x="32" y="48" class="zh head">普通坐标：越往后，边际收益越小</text>
+    <line x1="82" y1="420" x2="588" y2="420" class="axis"/>
+    <line x1="82" y1="88" x2="82" y2="420" class="axis"/>
+    <line x1="82" y1="160" x2="588" y2="160" class="grid"/>
+    <line x1="82" y1="245" x2="588" y2="245" class="grid"/>
+    <line x1="82" y1="330" x2="588" y2="330" class="grid"/>
+    <path d="M92 118 C150 205 205 282 290 330 C385 382 475 392 578 394" fill="none" stroke="#4c6fff" stroke-width="7" stroke-linecap="round"/>
+    <line x1="82" y1="397" x2="588" y2="397" stroke="#ed8c3b" stroke-width="3" stroke-dasharray="10 8"/>
+    <text x="455" y="382" class="zh small" fill="#b75b1d">不可约误差 L∞</text>
+    <circle cx="166" cy="222" r="9" fill="#4c6fff"/>
+    <circle cx="330" cy="353" r="9" fill="#4c6fff"/>
+    <path d="M176 216 L255 168" stroke="#8a94aa" stroke-width="2"/>
+    <text x="265" y="160" class="zh label">早期：增加资源很有效</text>
+    <path d="M339 350 L435 305" stroke="#8a94aa" stroke-width="2"/>
+    <text x="444" y="297" class="zh label">后期：仍下降，但更慢</text>
+    <text x="260" y="468" class="zh label">数据量 / 参数量 / 计算量</text>
+    <text x="26" y="285" transform="rotate(-90 26 285)" class="zh label">验证损失</text>
+  </g>
+
+  <g transform="translate(790 155)">
+    <rect width="640" height="500" rx="22" fill="#fff" stroke="#d9dff0" stroke-width="2"/>
+    <text x="32" y="48" class="zh head">log-log 坐标：幂律区会接近直线</text>
+    <rect x="82" y="88" width="120" height="332" fill="#edf1ff" opacity=".8"/>
+    <rect x="202" y="88" width="270" height="332" fill="#eefaf7" opacity=".9"/>
+    <rect x="472" y="88" width="116" height="332" fill="#fff4e7" opacity=".9"/>
+    <line x1="82" y1="420" x2="588" y2="420" class="axis"/>
+    <line x1="82" y1="88" x2="82" y2="420" class="axis"/>
+    <line x1="82" y1="171" x2="588" y2="171" class="grid"/>
+    <line x1="82" y1="254" x2="588" y2="254" class="grid"/>
+    <line x1="82" y1="337" x2="588" y2="337" class="grid"/>
+    <path d="M92 135 C130 160 164 184 202 204 L472 357 C510 376 545 386 578 390" fill="none" stroke="#28a68a" stroke-width="7" stroke-linecap="round"/>
+    <line x1="210" y1="209" x2="463" y2="351" stroke="#17213a" stroke-width="2" stroke-dasharray="7 6"/>
+    <text x="99" y="113" class="zh label">小规模区</text>
+    <text x="276" y="113" class="zh label">可拟合的幂律区</text>
+    <text x="485" y="113" class="zh label">接近下限</text>
+    <text x="222" y="382" class="mono formula">log(L-L∞) = log a - α log x</text>
+    <text x="104" y="449" class="zh tiny">曲线未稳定，别急着拟合</text>
+    <text x="278" y="449" class="zh tiny">斜率给出规模指数</text>
+    <text x="482" y="449" class="zh tiny">继续外推会过度乐观</text>
+    <text x="280" y="484" class="zh small">横轴和纵轴都取对数</text>
+  </g>
+
+  <g transform="translate(70 682)">
+    <rect width="1360" height="48" rx="14" fill="#17213a"/>
+    <text x="28" y="31" class="zh" font-size="18" font-weight="700" fill="#fff">读图顺序：先确认控制变量 → 找近似直线区 → 读取斜率 → 验证外推 → 检查数据质量或架构改变是否让整条曲线移动</text>
+  </g>
+</svg>

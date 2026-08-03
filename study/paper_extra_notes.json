@@ -1,0 +1,257 @@
+{
+  "schema_version": 1,
+  "description": "Curated beginner-facing notes for the elective half of the 33-paper learning set.",
+  "papers": [
+    {
+      "slug": "fast_weight_programmers",
+      "position": "给线性 attention 一个可操作的记忆直觉",
+      "reading": "先读摘要与 §2–3；第一次跳过附录证明，重点看 fast-weight programmer 解释",
+      "one_sentence": "线性 attention 可以看成一张会被每个 token 实时写入的快速权重矩阵：key 决定写到哪里，value 决定写什么，query 决定怎样读。",
+      "problem": "只把线性 attention 当成核技巧，很难理解固定状态到底记了什么、为什么会冲突，也难以从机制上改进它。",
+      "mechanism": [
+        "普通线性 attention 的状态 $S_t=S_{t-1}+v_t k_t^T$，等价于外层慢网络不断为内层快速网络编程。",
+        "当前 query 读取 $S_t q_t$，因此状态矩阵就是一个从 key 空间映射到 value 空间的临时关联记忆。",
+        "delta rule 不盲目累加，而是先读取当前 key 已经绑定的旧值，只把预测误差写回，从而允许同一个 key 被更新。"
+      ],
+      "evidence": [
+        "论文把多类线性 Transformer 统一到 fast-weight 视角，并在合成检索和语言建模任务中比较不同写入规则。",
+        "最重要的贡献是解释框架：它让后来的 DeltaNet、Gated DeltaNet 与 KDA 能用“读旧值—算误差—再写回”被推导。"
+      ],
+      "k3_bridge": ["K3 的 KDA 正是这条路线的后代：把快速权重、delta 擦写和逐通道遗忘门组合起来。"],
+      "caution": ["fast weight 是一种数学解释，不代表模型内部存在可单独观察的人类式记忆槽。", "固定大小矩阵仍有容量上限，相似 key 会互相干扰。"],
+      "checkpoint": "用“便签板”类比说明 additive write 与 delta write 的差别，并写出同一个 key 先绑定 A、再绑定 B 时两者的结果。"
+    },
+    {
+      "slug": "mamba2",
+      "position": "把 attention 与状态空间模型放进同一张地图",
+      "reading": "先读 §1–3 的 SSD 直觉和算法框图；矩阵分块证明放到第二遍",
+      "one_sentence": "Mamba-2 通过 Structured State Space Duality 说明一类状态空间模型既能写成逐 token 递推，也能写成受结构约束的 attention 矩阵。",
+      "problem": "RNN/SSM 推理时递推高效，Transformer 训练时矩阵并行高效；如果二者完全分开理解，就很难同时得到两种优势。",
+      "mechanism": [
+        "递推视角维护固定状态，适合一步步 decode；对偶视角把一段序列展开成结构化矩阵，适合训练时分块并行。",
+        "SSD 限制状态转移的结构，使序列变换能被高效分解，而不需要物化完整二次 attention 矩阵。",
+        "Mamba-2 block 还重新安排投影与卷积，让计算更接近硬件友好的大矩阵乘法。"
+      ],
+      "evidence": ["论文在多个模型规模与语言建模基准上比较 Mamba-2、Mamba 与 Transformer，并报告更好的训练吞吐和有竞争力的质量。", "系统收益依赖专门的 chunkwise/SSD kernel，而不只是一条递推公式。"],
+      "k3_bridge": ["Gated DeltaNet 与 KDA 都受益于这种“递推形式负责解释，分块形式负责训练”的思想。"],
+      "caution": ["“Transformers are SSMs”指特定结构下的数学对偶，不是所有 Transformer 与所有 SSM 完全相同。", "线性时间并不保证任何序列长度、batch 和硬件上都更快。"],
+      "checkpoint": "分别画出同一模型的 recurrent mode 和 chunkwise training mode，标出跨 token 保留的状态与块内临时矩阵。"
+    },
+    {
+      "slug": "switch_transformers",
+      "position": "最简单的 Top-1 MoE 起点",
+      "reading": "精读 §2 的 Switch layer 与负载损失；扫读稳定性和系统章节",
+      "one_sentence": "Switch Transformer 把每个 token 只路由到一个 FFN 专家，用极简 Top-1 稀疏计算把参数容量扩到万亿级。",
+      "problem": "Dense 模型增加参数时，每个 token 的计算也同步增加；传统 Top-2 MoE 又带来更复杂的路由、通信和稳定性问题。",
+      "mechanism": ["Router 为 token 计算专家概率，只选最高的一个专家。", "capacity factor 为每个专家预留有限 token 槽；超出容量的 token 会绕过或被丢弃专家计算。", "负载均衡辅助损失同时约束路由概率与实际 token 分配，避免少数专家过热。"],
+      "evidence": ["论文展示了稀疏模型在固定计算预算下的预训练与下游迁移收益，并训练了万亿参数量级模型。", "作者系统分析了低精度训练不稳定、初始化、expert dropout 和 capacity factor。"],
+      "k3_bridge": ["K3 的 896 选 16 比 Top-1 复杂得多，但 router、容量、负载与通信这四个基本问题从 Switch 开始就已经出现。"],
+      "caution": ["总参数巨大不等于每 token 做了同等规模计算。", "Top-1 简单但组合能力有限，后续细粒度 Top-k MoE 选择了不同权衡。"],
+      "checkpoint": "用 8 个 token、4 个专家画一次 Top-1 分配；让 5 个 token 都选同一专家，解释 capacity overflow。"
+    },
+    {
+      "slug": "roformer_rope",
+      "position": "理解现代位置编码最重要的基础论文",
+      "reading": "精读 §3.2 的二维旋转推导；高维推广只需理解分组旋转",
+      "one_sentence": "RoPE 不把位置向量直接加到 token 上，而是按位置旋转 Query 与 Key，使它们的点积天然依赖相对距离。",
+      "problem": "Attention 本身只看内容，不知道 token 顺序；绝对位置相加能告诉位置，却不自然地把相对距离放进 Query–Key 匹配。",
+      "mechanism": ["在二维平面中，位置 m 对向量旋转角度 $mθ$。", "位置 m 的 query 与位置 n 的 key 做点积时，两个旋转合成为角度差 $(m-n)θ$。", "高维向量被分成二维小组，每组使用不同频率，因此同时表达近距离与远距离模式。"],
+      "evidence": ["论文在多类 NLP 任务上比较位置编码，并展示长度外推与相对位置性质。", "更深远的影响是后续多数开源 LLM 采用 RoPE，并围绕其频率做长上下文扩展。"],
+      "k3_bridge": ["理解 RoPE 后才能明白 MLA 为什么需要解耦位置通道，也能理解 K3 的 NoPE 路线究竟省去了什么约束。"],
+      "caution": ["RoPE 不是无限长度记忆；训练范围外的角度与频率分布仍会失配。", "旋转发生在 Q/K 上，不是旋转 Value。"],
+      "checkpoint": "在纸上旋转两个二维箭头，说明为什么共同平移位置不会改变它们的相对角度。"
+    },
+    {
+      "slug": "yarn",
+      "position": "把已有 RoPE 模型扩展到更长上下文",
+      "reading": "读方法总图与三种 scaling 组件；实验重点看训练长度和目标长度的对应",
+      "one_sentence": "YaRN 不把所有 RoPE 频率一刀切地缩放，而是区分需要插值、需要保持和需要平滑过渡的频段，并调整 attention 温度。",
+      "problem": "直接把位置除以扩展倍数会破坏高频局部关系；完全不缩放又让低频维度在超长位置进入训练外区域。",
+      "mechanism": ["NTK-by-parts 按频率处理：高频维度更偏向保留，低频维度更偏向插值，中间平滑过渡。", "动态 scaling 允许模型在不同推理长度下调整尺度。", "temperature scaling 补偿扩窗后 attention 分布熵的变化。"],
+      "evidence": ["论文在 LLaMA 系列上用较少长文本微调扩展到更长窗口，并比较位置插值与 NTK 类方法。", "结果显示扩窗不仅看 perplexity，还要看长距离检索和下游任务。"],
+      "k3_bridge": ["DeepSeek-V3 使用 YaRN 激活 128K 长上下文；K3 选择 KDA + NoPE MLA，代表另一条避免 RoPE 外推压力的路线。"],
+      "caution": ["能运行到目标长度不等于能有效利用每个远距离信息。", "扩窗倍数、训练数据和基座模型共同决定效果，参数不能机械照搬。"],
+      "checkpoint": "解释为什么“所有频率都除以 8”会伤害局部位置分辨率，并给出高低频分开处理的直觉。"
+    },
+    {
+      "slug": "muon_scalable",
+      "position": "理解 Kimi 系列为什么改用矩阵优化器",
+      "reading": "先读摘要、§2 的 scale 修正和 scaling-law 对比；分布式实现按需读",
+      "one_sentence": "Muon 把二维权重的梯度更新做近似正交化，让不同方向更均衡；这篇报告用权重衰减与更新尺度校准把它扩展到大模型。",
+      "problem": "Muon 在小模型上有效，但直接搬到大模型会遇到更新尺度随矩阵形状变化、正则化缺失与分布式成本问题。",
+      "mechanism": ["对矩阵梯度做 Newton–Schulz 迭代，得到近似正交方向，而不是逐元素归一化。", "根据参数矩阵形状调整 update RMS，使不同宽度和深度的层得到可比较的相对更新。", "加入 weight decay，并把 orthogonalization 组织成通信与显存友好的分布式实现。"],
+      "evidence": ["报告的 compute-optimal scaling 实验给出相对 AdamW 约 2× 的计算效率主张。", "Moonlight MoE 以 5.7T token 训练，作为优化器可扩展到真实大模型的系统验证。"],
+      "k3_bridge": ["K2 使用 Muon，K3 进一步采用 Per-Head Muon；它属于优化器维度，不能与 KDA、MoE 等结构收益混为一谈。"],
+      "caution": ["约 2× 来自特定 scaling fit，不等于训练墙钟时间固定减半。", "Muon 主要用于二维矩阵参数，bias、norm 等参数通常仍由 AdamW 类方法处理。"],
+      "checkpoint": "比较逐元素 AdamW 与整张矩阵正交化的观察单位，并解释为什么矩阵长宽改变时要校准更新尺度。"
+    },
+    {
+      "slug": "instructgpt",
+      "position": "现代指令对齐三阶段范式的经典起点",
+      "reading": "精读 Fig.2、§3 方法与标注流程；结果重点看人类偏好而非单一 benchmark",
+      "one_sentence": "InstructGPT 用示范数据做 SFT、用人类排序训练奖励模型，再用 PPO 让策略获得更高奖励，从而把续写模型变成更愿意遵循用户意图的助手。",
+      "problem": "预训练只要求预测互联网文本的下一个 token，不保证回答用户、承认不知道、避免有害输出或遵循格式。",
+      "mechanism": ["标注者先写理想回答，模型用监督学习获得可用起点。", "对同一 prompt 采样多个回答，由标注者排序；奖励模型学习这种偏好。", "PPO 优化策略得分，同时用 KL 惩罚限制它不要偏离 SFT 模型太远。"],
+      "evidence": ["1.3B InstructGPT 在人类偏好比较中可胜过 175B GPT-3，说明行为对齐不只由参数规模决定。", "论文同时测量真实性、有害性与公开 NLP 指标，并披露对齐税与标注者分歧。"],
+      "k3_bridge": ["K3 的 SFT、生成式奖励、分领域 RL 更复杂，但“先给行为起点，再用偏好/结果优化”的骨架来自这条路线。"],
+      "caution": ["奖励模型近似的是一组标注者在特定指南下的偏好，不是普遍人类价值。", "RLHF 可以改善可用性，也可能放大奖励漏洞和过度迎合。"],
+      "checkpoint": "画出 SFT 数据、比较数据、RL rollout 三种数据的来源，说明为什么不能互换。"
+    },
+    {
+      "slug": "dpo",
+      "position": "不用在线 RL 也能学习成对偏好",
+      "reading": "先读 §3 的核心推导直觉，再看与 PPO 的实验对比；第一次不必推完拉格朗日",
+      "one_sentence": "DPO 把奖励最大化问题改写成一个二分类损失：提高偏好回答相对参考模型的概率，同时降低被拒回答。",
+      "problem": "传统 RLHF 需要单独训练奖励模型，再运行容易不稳定且昂贵的在线 RL。",
+      "mechanism": ["KL 约束最优策略与隐式奖励之间存在闭式关系。", "把未知奖励消去后，只需比较 chosen 与 rejected 在策略和 reference 下的 log-ratio。", "训练形式类似 logistic regression，但仍保留 reference model 作为行为锚点。"],
+      "evidence": ["论文在情感控制、摘要与对话偏好任务上比较 PPO 类 RLHF 和监督偏好方法，展示简单稳定的竞争力。", "DPO 的工程优势是只需离线偏好对，不需要训练期间采样环境轨迹。"],
+      "k3_bridge": ["DPO 适合静态回答偏好；K3 的长程 Agent 结果依赖环境状态与工具行为，因此仍需要 on-policy/环境内 RL 与验证器。"],
+      "caution": ["DPO 不是“没有奖励模型”，而是奖励被隐式参数化在策略与参考模型的比值中。", "离线数据覆盖不到的状态仍会产生分布外问题。"],
+      "checkpoint": "用一对 chosen/rejected 回答解释 DPO 同时做的两次相对比较：回答之间，以及当前策略相对参考策略。"
+    },
+    {
+      "slug": "deepseek_math",
+      "position": "数学语料、代码训练与 GRPO 的组合样板",
+      "reading": "读数据构建、§4 GRPO 与主要消融；数学 benchmark 表只抓训练阶段差异",
+      "one_sentence": "DeepSeekMath 先构建高质量数学语料，再从代码模型继续预训练，最后用 GRPO 以组内相对奖励强化可验证数学答案。",
+      "problem": "数学推理同时受限于专业语料质量、形式化结构能力与稀疏的最终答案奖励。",
+      "mechanism": ["从 Common Crawl 迭代检索并分类数学网页，形成大规模数学预训练语料。", "从代码模型初始化，利用代码与数学共享的结构化推理模式。", "GRPO 对同一问题采样一组回答，用组内奖励标准化估计优势，省去与策略同规模的 critic。"],
+      "evidence": ["论文发布 7B 系列模型并在 MATH 等基准上报告 base、instruction 与 RL 阶段的逐步收益。", "消融说明数据、代码初始化与 RL 各有贡献，不能把最终分数全部归因给 GRPO。"],
+      "k3_bridge": ["DeepSeek-R1 与后续 reasoning RL 继承 GRPO/可验证奖励路线；K3 则把可验证结果扩展到搜索、代码和环境任务。"],
+      "caution": ["最终答案可验证不代表推理过程真实或唯一。", "组内相对优势依赖采样多样性；回答全对或全错时信号会变弱。"],
+      "checkpoint": "用四个候选答案的奖励手算一次组内均值和相对优势，说明为什么 GRPO 不需要单独 critic。"
+    },
+    {
+      "slug": "mopd",
+      "position": "把多个领域 RL 教师合并回一个学生",
+      "reading": "精读 Fig.1、§3 pipeline 与 top-k distillation；再看三领域整合实验",
+      "one_sentence": "MOPD 让学生自己生成轨迹，再由对应领域教师逐 token 打分，把数学、指令和软件工程等专长密集地蒸馏进一个模型。",
+      "problem": "混合 RL 会让领域信号相互干扰，串行 RL 会遗忘，直接参数合并不稳定，拿教师旧轨迹做 SFT 又有 exposure bias。",
+      "mechanism": ["所有领域教师从同一 SFT 起点独立做专门 RL，可以并行开发。", "蒸馏阶段由 student rollout，保持训练状态与部署状态一致。", "根据 prompt 路由到领域教师；教师在学生已经走到的 token 状态上提供密集 log-prob 信号。"],
+      "evidence": ["在 Qwen3-30B-A3B 的数学、指令遵循和软件工程三域实验中，归一化分数 0.937，高于最强比较基线 0.882。", "论文还报告同源教师、top-k 蒸馏和多轮迭代的重要性，并在 MiMo-V2-Flash 中部署。"],
+      "k3_bridge": ["K3 报告使用九个教师做 Multi-Teacher On-Policy Distillation；MOPD 提供理解这种能力整合范式的直接方法背景。"],
+      "caution": ["学生 on-policy 不等于教师 on-policy；教师被冻结，只负责评估学生访问的状态。", "不同起点的教师可能给出不兼容的概率几何，论文强调 same-origin 的稳定性。"],
+      "checkpoint": "比较“教师先生成、学生模仿”和“学生先生成、教师逐 token 评分”的状态分布差异。"
+    },
+    {
+      "slug": "kimi_vl",
+      "position": "MoonViT 与原生分辨率视觉路线的前传",
+      "reading": "读架构总图、MoonViT、视觉 token 压缩与 agent 数据；表格只选你关心的视觉任务",
+      "one_sentence": "Kimi-VL 用 MoonViT 编码不同分辨率图像，通过 token 压缩接入 MoE 语言模型，并同时训练感知、推理与视觉 Agent 能力。",
+      "problem": "固定方形缩放会损失文档小字和极端宽高比信息；视觉 token 太多又会挤占上下文并放大 attention 成本。",
+      "mechanism": ["图像按原生分辨率和动态尺寸进入视觉编码器，尽量保留细节与布局。", "视觉特征经过 projector 和 token 压缩映射到语言模型隐藏空间。", "训练数据同时覆盖 OCR、图表、通用视觉问答、数学与 GUI/工具交互，而不只是 caption。"],
+      "evidence": ["报告给出 Kimi-VL-A3B 等模型在视觉理解、文档、视频和 agent benchmark 上的结果。", "模型为 MoE，激活参数远小于总参数；视觉分支与语言分支的成本需要分开看。"],
+      "k3_bridge": ["K3 的 MoonViT-V2 改为从 scratch 用 next-token prediction 训练，正是对 Kimi-VL/K2.5 视觉初始化路线的进一步调整。"],
+      "caution": ["“原生分辨率”仍会受到像素上限、patching 与 token compression 的约束。", "视觉 benchmark 提升不能仅归因于视觉塔，数据与后训练同样关键。"],
+      "checkpoint": "从一张 4K 文档图开始，画出像素、patch、视觉 token、projector、语言 token 的完整形状链。"
+    },
+    {
+      "slug": "react",
+      "position": "Agent 的 reason–act–observe 最小原型",
+      "reading": "精读方法示例轨迹；分别看知识任务和交互环境两类实验",
+      "one_sentence": "ReAct 让语言模型交替产生推理文字与外部行动，再把环境观察放回上下文，从而一边计划、一边查证和修正。",
+      "problem": "只做 chain-of-thought 容易凭内部记忆编造事实；只做行动又缺少显式规划与错误分析。",
+      "mechanism": ["Thought 总结当前目标和下一步计划。", "Action 调用搜索、百科或环境动作。", "Observation 返回真实世界信息；下一轮 Thought 基于新证据继续，直到给出答案或完成任务。"],
+      "evidence": ["论文在 HotpotQA/FEVER 等知识任务和 ALFWorld/WebShop 等交互任务上比较纯推理、纯行动与 ReAct。", "轨迹示例显示外部观察既能补知识，也能让模型识别先前计划失败。"],
+      "k3_bridge": ["K3 的 Agent 已扩展到持久环境、长轨迹、并行工具与 verifier，但最小闭环仍是 ReAct 的 reason–act–observe。"],
+      "caution": ["显式 Thought 不是可靠的因果解释，也可能冗长或错误。", "工具、prompt、停止条件和环境实现都属于 harness，会显著影响结果。"],
+      "checkpoint": "为“查明一家公司某年的营收”写三轮 Thought–Action–Observation，并标出哪一步来自外部证据。"
+    },
+    {
+      "slug": "megatron_lm",
+      "position": "大模型并行训练的基础坐标系",
+      "reading": "先看 tensor parallel 图与通信位置；再看 data/pipeline 组合",
+      "one_sentence": "Megatron-LM 把单层里的大矩阵沿 GPU 切开，通过少量 AllReduce 协同计算，使单卡放不下的 Transformer 能在多卡上训练。",
+      "problem": "模型权重、激活和矩阵计算超过单卡容量与算力，必须切分；切错位置会产生大量通信和同步等待。",
+      "mechanism": ["MLP 第一层按列切、第二层按行切，中间激活可局部计算，block 只需少数 AllReduce。", "Attention 的 heads 天然可分到不同 GPU，再在输出投影处合并。", "Tensor parallel 可与 data parallel、pipeline parallel 组成多维并行。"],
+      "evidence": ["论文在大规模 GPU 集群上训练数十亿参数语言模型，并报告扩展效率与下游结果。", "最持久的贡献是列并行/行并行的切分模式，成为后续大模型框架基础。"],
+      "k3_bridge": ["K3 系统章节里的 TP、PP、DP、EP、CP 都建立在这套多维并行语言上。"],
+      "caution": ["更多 GPU 不会线性变快；通信、pipeline bubble 和小矩阵效率会限制 scaling。", "Tensor parallel 切参数，data parallel 复制参数，二者不要混。"],
+      "checkpoint": "画一个两层 MLP 在 2 张 GPU 上的列切—激活—行切过程，标出唯一需要合并的位置。"
+    },
+    {
+      "slug": "zero",
+      "position": "把数据并行的重复显存一层层去掉",
+      "reading": "精读三阶段分片表；通信推导第二遍再看",
+      "one_sentence": "ZeRO 发现数据并行每张卡重复保存优化器状态、梯度和参数，于是按 Stage 1/2/3 逐步把三者分片。",
+      "problem": "普通数据并行虽然把 batch 分开，却在每张 GPU 上复制完整模型状态，显存随 GPU 数增加没有得到充分利用。",
+      "mechanism": ["Stage 1 分片 optimizer states。", "Stage 2 再分片 gradients。", "Stage 3 连 parameters 也分片，在某层计算前临时 AllGather，用完释放。"],
+      "evidence": ["论文给出各阶段的显存与通信分析，并展示把可训练模型规模推向万亿参数的可行性。", "ZeRO-R 进一步讨论 activation、临时 buffer 与内存碎片。"],
+      "k3_bridge": ["K3 的显存账同样不止参数；MoE 权重、优化器、activation、视觉分支和百万 token 状态都需要分片或重算。"],
+      "caution": ["Stage 越高，显存越省，但参数临时聚合的通信与实现复杂度更高。", "ZeRO 是状态分片，不直接减少模型本身需要执行的 FLOPs。"],
+      "checkpoint": "假设参数、梯度、Adam 状态分别占 2、2、12 GB，计算 8 卡下三个 Stage 的理想每卡占用。"
+    },
+    {
+      "slug": "flash_attention_2",
+      "position": "理解 attention 为什么常常卡在搬数据而不是算乘法",
+      "reading": "先读 §2.2–2.3 与 Fig.1；再读 §3 三项 work partition 改进",
+      "one_sentence": "FlashAttention-2 不近似 attention，而是分块搬入片上 SRAM、在线维护 softmax 统计并重算中间量，从而避免反复读写巨大的分数矩阵。",
+      "problem": "标准实现把 $QK^T$ 和 softmax 矩阵写到 HBM；长序列下，昂贵的数据搬运与二次中间内存压过了有效计算。",
+      "mechanism": ["Tiling：只把 Q/K/V 小块搬到高速 SRAM。", "Online softmax：保存行最大值与归一化和，使分块结果能精确合并。", "FA2 减少非矩阵 FLOPs，并沿序列增加 thread-block 并行，重新分配 warp 工作以减少共享内存通信。"],
+      "evidence": ["论文报告相对 FlashAttention 约 2× 加速，A100 上达到理论峰值的 50–73%。", "端到端 GPT 训练达到每张 A100 最高约 225 TFLOPs/s，且结果与标准 attention 数学等价。"],
+      "k3_bridge": ["K3 的 MLA/KDA kernel 同样遵循 IO-aware 原则；算法复杂度、片上分块与工作划分必须一起设计。"],
+      "caution": ["FlashAttention 降低的是中间内存 IO，不把标准 attention 的理论计算从 $O(T^2)$ 改成线性。", "峰值比例依赖 GPU、head dimension、causal mask 和序列形状。"],
+      "checkpoint": "画出标准 attention 三次 HBM 往返，再画分块版本；说明为什么重算有时反而更快。"
+    },
+    {
+      "slug": "ring_attention",
+      "position": "用环形通信把完整 attention 扩到多卡长序列",
+      "reading": "读 blockwise attention 与 ring 图；重点理解通信怎样和计算重叠",
+      "one_sentence": "Ring Attention 把序列块分到多张卡，Query 留在本卡，K/V 块沿设备环传递；每到一站就计算一块 attention 并在线合并 softmax。",
+      "problem": "单卡无法容纳超长序列的输入与 activation；简单切序列又要求每个 Query 看到所有设备上的 K/V。",
+      "mechanism": ["每张卡持有一段 Q/K/V。", "K/V 块按 ring 传给下一张卡，Q 块保持本地。", "通信下一块的同时计算当前块，利用 blockwise online softmax 精确累计结果。"],
+      "evidence": ["论文展示上下文长度可随设备数近线性扩展，并在足够块计算量下隐藏大部分通信。", "方法保持全 attention 语义，而不是局部窗口近似。"],
+      "k3_bridge": ["Ring Attention 是 MLA/full attention 的 context parallel 对照；KDA 只需扫描固定状态片段，通信对象和复杂度不同。"],
+      "caution": ["上下文‘近无限’受总显存、网络带宽、训练稳定性和数据限制。", "通信能否隐藏取决于块计算够不够重以及网络拓扑。"],
+      "checkpoint": "用 4 张 GPU、4 个序列块画 4 轮 K/V 环传递，确认每个 Q 最终见过全部 K/V。"
+    },
+    {
+      "slug": "deepspeed_ulysses",
+      "position": "用 All-to-All 在 head 与 sequence 两种切分间换形",
+      "reading": "精读 sequence parallel group 的两次 All-to-All；再看与 ZeRO/TP 的组合",
+      "one_sentence": "Ulysses 先按序列把输入分卡，在 attention 前通过 All-to-All 变成按 head 分卡，算完再换回序列切分。",
+      "problem": "超长序列 activation 单卡放不下；传统 sequence parallel 往往需要高通信量或受 attention head 数限制。",
+      "mechanism": ["非 attention 模块保持 sequence-sharded，每卡只存一段 token。", "第一次 All-to-All 把序列片段重排成完整序列的部分 heads。", "各卡独立算自己的 heads，第二次 All-to-All 把输出还原为序列切分。"],
+      "evidence": ["论文在多 GPU 上展示长序列训练的显存扩展与吞吐，并讨论与 tensor/pipeline/data parallel 的正交组合。", "通信量与序列长度线性相关，主要依赖高效 All-to-All。"],
+      "k3_bridge": ["K3 的百万 token 系统同样需要沿序列切分，但 KDA Context Parallelism 传递的是可组合递推片段，不等同 Ulysses 的 head 重排。"],
+      "caution": ["可用并行度受 attention head 数与网络 All-to-All 能力约束。", "Ulysses 解决显存与并行，不改变 attention 的数学计算量。"],
+      "checkpoint": "画出 2 卡、4 token、2 head 的 sequence-shard → head-shard → sequence-shard 张量布局。"
+    },
+    {
+      "slug": "pagedattention_vllm",
+      "position": "把操作系统分页思想搬到 KV Cache",
+      "reading": "精读 Fig.1–4 的碎片问题、block table 和 copy-on-write；调度实验第二遍看",
+      "one_sentence": "PagedAttention 把连续逻辑 KV Cache 切成固定大小块，通过 block table 映射到不连续显存，像虚拟内存一样按需分配和共享。",
+      "problem": "每个请求输出长度未知；提前预留最大连续空间会产生内部碎片，不同长度请求又造成外部碎片，限制可并发 batch。",
+      "mechanism": ["逻辑 token block 与物理显存 block 解耦，只在新 token 到来时分配。", "Attention kernel 通过 block table 找到各历史 K/V，不要求物理连续。", "多个采样分支可共享前缀 block，写入分叉时用 copy-on-write。"],
+      "evidence": ["论文报告 vLLM 相对 FasterTransformer/Orca 等系统可实现约 2–4× 吞吐提升，收益在长短请求混合和多采样时更明显。", "核心收益来自接近零的 KV 内存浪费与更大的连续 batch。"],
+      "k3_bridge": ["K3 的混合 KDA–MLA prefix cache 仍需要分页、细粒度哈希和状态检查点；PagedAttention 提供服务内存管理基础。"],
+      "caution": ["分页解决显存利用率，不减少每个有效 token 的 KV 信息量。", "block 太小增加表项与 kernel 开销，太大又增加尾部浪费。"],
+      "checkpoint": "给三个最大长度未知的请求画连续预留与 4-token 分页布局，数出两种方案浪费的槽位。"
+    },
+    {
+      "slug": "mooncake",
+      "position": "把 KV Cache 当作服务系统的核心资源",
+      "reading": "读架构 Fig.1、prefill/decode 分离、KV 池与 Conductor 调度；重点看真实流量实验",
+      "one_sentence": "Mooncake 将 prefill 与 decode GPU 池分离，把 CPU/DRAM/SSD 组织成分布式 KV Cache 池，并由缓存感知调度器在吞吐与延迟 SLO 之间取舍。",
+      "problem": "Prefill 偏计算、decode 偏带宽，两者混在同一 GPU 互相干扰；长 prompt 的 KV 又昂贵，命中、迁移和过载准入决定整体成本。",
+      "mechanism": ["Prefill pool 负责建立 KV，decode pool 负责逐 token 生成。", "KV 可经 RDMA 在 GPU 与分布式 CPU/DRAM/SSD 池之间传输和复用。", "Conductor 同时做 cache-aware prefill、KV 负载均衡与 decode 调度，并在预测无法满足 SLO 时提前拒绝。"],
+      "evidence": ["模拟场景中吞吐最高提升 525%；真实 Kimi 负载中架构可多处理约 75% 请求。", "论文特别报告过载场景，而不是假设所有请求都必须接收。"],
+      "k3_bridge": ["K3 面对 2K 到 1M token 请求跨度时使用类似的 cache affinity、资源预算准入和混合缓存思路。"],
+      "caution": ["跨池传 KV 不是免费：RDMA 带宽、序列长度与重算成本决定是否值得。", "提前拒绝提高有效吞吐，却改变了服务可用性与公平性目标。"],
+      "checkpoint": "为一个 100K prompt + 200 token 输出请求，分别列出 prefill 节点和 decode 节点最重的资源，并决定 KV 应传输还是重算。"
+    },
+    {
+      "slug": "deepseek_v4",
+      "position": "另一条百万 token 混合注意力与深度连接路线",
+      "reading": "第一遍读摘要、架构总图与效率表；第二遍拆 CSA/HCA、mHC 和长上下文训练",
+      "one_sentence": "DeepSeek-V4 用 CSA + HCA 混合压缩长上下文 attention，以 mHC 改造残差连接，并配合 Muon 和完整后训练把窗口扩到一百万 token。",
+      "problem": "百万 token 下标准 attention 的单 token FLOPs 与 KV Cache 过高，网络加深时信息流与训练稳定性也成为瓶颈。",
+      "mechanism": ["Compressed Sparse Attention 让 token 只访问经过选择或压缩的上下文。", "Heavily Compressed Attention 用更强的缓存压缩保留全局通路，两类层混合弥补单一路线的损失。", "Manifold-Constrained Hyper-Connections 让多条残差流可学习混合，同时用约束控制稳定性；优化器采用 Muon。"],
+      "evidence": ["报告包含 1.6T/49B activated 的 Pro 与 284B/13B activated 的 Flash，二者在超过 32T token 上预训练并支持 1M context。", "在 1M setting 下，Pro 报告为 DeepSeek-V3.2 的 27% 单 token 推理 FLOPs 与 10% KV Cache。"],
+      "k3_bridge": ["V4 与 K3 都用混合注意力、改造深度连接、Muon 与多教师后训练，但序列机制分别是 CSA/HCA 与 KDA/MLA，适合做同问题不同答案的对照。"],
+      "caution": ["27%/10% 的基线是特定 V3.2 配置与 1M 场景，不能直接推广到所有服务请求。", "百万窗口支持仍需区分可输入、可检索和可完成复杂推理三个层次。"],
+      "checkpoint": "做一张 K3 与 DeepSeek-V4 对照表，分别写出序列、深度、宽度、优化器和后训练方案。"
+    }
+  ]
+}

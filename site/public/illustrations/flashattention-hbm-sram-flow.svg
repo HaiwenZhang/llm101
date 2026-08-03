@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">普通 Attention 与 FlashAttention 的 HBM 和片上存储数据流对比</title>
+  <desc id="desc">普通实现把完整的分数矩阵 S 和概率矩阵 P 写入并读回 HBM；FlashAttention 把 Q、K、V 分块搬入片上 SRAM，在一个融合 kernel 内完成点积、mask、online softmax 和乘 V，只把输出与每行统计量写回 HBM。两者计算同一个密集注意力结果。</desc>
+  <rect width="1200" height="720" rx="30" fill="#f8faff"/>
+  <text x="56" y="65" font-family="system-ui,sans-serif" font-size="29" font-weight="700" fill="#182342">FlashAttention 没有少算注意力；它让 N×N 中间结果不去 HBM“过夜”</text>
+  <text x="56" y="102" font-family="system-ui,sans-serif" font-size="17" fill="#5c6787">HBM 容量大但搬运远，片上 SRAM / shared memory 小却快；分块与融合把数据留在计算附近</text>
+
+  <g font-family="system-ui,sans-serif">
+    <g transform="translate(55 148)">
+      <rect width="530" height="476" rx="24" fill="#fff0ef" stroke="#d9867f" stroke-width="2"/>
+      <text x="28" y="43" font-size="21" font-weight="700" fill="#6f2e2a">普通分离 kernel：反复写回 HBM</text>
+      <text x="28" y="69" font-size="13" fill="#86534f">每个框结束后，下一个 kernel 需要重新从全局显存读取</text>
+
+      <g transform="translate(28 101)">
+        <rect width="474" height="88" rx="16" fill="#f6d6d3" stroke="#d9867f"/>
+        <text x="18" y="27" font-size="13" font-weight="700" fill="#6f2e2a">HBM / Global memory</text>
+        <rect x="155" y="17" width="78" height="50" rx="9" fill="#fff"/><text x="194" y="47" text-anchor="middle" font-size="13" fill="#6f2e2a">Q K V</text>
+        <rect x="249" y="17" width="88" height="50" rx="9" fill="#fff"/><text x="293" y="47" text-anchor="middle" font-size="13" font-weight="700" fill="#6f2e2a">S : N×N</text>
+        <rect x="353" y="17" width="88" height="50" rx="9" fill="#fff"/><text x="397" y="47" text-anchor="middle" font-size="13" font-weight="700" fill="#6f2e2a">P : N×N</text>
+      </g>
+
+      <g transform="translate(28 232)">
+        <rect width="128" height="70" rx="14" fill="#fff" stroke="#e4aaa5"/><text x="64" y="29" text-anchor="middle" font-size="14" font-weight="700" fill="#6f2e2a">Kernel 1</text><text x="64" y="51" text-anchor="middle" font-size="12" fill="#86534f">S = QKᵀ</text>
+        <rect x="173" width="128" height="70" rx="14" fill="#fff" stroke="#e4aaa5"/><text x="237" y="29" text-anchor="middle" font-size="14" font-weight="700" fill="#6f2e2a">Kernel 2</text><text x="237" y="51" text-anchor="middle" font-size="12" fill="#86534f">mask + softmax</text>
+        <rect x="346" width="128" height="70" rx="14" fill="#fff" stroke="#e4aaa5"/><text x="410" y="29" text-anchor="middle" font-size="14" font-weight="700" fill="#6f2e2a">Kernel 3</text><text x="410" y="51" text-anchor="middle" font-size="12" fill="#86534f">O = PV</text>
+        <path d="M64-37V-8M237-37V-8M410-37V-8" stroke="#d9867f" stroke-width="3"/>
+        <path d="M64 78v45M237 78v45M410 78v45" stroke="#d9867f" stroke-width="3"/>
+      </g>
+      <g transform="translate(28 367)">
+        <rect width="474" height="70" rx="15" fill="#f6d6d3"/>
+        <text x="237" y="28" text-anchor="middle" font-size="14" font-weight="700" fill="#6f2e2a">慢路径被重复经过</text>
+        <text x="237" y="50" text-anchor="middle" font-size="12" fill="#86534f">写 S → 读 S → 写 P → 读 P；中间显存随 N² 增长</text>
+      </g>
+    </g>
+
+    <g transform="translate(615 148)">
+      <rect width="530" height="476" rx="24" fill="#eaf8f4" stroke="#72baa7" stroke-width="2"/>
+      <text x="28" y="43" font-size="21" font-weight="700" fill="#205c50">FlashAttention：tile 留在片上并融合</text>
+      <text x="28" y="69" font-size="13" fill="#4c6f67">每次只处理 Br×Bc score tile，完整 S/P 从不 materialize</text>
+
+      <g transform="translate(28 101)">
+        <rect width="474" height="88" rx="16" fill="#d5eee8" stroke="#72baa7"/>
+        <text x="18" y="27" font-size="13" font-weight="700" fill="#205c50">HBM / Global memory</text>
+        <rect x="145" y="17" width="88" height="50" rx="9" fill="#fff"/><text x="189" y="47" text-anchor="middle" font-size="13" fill="#205c50">Q K V</text>
+        <rect x="249" y="17" width="88" height="50" rx="9" fill="#fff"/><text x="293" y="47" text-anchor="middle" font-size="13" fill="#205c50">O : N×d</text>
+        <rect x="353" y="17" width="88" height="50" rx="9" fill="#fff"/><text x="397" y="39" text-anchor="middle" font-size="12" fill="#205c50">m, ℓ</text><text x="397" y="56" text-anchor="middle" font-size="11" fill="#4c6f67">每行统计</text>
+      </g>
+
+      <path d="M265 195v35" stroke="#72baa7" stroke-width="3"/><path d="m257 218 8 14 8-14" fill="none" stroke="#72baa7" stroke-width="3"/>
+      <g transform="translate(28 232)">
+        <rect width="474" height="143" rx="17" fill="#fff" stroke="#9dcfc3" stroke-width="2"/>
+        <text x="237" y="28" text-anchor="middle" font-size="14" font-weight="700" fill="#205c50">一个融合 kernel · SRAM / shared memory</text>
+        <g transform="translate(20 51)" font-size="12" fill="#205c50">
+          <rect width="92" height="55" rx="10" fill="#d5eee8"/><text x="46" y="24" text-anchor="middle">Q/K/V</text><text x="46" y="42" text-anchor="middle">分块载入</text>
+          <path d="M101 27h30" stroke="#72baa7" stroke-width="2"/><path d="m121 21 11 6-11 6" fill="none" stroke="#72baa7" stroke-width="2"/>
+          <rect x="141" width="92" height="55" rx="10" fill="#d5eee8"/><text x="187" y="24" text-anchor="middle">QKᵀ tile</text><text x="187" y="42" text-anchor="middle">+ mask</text>
+          <path d="M242 27h30" stroke="#72baa7" stroke-width="2"/><path d="m262 21 11 6-11 6" fill="none" stroke="#72baa7" stroke-width="2"/>
+          <rect x="282" width="92" height="55" rx="10" fill="#d5eee8"/><text x="328" y="24" text-anchor="middle">online</text><text x="328" y="42" text-anchor="middle">softmax</text>
+          <path d="M383 27h25" stroke="#72baa7" stroke-width="2"/><path d="m398 21 11 6-11 6" fill="none" stroke="#72baa7" stroke-width="2"/>
+          <rect x="418" width="36" height="55" rx="10" fill="#205c50"/><text x="436" y="33" text-anchor="middle" fill="#fff">×V</text>
+        </g>
+        <text x="237" y="132" text-anchor="middle" font-size="11" fill="#4c6f67">更新运行 max、分母和输出累计；score tile 用完即丢</text>
+      </g>
+      <path d="M265 383v32" stroke="#72baa7" stroke-width="3"/><path d="m257 403 8 14 8-14" fill="none" stroke="#72baa7" stroke-width="3"/>
+      <rect x="28" y="421" width="474" height="41" rx="12" fill="#d5eee8"/><text x="265" y="447" text-anchor="middle" font-size="13" font-weight="700" fill="#205c50">只写 O 与 O(N) 行统计；数学输出与 dense Attention 相同</text>
+    </g>
+  </g>
+
+  <rect x="161" y="652" width="878" height="42" rx="13" fill="#eef1ff"/>
+  <text x="600" y="678" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" fill="#25345d">必须同时记住：算术量仍约 O(N²d) · HBM 中间存储降为 O(Nd) · 浮点累加次序变化会有微小数值差</text>
+</svg>

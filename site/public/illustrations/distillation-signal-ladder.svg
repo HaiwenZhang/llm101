@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="610" viewBox="0 0 1200 610" role="img" aria-labelledby="title desc">
+  <title id="title">知识蒸馏四种监督信号的层级</title>
+  <desc id="desc">从硬标签、词级软分布、序列级教师生成到学生轨迹上的在线教师反馈，监督覆盖逐渐接近部署状态，成本也逐渐增加。</desc>
+  <rect width="1200" height="610" rx="30" fill="#f8faff"/>
+  <text x="60" y="65" font-family="system-ui,sans-serif" font-size="28" font-weight="700" fill="#182342">蒸馏不是一种损失：先问教师在哪个粒度说话</text>
+  <text x="60" y="101" font-family="system-ui,sans-serif" font-size="17" fill="#5c6787">越往右越贴近学生部署时会遇到的状态，但教师调用、数据版本和安全治理也越复杂</text>
+  <g font-family="system-ui,sans-serif">
+    <g transform="translate(60 155)">
+      <rect width="250" height="315" rx="22" fill="#eef1ff" stroke="#8799e9" stroke-width="2"/>
+      <circle cx="40" cy="42" r="19" fill="#5368d9"/><text x="40" y="48" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">1</text>
+      <text x="72" y="49" font-size="21" font-weight="700" fill="#25345d">Hard label</text>
+      <text x="28" y="92" font-size="15" fill="#596683">教师只给：标准 token / 答案</text>
+      <rect x="28" y="119" width="194" height="48" rx="12" fill="#dfe4fa"/><text x="125" y="149" text-anchor="middle" font-size="15" fill="#34467e">巴黎 = 1，其余 = 0</text>
+      <text x="28" y="207" font-size="14" fill="#596683">保留信息：最低</text><text x="28" y="240" font-size="14" fill="#596683">存储 / API：最低</text><text x="28" y="273" font-size="14" fill="#596683">风险：忽略候选关系</text>
+    </g>
+    <g transform="translate(335 155)">
+      <rect width="250" height="315" rx="22" fill="#edf7ff" stroke="#67a7cf" stroke-width="2"/>
+      <circle cx="40" cy="42" r="19" fill="#438ab7"/><text x="40" y="48" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">2</text>
+      <text x="72" y="49" font-size="21" font-weight="700" fill="#204f69">Word / Logit KD</text>
+      <text x="28" y="92" font-size="15" fill="#527083">教师给：每位置词表分布</text>
+      <rect x="28" y="119" width="194" height="48" rx="12" fill="#d8edf8"/><text x="125" y="149" text-anchor="middle" font-size="15" fill="#24536d">0.72 · 0.18 · 0.08 · 0.02</text>
+      <text x="28" y="207" font-size="14" fill="#527083">保留信息：局部候选结构</text><text x="28" y="240" font-size="14" fill="#527083">存储 / API：词表级，很高</text><text x="28" y="273" font-size="14" fill="#527083">风险：词表不一致</text>
+    </g>
+    <g transform="translate(610 155)">
+      <rect width="250" height="315" rx="22" fill="#fff4e5" stroke="#dfa84e" stroke-width="2"/>
+      <circle cx="40" cy="42" r="19" fill="#c88925"/><text x="40" y="48" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">3</text>
+      <text x="72" y="49" font-size="21" font-weight="700" fill="#684c1e">Sequence KD</text>
+      <text x="28" y="92" font-size="15" fill="#745f43">教师给：完整生成 / Beam</text>
+      <rect x="28" y="119" width="194" height="48" rx="12" fill="#f4dfb9"/><text x="125" y="149" text-anchor="middle" font-size="15" fill="#684c1e">Prompt → 一条完整轨迹</text>
+      <text x="28" y="207" font-size="14" fill="#745f43">保留信息：全局输出模式</text><text x="28" y="240" font-size="14" fill="#745f43">存储 / API：文本级</text><text x="28" y="273" font-size="14" fill="#745f43">风险：压窄多样性</text>
+    </g>
+    <g transform="translate(885 155)">
+      <rect width="250" height="315" rx="22" fill="#eaf8f4" stroke="#72baa7" stroke-width="2"/>
+      <circle cx="40" cy="42" r="19" fill="#419b83"/><text x="40" y="48" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">4</text>
+      <text x="72" y="49" font-size="21" font-weight="700" fill="#205c50">On-policy KD</text>
+      <text x="28" y="92" font-size="15" fill="#4c6f67">教师看：学生真实前缀</text>
+      <rect x="28" y="119" width="194" height="48" rx="12" fill="#d5eee8"/><text x="125" y="149" text-anchor="middle" font-size="15" fill="#205c50">学生出错处 → 教师纠偏</text>
+      <text x="28" y="207" font-size="14" fill="#4c6f67">保留信息：部署状态反馈</text><text x="28" y="240" font-size="14" fill="#4c6f67">存储 / API：循环调用最高</text><text x="28" y="273" font-size="14" fill="#4c6f67">风险：版本滞后与闭环偏差</text>
+    </g>
+  </g>
+  <path d="M185 518H1015" stroke="#5368d9" stroke-width="4"/><path d="M1000 506l16 12-16 12" fill="none" stroke="#5368d9" stroke-width="4"/>
+  <text x="600" y="558" text-anchor="middle" font-family="system-ui,sans-serif" font-size="15" fill="#5c6787">更接近学生自己的状态分布 · 更高教师成本 · 更复杂的数据谱系</text>
+  <text x="600" y="587" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" fill="#596683">选择信号粒度，而不是默认“生成一批答案就叫蒸馏”</text>
+</svg>

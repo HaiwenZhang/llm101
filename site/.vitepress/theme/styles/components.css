@@ -1,0 +1,78 @@
+.lab-shell {
+  margin: 1.5rem 0 2rem;
+  padding: clamp(1rem, 3vw, 1.6rem);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--vp-c-bg-soft);
+  box-shadow: var(--shadow);
+}
+
+.lab-shell h3 { margin: 0 0 .35rem; font-size: 1.2rem; }
+.lab-intro { margin: 0 0 1.2rem; color: var(--ink-muted); font-size: .9rem; }
+
+.control-row {
+  display: grid;
+  grid-template-columns: 150px 1fr 70px;
+  align-items: center;
+  gap: 1rem;
+  margin: .85rem 0;
+}
+
+.control-row label { font-size: .84rem; font-weight: 700; }
+.control-row output { font-family: var(--vp-font-family-mono); font-size: .82rem; text-align: right; }
+
+input[type='range'] { accent-color: var(--coral); width: 100%; }
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: .75rem;
+  margin-top: 1.25rem;
+}
+
+.metric-card {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--vp-c-bg);
+}
+
+.metric-card small { display: block; color: var(--ink-muted); font-size: .72rem; }
+.metric-card strong { display: block; margin: .22rem 0; color: var(--ink); font: 700 1.4rem/1.2 var(--vp-font-family-mono); }
+.metric-card span { color: var(--ink-muted); font-size: .75rem; }
+
+.teach-note {
+  margin-top: 1.1rem;
+  padding: .85rem 1rem;
+  border-left: 4px solid var(--gold);
+  background: color-mix(in srgb, var(--gold) 12%, var(--vp-c-bg));
+  color: var(--vp-c-text-1);
+  font-size: .87rem;
+  line-height: 1.7;
+}
+
+.progress-board { margin: 1.5rem 0; }
+.progress-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: .8rem; }
+.progress-count { color: var(--ink-muted); font: 500 .84rem var(--vp-font-family-mono); }
+.progress-rail { height: 9px; overflow: hidden; border-radius: 99px; background: var(--line); }
+.progress-fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--coral), var(--gold)); transition: width .35s ease; }
+.progress-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: .55rem; margin-top: 1rem; }
+.progress-item { display: flex; align-items: center; gap: .6rem; padding: .75rem .85rem; border: 1px solid var(--line); border-radius: 10px; background: var(--vp-c-bg); cursor: pointer; font-size: .85rem; }
+.progress-item.done { opacity: .65; text-decoration: line-through; }
+.progress-item input { accent-color: var(--coral); }
+
+.concept-check { margin: 1.6rem 0; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.concept-question { padding: 1rem 1.1rem; background: var(--vp-c-bg-soft); font-weight: 700; }
+.concept-options { display: grid; gap: .55rem; padding: 1rem; }
+.concept-option { width: 100%; padding: .75rem .9rem; border: 1px solid var(--line); border-radius: 9px; color: var(--vp-c-text-1); background: var(--vp-c-bg); text-align: left; cursor: pointer; }
+.concept-option:hover { border-color: var(--vp-c-brand-1); }
+.concept-option.correct { border-color: #2d8a6d; background: rgba(45,138,109,.12); }
+.concept-option.wrong { border-color: var(--coral); background: rgba(227,108,72,.12); }
+.concept-feedback { margin: 0; padding: 0 1rem 1rem; color: var(--ink-muted); font-size: .86rem; }
+
+@media (max-width: 700px) {
+  .control-row { grid-template-columns: 1fr 65px; }
+  .control-row input { grid-column: 1 / -1; grid-row: 2; }
+  .metric-grid, .progress-list { grid-template-columns: 1fr; }
+}

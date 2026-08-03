@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+  <title id="title">LLM 强化学习中轨迹绑定的模型和验证器版本</title><desc id="desc">当前策略不断更新，旧策略生成轨迹，参考策略冻结，验证器也有独立版本；轨迹必须保存全部版本关系。</desc>
+  <rect width="1200" height="560" rx="30" fill="#f8faff"/>
+  <text x="60" y="68" font-family="system-ui,sans-serif" font-size="28" font-weight="700" fill="#182342">一条轨迹必须能回答：谁生成、谁打分、相对谁约束、由谁更新</text>
+  <text x="60" y="102" font-family="system-ui,sans-serif" font-size="17" fill="#5c6787">只保存最终 checkpoint，无法重算正确的 ratio、KL 或奖励</text>
+  <g font-family="system-ui,sans-serif">
+    <line x1="90" y1="225" x2="1110" y2="225" stroke="#c1c9df" stroke-width="5"/>
+    <g transform="translate(135 225)"><circle r="20" fill="#5368d9"/><text y="-39" text-anchor="middle" font-size="17" font-weight="700" fill="#25345d">policy v10</text><text y="55" text-anchor="middle" font-size="14" fill="#596683">开始 rollout</text></g>
+    <g transform="translate(390 225)"><circle r="20" fill="#5368d9"/><text y="-39" text-anchor="middle" font-size="17" font-weight="700" fill="#25345d">policy v11</text><text y="55" text-anchor="middle" font-size="14" fill="#596683">trainer 更新</text></g>
+    <g transform="translate(645 225)"><circle r="20" fill="#5368d9"/><text y="-39" text-anchor="middle" font-size="17" font-weight="700" fill="#25345d">policy v12</text><text y="55" text-anchor="middle" font-size="14" fill="#596683">轨迹才完成</text></g>
+    <g transform="translate(900 225)"><circle r="20" fill="#28987d"/><text y="-39" text-anchor="middle" font-size="17" font-weight="700" fill="#205c50">policy v13</text><text y="55" text-anchor="middle" font-size="14" fill="#4c6f67">准备训练该轨迹</text></g>
+    <rect x="90" y="350" width="300" height="92" rx="18" fill="#eef1ff"/><text x="240" y="384" text-anchor="middle" font-size="17" font-weight="700" fill="#25345d">old log-prob：v10</text><text x="240" y="414" text-anchor="middle" font-size="14" fill="#596683">不能用 v13 重算冒充</text>
+    <rect x="450" y="350" width="300" height="92" rx="18" fill="#fff4e5"/><text x="600" y="384" text-anchor="middle" font-size="17" font-weight="700" fill="#684c1e">reference：r3</text><text x="600" y="414" text-anchor="middle" font-size="14" fill="#745f43">KL 行为锚点，独立版本</text>
+    <rect x="810" y="350" width="300" height="92" rx="18" fill="#fff0ef"/><text x="960" y="384" text-anchor="middle" font-size="17" font-weight="700" fill="#69332f">verifier：test-v7</text><text x="960" y="414" text-anchor="middle" font-size="14" fill="#76504d">奖励规则也必须可追溯</text>
+    <text x="600" y="505" text-anchor="middle" font-size="16" fill="#5c6787">policy lag = 13 − 10 = 3；是否还能训练，要结合 ratio、KL、门限和算法判断。</text>
+  </g>
+</svg>

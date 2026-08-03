@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">Paged KV Cache 与共享前缀的物理页映射</title>
+  <desc id="desc">三个请求的逻辑 token 序列被映射到固定大小物理 KV 页；请求 A 与 B 共享 system prompt 的前缀页，之后各自分叉；分页避免为每条请求预留完整连续最大长度。</desc>
+  <rect width="1200" height="650" rx="30" fill="#f8faff"/>
+  <text x="55" y="65" font-family="system-ui,sans-serif" font-size="28" font-weight="700" fill="#182342">KV Cache 分页：逻辑连续，不要求显存物理连续</text>
+  <text x="55" y="101" font-family="system-ui,sans-serif" font-size="17" fill="#5c6787">固定大小 block 像操作系统页；共享前缀页可被多个请求引用，分叉后再各自追加</text>
+  <g font-family="system-ui,sans-serif">
+    <text x="65" y="165" font-size="18" font-weight="700" fill="#25345d">逻辑请求</text>
+    <text x="65" y="215" font-size="15" fill="#596683">请求 A</text><text x="65" y="285" font-size="15" fill="#596683">请求 B</text><text x="65" y="355" font-size="15" fill="#596683">请求 C</text>
+    <g stroke="#fff" stroke-width="3">
+      <g transform="translate(150 184)"><rect width="90" height="50" rx="9" fill="#dfe4fa"/><rect x="92" width="90" height="50" rx="9" fill="#dfe4fa"/><rect x="184" width="90" height="50" rx="9" fill="#f4dfb9"/><rect x="276" width="90" height="50" rx="9" fill="#f4dfb9"/><rect x="368" width="90" height="50" rx="9" fill="#f4dfb9"/></g>
+      <g transform="translate(150 254)"><rect width="90" height="50" rx="9" fill="#dfe4fa"/><rect x="92" width="90" height="50" rx="9" fill="#dfe4fa"/><rect x="184" width="90" height="50" rx="9" fill="#d5eee8"/><rect x="276" width="90" height="50" rx="9" fill="#d5eee8"/></g>
+      <g transform="translate(150 324)"><rect width="90" height="50" rx="9" fill="#e1e4eb"/><rect x="92" width="90" height="50" rx="9" fill="#e1e4eb"/><rect x="184" width="90" height="50" rx="9" fill="#e1e4eb"/></g>
+    </g>
+    <text x="240" y="402" text-anchor="middle" font-size="14" fill="#596683">蓝色：A/B 相同 system prompt</text><text x="465" y="402" text-anchor="middle" font-size="14" fill="#745f43">分叉后各自增长</text>
+
+    <path d="M620 278H706" stroke="#5368d9" stroke-width="3"/><path d="M695 269l12 9-12 9" fill="none" stroke="#5368d9" stroke-width="3"/>
+    <text x="663" y="257" text-anchor="middle" font-size="13" fill="#596683">block table</text>
+
+    <text x="760" y="165" font-size="18" font-weight="700" fill="#205c50">物理 KV 页池</text>
+    <g transform="translate(760 188)" stroke="#fff" stroke-width="4">
+      <rect width="118" height="72" rx="12" fill="#d5eee8"/><rect x="124" width="118" height="72" rx="12" fill="#dfe4fa"/><rect x="248" width="118" height="72" rx="12" fill="#f4dfb9"/>
+      <rect y="78" width="118" height="72" rx="12" fill="#e1e4eb"/><rect x="124" y="78" width="118" height="72" rx="12" fill="#f4dfb9"/><rect x="248" y="78" width="118" height="72" rx="12" fill="#dfe4fa"/>
+      <rect y="156" width="118" height="72" rx="12" fill="#e1e4eb"/><rect x="124" y="156" width="118" height="72" rx="12" fill="#d5eee8"/><rect x="248" y="156" width="118" height="72" rx="12" fill="#eef1ff" stroke="#8799e9" stroke-dasharray="7 5"/>
+    </g>
+    <g font-size="14" text-anchor="middle" font-family="system-ui,sans-serif" fill="#34467e"><text x="819" y="229">B 分支</text><text x="943" y="229">共享前缀 1</text><text x="1067" y="229">A 分支</text><text x="819" y="307">C 独占</text><text x="943" y="307">A 分支</text><text x="1067" y="307">共享前缀 2</text><text x="819" y="385">C 独占</text><text x="943" y="385">B 分支</text><text x="1067" y="385">空闲页</text></g>
+  </g>
+  <g font-family="system-ui,sans-serif">
+    <rect x="65" y="478" width="330" height="118" rx="18" fill="#eef1ff"/><text x="230" y="514" text-anchor="middle" font-size="17" font-weight="700" fill="#25345d">减少预留浪费</text><text x="230" y="545" text-anchor="middle" font-size="14" fill="#596683">不用为每条请求预留最大长度</text><text x="230" y="572" text-anchor="middle" font-size="14" fill="#596683">只在最后一页有小块内部碎片</text>
+    <rect x="435" y="478" width="330" height="118" rx="18" fill="#fff4e5"/><text x="600" y="514" text-anchor="middle" font-size="17" font-weight="700" fill="#684c1e">共享需要引用计数</text><text x="600" y="545" text-anchor="middle" font-size="14" fill="#745f43">A 结束不能误删 B 仍在用的前缀</text><text x="600" y="572" text-anchor="middle" font-size="14" fill="#745f43">模型/Adapter/位置配置必须一致</text>
+    <rect x="805" y="478" width="330" height="118" rx="18" fill="#eaf8f4"/><text x="970" y="514" text-anchor="middle" font-size="17" font-weight="700" fill="#205c50">淘汰必须考虑代价</text><text x="970" y="545" text-anchor="middle" font-size="14" fill="#4c6f67">长前缀重算贵，但传输也可能贵</text><text x="970" y="572" text-anchor="middle" font-size="14" fill="#4c6f67">租户隔离与敏感数据不可省</text>
+  </g>
+</svg>

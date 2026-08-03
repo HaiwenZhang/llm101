@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="650" viewBox="0 0 1400 650" role="img" aria-labelledby="title desc">
+  <title id="title">现代 Pre-Norm Decoder Block 数据流</title>
+  <desc id="desc">展示残差流先经过 RMSNorm 和因果 Attention，再相加，然后经过 RMSNorm 和 SwiGLU，再次相加。RoPE 作用于 Q K，GQA 减少 K V 头。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7f9ff"/><stop offset="1" stop-color="#fff8f1"/></linearGradient>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="7" stdDeviation="10" flood-color="#24304a" flood-opacity=".1"/></filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 10 5 0 10z" fill="#7d879c"/></marker>
+    <style>.zh{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.t{font-size:42px;font-weight:800;fill:#17213a}.sub{font-size:24px;fill:#66708a}.h{font-size:29px;font-weight:800;fill:#17213a}.b{font-size:24px;font-weight:750;fill:#27324a}.s{font-size:21px;fill:#66708a}.f{font-size:25px;font-weight:750;fill:#17213a}.tiny{font-size:18px;fill:#788299}</style>
+  </defs>
+  <rect width="1400" height="650" rx="32" fill="url(#bg)"/>
+  <text x="65" y="68" class="zh t">一个现代 Decoder Block：主干始终是残差流</text>
+  <text x="65" y="106" class="zh sub">Pre-Norm 的顺序是“先归一化、再变换、最后加回原输入”</text>
+
+  <path d="M95 338H1297" stroke="#42506a" stroke-width="12" stroke-linecap="round"/>
+  <path d="M1343 338H1370" stroke="#42506a" stroke-width="8" marker-end="url(#arr)"/>
+  <text x="95" y="302" class="zh b">xℓ</text><text x="1320" y="294" text-anchor="middle" class="zh b">xℓ₊₁</text>
+  <text x="675" y="382" text-anchor="middle" class="zh s">加法主干给梯度保留接近恒等映射的路径</text>
+
+  <g filter="url(#sh)">
+    <rect x="180" y="168" width="175" height="88" rx="18" fill="#eaf8f4" stroke="#73c4b1" stroke-width="2"/>
+    <text x="268" y="207" text-anchor="middle" class="mono h">RMSNorm</text><text x="268" y="238" text-anchor="middle" class="zh tiny" font-size="16">逐 token 按隐藏维归一化</text>
+    <rect x="385" y="148" width="315" height="128" rx="20" fill="#eef2ff" stroke="#98aaf5" stroke-width="2"/>
+    <text x="542" y="190" text-anchor="middle" class="zh h">Causal Attention</text>
+    <text x="542" y="226" text-anchor="middle" class="zh s">RoPE 旋转 Q/K　·　GQA 共享 K/V</text>
+    <text x="542" y="255" text-anchor="middle" class="zh tiny">每个位置只能读取自己和左侧历史</text>
+    <path d="M160 338V212H176M358 212H381M702 212H730V338" fill="none" stroke="#596fe5" stroke-width="5" marker-end="url(#arr)"/>
+    <circle cx="730" cy="338" r="23" fill="#fff" stroke="#596fe5" stroke-width="4"/><text x="730" y="347" text-anchor="middle" class="mono h">+</text>
+
+    <rect x="800" y="430" width="175" height="88" rx="18" fill="#eaf8f4" stroke="#73c4b1" stroke-width="2"/>
+    <text x="888" y="469" text-anchor="middle" class="mono h">RMSNorm</text><text x="888" y="500" text-anchor="middle" class="zh tiny">同样先归一化</text>
+    <rect x="1030" y="410" width="245" height="128" rx="20" fill="#fff1e5" stroke="#edaa5d" stroke-width="2"/>
+    <text x="1152" y="452" text-anchor="middle" class="zh h">SwiGLU FFN</text>
+    <text x="1152" y="488" text-anchor="middle" class="mono s">SiLU(xW₁) ⊙ xW₃</text>
+    <text x="1152" y="517" text-anchor="middle" class="zh tiny">逐 token 变换特征</text>
+    <path d="M770 338V474H796M978 474H1026M1278 474H1320V338" fill="none" stroke="#e08a35" stroke-width="5" marker-end="url(#arr)"/>
+    <circle cx="1320" cy="338" r="23" fill="#fff" stroke="#e08a35" stroke-width="4"/><text x="1320" y="347" text-anchor="middle" class="mono h">+</text>
+  </g>
+
+  <rect x="80" y="555" width="1240" height="58" rx="15" fill="#fff" stroke="#d8def0"/>
+  <text x="700" y="591" text-anchor="middle" class="mono f">uℓ = xℓ + Attn(RMSNorm(xℓ))　　xℓ₊₁ = uℓ + FFN(RMSNorm(uℓ))</text>
+</svg>
